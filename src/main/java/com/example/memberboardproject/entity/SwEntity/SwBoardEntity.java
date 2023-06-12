@@ -34,4 +34,17 @@ public class SwBoardEntity {
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private SwMemberEntity swMemberEntity;
+
+    @OneToMany(mappedBy = "swBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<SwBoardFileEntity> swBoardFileEntityList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "swBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<SwCommentEntity> swCommentEntityList = new ArrayList<>();
+
+
+
+
 }
