@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form id="saveForm" onsubmit="saveMember(event)" name="saveForm" action="/member/save" method="post"
+      enctype="multipart/form-data">
+    <label for="memberName">이름</label>
+    <input type="text" name="memberName" id="memberName"><br>
+    <label for="memberEmail">이메일</label>
+    <input type="text" name="memberEmail" id="memberEmail"><br>
+    <label for="memberPassword">비밀번호</label>
+    <input type="text" name="memberPassword" id="memberPassword"><br>
+    <label for="memberMoblie">전화번호</label>
+    <input type="text" name="memberMoblie" id="memberMoblie"><br>
+    <label for="memberMoblie">생년월일</label>
+    <input type="text" name="memberBirth" id="memberBirth"><br>
+    <label for="memberProfile">프로필사진</label>
+    <input type="file" id="memberProfile" name="memberProfile" class="form-control" multiple><br>
+    <input type="submit" value="회원가입하기">
+</form>
+
+<script>
+    const saveMember = (event) => {
+        event.preventDefault();
+        const saveForm = document.querySelector("#saveForm");
+        const memberName = document.querySelector("#memberName");
+        const memberEmail = document.querySelector("#memberEmail");
+        const memberPassword = document.querySelector("#memberPassword");
+        const memberMoblie = document.querySelector("#memberMoblie");
+        const memberBirth = document.querySelector("#memberBirth");
+        if (memberName.value == "") {
+            alert("이름을 입력해주세요");
+            memberName.focus();
+        } else if (memberEmail.value == "") {
+            alert("이메일을 입력해주세요");
+            memberEmail.focus();
+        } else if (memberPassword.value == "") {
+            alert("비밀번호를 입력해주세요");
+            memberPassword.focus();
+        } else if (memberMoblie.value == "") {
+            alert("전화번호를 입력해주세요");
+            memberMoblie.focus();
+        } else if (memberBirth.value == "") {
+            alert("생년월일을 입력해주세요");
+            memberBirth.focus();
+        } else {
+            saveForm.submit();
+            alert("회원가입에 성공하셨습니다");
+        }
+
+    }
+
+</script>
+</body>
+</html>
