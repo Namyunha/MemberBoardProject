@@ -25,11 +25,11 @@ public class HsBoardEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="member_id")
-    HsMemberEntity memberEntity;
+    HsMemberEntity hsMemberEntity;
 
-    @OneToMany(mappedBy = "boardEntity",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hsBoardEntity",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
     List<HsFileEntity> hsFileEntityList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "boardEntity",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hsBoardEntity",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
     List<HsCommentEntity> hsCommentEntityList = new ArrayList<>();
 }
