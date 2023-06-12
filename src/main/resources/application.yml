@@ -1,0 +1,38 @@
+# server port ?? ??
+server:
+  port: 8120
+# data base ?? ??
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_springboot?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: user_springboot
+    password: 1234
+
+  # thymeleaf ?? ??
+  thymeleaf:
+    cache: false
+
+  # spring data jpa ??
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    #  ddl-auto: create    ??? ??? TABLE? ?????? > ??? ??? reset
+    #  ddl-auto: update    ????? ????
+# db query log ?? ??
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: trace
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
+
+naver-cloud-sms.accessKey: ZKxzIkHO60IpdWw47JQR
+naver-cloud-sms.secretKey: aiedH7otonnMpfCDHZBpxBkRKbJgv6skOG3WKL4k
+naver-cloud-sms.serviceId: ncp:sms:kr:309336187163:save_sms_service
+naver-cloud-sms.senderPhone: 01068441656
