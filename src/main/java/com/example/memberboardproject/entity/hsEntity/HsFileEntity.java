@@ -22,7 +22,7 @@ public class HsFileEntity {
 
     @ManyToOne
     @JoinColumn(name = "board_id")
-    HsBoardEntity boardEntity;
+    HsBoardEntity hsBoardEntity;
 
     @ManyToOne
     @JoinColumn(name= "member_id")

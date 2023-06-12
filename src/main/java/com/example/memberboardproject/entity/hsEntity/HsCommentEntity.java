@@ -17,9 +17,9 @@ public class HsCommentEntity {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    HsMemberEntity memberEntity;
+    HsMemberEntity hsMemberEntity;
 
     @ManyToOne
     @JoinColumn(name = "board_id")
-    HsBoardEntity boardEntity;
+    HsBoardEntity hsBoardEntity;
 }
