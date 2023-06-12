@@ -28,6 +28,11 @@ public class SwCommentEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
-    private SwBoardEntity SwBoardEntity;
+    private SwBoardEntity swBoardEntity;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private SwMemberEntity swMemberEntity;
 }
 
