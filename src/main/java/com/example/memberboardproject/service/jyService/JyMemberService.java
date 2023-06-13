@@ -7,6 +7,7 @@ import com.example.memberboardproject.repository.jyRepository.JyMemberFileReposi
 import com.example.memberboardproject.repository.jyRepository.JyMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -44,6 +45,18 @@ public class JyMemberService {
             JyMemberFileEntity jyMemberFileEntity = JyMemberFileEntity.toSaveMemberFileEntity(savedEntity, originalFileName, storedFileName);
             jyMemberFileRepository.save(jyMemberFileEntity);
             return savedEntity.getId();
+        }
+    }
+
+    @Transactional
+    public JyMemberDTO login(String memberEmail, String memberPassword) {
+        Optional<JyMemberEntity> optionalJyMemberEntity = jyMemberRepository.findByMemberEmailAndMemberPassword(memberEmail, memberPassword);
+        if (optionalJyMemberEntity.isPresent()) {   // 있음
+            JyMemberEntity jyMemberEntity = optionalJyMemberEntity.get();
+            JyMemberDTO jyMemberDTO = JyMemberDTO.toDTO(jyMemberEntity);
+            return jyMemberDTO;
+        } else {
+            return null;
         }
     }
 }

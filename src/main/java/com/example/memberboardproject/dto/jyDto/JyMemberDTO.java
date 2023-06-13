@@ -1,5 +1,6 @@
 package com.example.memberboardproject.dto.jyDto;
 
+import com.example.memberboardproject.entity.jyEntity.JyMemberEntity;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,4 +25,23 @@ public class JyMemberDTO {
     private int fileAttached;
     private String originalFileName;
     private String storeFileName;
+
+    public static JyMemberDTO toDTO(JyMemberEntity jyMemberEntity) {
+        JyMemberDTO jyMemberDTO = new JyMemberDTO();
+        jyMemberDTO.setId(jyMemberEntity.getId());
+        jyMemberDTO.setMemberEmail(jyMemberEntity.getMemberEmail());
+        jyMemberDTO.setMemberPassword(jyMemberEntity.getMemberPassword());
+        jyMemberDTO.setMemberName(jyMemberEntity.getMemberName());
+        jyMemberDTO.setMemberMobile(jyMemberEntity.getMemberMobile());
+        jyMemberDTO.setMemberBirth(jyMemberEntity.getMemberBirth());
+
+        if (jyMemberEntity.getFileAttached() == 1) {
+            jyMemberDTO.setFileAttached(1);
+            jyMemberDTO.setOriginalFileName(jyMemberEntity.getJyMemberFileEntityList().get(0).getOriginalFileName());
+            jyMemberDTO.setStoreFileName(jyMemberEntity.getJyMemberFileEntityList().get(0).getStoreFileName());
+        } else {
+            jyMemberDTO.setFileAttached(0);
+        }
+        return jyMemberDTO;
+    }
 }

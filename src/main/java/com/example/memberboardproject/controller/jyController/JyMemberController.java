@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -33,5 +34,22 @@ public class JyMemberController {
     public String save(@ModelAttribute JyMemberDTO jyMemberDTO) throws IOException {
         jyMemberService.save(jyMemberDTO);
         return "JYPages/jyMemberPages/jyMemberLogin";
+    }
+
+    @GetMapping("/login")
+    public String loginForm() { return "JYPages/jyMemberPages/jyMemberLogin"; }
+
+    @PostMapping("/login")
+    public String login(@RequestParam String memberEmail,
+                        @RequestParam String memberPassword,
+                        HttpSession session) {
+        JyMemberDTO jyMemberDTO = jyMemberService.login(memberEmail, memberPassword);
+        if (jyMemberDTO == null) {
+            return "JYPages/jyMemberPages/jyMemberLogin";
+        } else {
+            session.setAttribute("loginEmail", memberEmail);
+            session.setAttribute("loginId", jyMemberDTO.getId());
+            return "JYPages/jyMemberPages/jyMemberMain";
+        }
     }
 }
