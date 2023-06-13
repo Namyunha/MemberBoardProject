@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface JyMemberRepository extends JpaRepository<JyMemberEntity, Long> {
 
     Optional<JyMemberEntity> findByMemberEmail(String memberEmail);
+
+    Optional<JyMemberEntity> findByMemberEmailAndMemberPassword(String memberEmail, String memberPassword);
 }
