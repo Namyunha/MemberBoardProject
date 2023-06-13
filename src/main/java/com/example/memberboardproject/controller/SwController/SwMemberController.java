@@ -2,7 +2,6 @@ package com.example.memberboardproject.controller.SwController;
 
 import com.example.memberboardproject.dto.SwDTO.SwMemberDTO;
 import com.example.memberboardproject.service.swService.SwMemberService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +47,10 @@ public class SwMemberController {
     @PostMapping("/member/login")
     public ResponseEntity memberLogin(@RequestBody SwMemberDTO swMemberDTO, HttpSession session) throws Exception {
         SwMemberDTO DTO = swMemberService.findByEmailAndMemberPassword(swMemberDTO.getMemberEmail(),swMemberDTO.getMemberPassword());
-        System.out.println("DTO = " + DTO);
         if(DTO!=null) {
             session.setAttribute("loginEmail",DTO.getMemberEmail());
-            System.out.println("1");
             return new ResponseEntity<>(DTO,HttpStatus.OK);
         }else {
-            System.out.println("2");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
@@ -65,10 +61,11 @@ public class SwMemberController {
         return "redirect:/SWPages";
     }
 
-    @GetMapping("/member/memberDetail")
-    public String memberDetail(Model model,HttpSession session) {
-        SwMemberDTO swMemberDTO = swMemberService.findByEmail((String) session.getAttribute("loginEmail"));
-        System.out.println("swMemberDTO = " + swMemberDTO);
-        return "redirect:/SWPages";
-    }
+//    @GetMapping("/member/memberDetail")
+//    public String memberDetail(Model model,HttpSession session) {
+//        try {
+//            SwMemberDTO swMemberDTO = swMemberService.findById()
+//        }
+//        return "redirect:/SWPages";
+//    }
 }
