@@ -4,6 +4,10 @@ package com.example.memberboardproject.dto.yhdDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,8 +21,7 @@ public class YhMemberDTO {
     private String memberBirth;
     private String createdAt;
     private int fileAttached;
-//    private List<MultipartFile> memberProfile;
-//    private int fileAttached;
-//    private List<String> originalFileName = new ArrayList<>();
-//    private List<String> storedFileName = new ArrayList<>();
+    private List<MultipartFile> memberProfile;
+    private List<String> originalFileName = new ArrayList<>();
+    private List<String> storedFileName = new ArrayList<>();
 }
