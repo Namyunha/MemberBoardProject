@@ -18,7 +18,7 @@ public class JyMemberFileEntity {
     private String originalFileName;
 
     @Column
-    private String storeFileName;
+    private String storedFileName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -28,7 +28,7 @@ public class JyMemberFileEntity {
         JyMemberFileEntity jyMemberFileEntity = new JyMemberFileEntity();
         jyMemberFileEntity.setJyMemberEntity(savedEntity);
         jyMemberFileEntity.setOriginalFileName(originalFileName);
-        jyMemberFileEntity.setStoreFileName(storedFileName);
+        jyMemberFileEntity.setStoredFileName(storedFileName);
         return jyMemberFileEntity;
     }
 }

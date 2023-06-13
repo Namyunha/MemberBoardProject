@@ -24,7 +24,7 @@ public class JyMemberDTO {
     private MultipartFile memberProfile;
     private int fileAttached;
     private String originalFileName;
-    private String storeFileName;
+    private String storedFileName;
 
     public static JyMemberDTO toDTO(JyMemberEntity jyMemberEntity) {
         JyMemberDTO jyMemberDTO = new JyMemberDTO();
@@ -38,7 +38,7 @@ public class JyMemberDTO {
         if (jyMemberEntity.getFileAttached() == 1) {
             jyMemberDTO.setFileAttached(1);
             jyMemberDTO.setOriginalFileName(jyMemberEntity.getJyMemberFileEntityList().get(0).getOriginalFileName());
-            jyMemberDTO.setStoreFileName(jyMemberEntity.getJyMemberFileEntityList().get(0).getStoreFileName());
+            jyMemberDTO.setStoredFileName(jyMemberEntity.getJyMemberFileEntityList().get(0).getStoredFileName());
         } else {
             jyMemberDTO.setFileAttached(0);
         }
