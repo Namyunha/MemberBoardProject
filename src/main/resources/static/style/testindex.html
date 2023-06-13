@@ -3,32 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <title>indexform</title>
-    <link rel="stylesheet" href="../css/style.css">
-
+    <link rel="stylesheet" href="../css/hsCss/hsMain.css">
 </head>
 <body>
-<section style="background-color: palegoldenrod;height: 100vh;">
-    <div style="padding-top: 5%;display: flex;justify-content: center">
-        <div style="width: 1500px;height: 700px; display:table;">
-            <div style="display:table-cell;background-color: white;width: 412px;border-radius:30px 0 0 30px;">
-                <div style="position: relative;">
-                    <span style="position: absolute;font-size: 100px;font-weight: bold;top: 250px;right: 35px;">Git test</span>
-                </div>
-            </div>
-            <div style="display:table-cell;background-color:darkslateblue;border-radius: 0 30px 30px 0;position: relative;">
-                <div style="width: 960px;">
-                    <span style="color: white;font-size: 100px;position: absolute;right: 450px;">공용</span>
-                    <ul style="position: absolute;top: 190px;left: 100px;font-size: 50px;">
-                        <li style="background-color: wheat;width: 500px;margin: 10px;"><a href="/YHPages" style="padding-left: 10px;">윤하♥</a></li>
-                        <li style="background-color: palevioletred;width: 300px;margin: 10px;"><a href="/HSPages" style="padding-left: 10px;">호섭☆</a></li>
-                        <li style="background-color: palegreen;width: 450px;margin: 10px;"><a href="/KMPages" style="padding-left: 10px;">광명♡</a></li>
-                        <li style="background-color: cornflowerblue;width: 350px;margin: 10px;"><a href="/SWPages" style="padding-left: 10px;">신욱♠</a></li>
-                        <li style="background-color: lightgreen;width: 400px;margin: 10px;"><a href="/JYPages" style="padding-left: 10px;">지윤★</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<header th:fragment="header" id="header">
+    <div>
+        <h2>Project-MemberBoard</h2>
+    </div>
+</header>
+<nav th:fragment="nav" id="nav">
+    <div>
+        <ul>
+            <li th:if="${showBtn}">
+                <a href="/HSPages" id="goingHome">Home</a>
+            </li>
+            <li th:unless="${showBtn}">
+                <a href="/">초기화면</a>
+            </li>
+            <li>
+                <a href="/hsMember/save" id="goingSave">회원가입</a>
+            </li>
+            <li>
+                <a href="#">로그인</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<section>
+    <div>
+        <h2 style="text-align: center">안녕 나는 회원가입</h2>
+        <form action="/hsMember/save" method="post" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberEmail">아이디</label></td>
+                </tr>
+                <tr>
+                    <th><input type="text" name="memberEmail" id="memberEmail"></th>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberPassword">비밀번호</label></td>
+                </tr>
+                <tr>
+                    <th><input type="password" name="memberPassword" id="memberPassword"></th>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberPassword1">비밀번호 확인</label></td>
+                </tr>
+                <tr>
+                    <th><input type="password" name="memberPassword1" id="memberPassword1"></th>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberName">이름</label></td>
+                </tr>
+                <tr>
+                    <th><input type="text" id="memberName" name="memberName"></th>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberNum1">전화번호</label></td>
+                </tr>
+                <tr>
+                    <th>
+                        <select name="memberNum1" id="memberNum1">
+                            <option value="">선택</option>
+                            <option value="010">010</option>
+                            <option value="011">011</option>
+                            <option value="070">070</option>
+                        </select>
+                        <input type="text" maxlength="4" id="memberNum2" name="memberNum3">
+                        <input type="text" maxlength="4" name="memberNum3" id="memberNum3">
+                    </th>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberYY">생일</label></td>
+                </tr>
+                <tr>
+                    <th>
+                        <input type="text" name="memberYY" id="memberYY" maxlength="4">
+                        <select name="memberMM" id="memberMM">
+                            <option value="">선택</option>
+                            <option value="01">1월</option>
+                            <option value="02">2월</option>
+                            <option value="03">3월</option>
+                            <option value="04">4월</option>
+                            <option value="05">5월</option>
+                            <option value="06">6월</option>
+                            <option value="07">7월</option>
+                            <option value="08">8월</option>
+                            <option value="09">9월</option>
+                            <option value="10">10월</option>
+                            <option value="11">11월</option>
+                            <option value="12">12월</option>
+                        </select>
+                        <input type="text" name="memberDD" id="memberDD" maxlength="2">
+                    </th>
+                </tr>
+                <tr>
+                    <td><label style="font-weight: bold;" for="memberFile">프로필</label></td>
+                </tr>
+                <tr>
+                    <th><input type="file" name="memberFile" id="memberFile"></th>
+                </tr>
+                <tr>
+                    <th><button type="submit" id="memberSaveBtn">회원가입</button></th>
+                </tr>
+            </table>
+        </form>
     </div>
 </section>
+<footer th:fragment="footer" id="footer">
+    <div id="footerResult">
+
+    </div>
+    <script>
+        const date = new Date();
+        const footer = document.getElementById('footerResult');
+        footer.innerHTML = "<p>&copy" + date.getFullYear() + "&nbsp;HRDKOREA All rights reserved."
+    </script>
+</footer>
 </body>
 </html>

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class KmMemberService {
-    private final KmMemberRepository memberRepository;
-//    private final KmMemberFileRepository kmMemberFileRepository;
-    public void save(KmMemberDTO kmMemberDTO) {
-       KmMemberEntity kmMemberEntity= KmMemberEntity.savetoKmMemberEntity(kmMemberDTO);
-        memberRepository.save(kmMemberEntity);
-    }
+//    private final KmMemberRepository memberRepository;
+////    private final KmMemberFileRepository kmMemberFileRepository;
+//    public void save(KmMemberDTO kmMemberDTO) {
+//       KmMemberEntity kmMemberEntity= KmMemberEntity.savetoKmMemberEntity(kmMemberDTO);
+//        memberRepository.save(kmMemberEntity);
+//    }
 }

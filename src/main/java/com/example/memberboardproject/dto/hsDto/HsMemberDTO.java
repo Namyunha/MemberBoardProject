@@ -14,8 +14,14 @@ public class HsMemberDTO {
     String memberPassword;
     String memberName;
     String memberMobile;
+    String memberNum1;
+    String memberNum2;
+    String memberNum3;
     String memberBirth;
+    String memberYY;
+    String memberMM;
+    String memberDD;
     int fileAttached = 0;
-    List<MultipartFile> memberFile;
+    MultipartFile memberFile;
 
 }

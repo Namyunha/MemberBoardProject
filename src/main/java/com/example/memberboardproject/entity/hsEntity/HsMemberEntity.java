@@ -1,5 +1,6 @@
 package com.example.memberboardproject.entity.hsEntity;
 
+import com.example.memberboardproject.dto.hsDto.HsMemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,4 +43,15 @@ public class HsMemberEntity {
 
     @OneToMany(mappedBy = "hsMemberEntity",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch = FetchType.LAZY)
     List<HsFileEntity> hsFileEntityList = new ArrayList<>();
+
+    public static HsMemberEntity toSaveEntity(HsMemberDTO hsMemberDTO) {
+        HsMemberEntity hsMemberEntity = new HsMemberEntity();
+        hsMemberEntity.setMemberEmail(hsMemberDTO.getMemberEmail());
+        hsMemberEntity.setMemberPassword(hsMemberDTO.getMemberPassword());
+        hsMemberEntity.setMemberName(hsMemberDTO.getMemberName());
+        hsMemberEntity.setMemberBirth(hsMemberDTO.getMemberBirth());
+        hsMemberEntity.setMemberMobile(hsMemberDTO.getMemberMobile());
+        hsMemberEntity.setFileAttached(hsMemberDTO.getFileAttached());
+        return hsMemberEntity;
+    }
 }
