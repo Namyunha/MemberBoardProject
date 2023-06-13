@@ -28,7 +28,7 @@ public class SwMemberService {
             for(MultipartFile swMemberFile : swMemberDTO.getSwMemberFile()) {
                 String originalFileName = swMemberFile.getOriginalFilename();
                 String storedFileName = System.currentTimeMillis()+"-"+originalFileName;
-                String savePath = "D:\\Springboot_aithub_img\\"+ storedFileName;
+                String savePath = "D:\\Springboot_github_img\\"+ storedFileName;
                 swMemberFile.transferTo(new File(savePath));
                 SwMemberFileEntity swMemberFileEntity = SwMemberFileEntity.toSaveMemberFileEntity(saveMemberEntity,originalFileName,storedFileName);
                 swMemberFileRepository.save(swMemberFileEntity);
