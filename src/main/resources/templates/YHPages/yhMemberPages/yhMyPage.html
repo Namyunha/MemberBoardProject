@@ -7,7 +7,7 @@
 <div>
     <table class="table table-striped table-hover text-center">
         <thead>
-        <tr>
+        <tr class="table-dark">
             <th>비고</th>
             <td>정보</td>
         </tr>
@@ -34,9 +34,41 @@
             <td>
                 <img th:src="@{|/upload/${memberDTO.storedFileName[0]}}" width="200" height="200"></td>
         </tr>
-        <tr></tr>
+        <tr>
+            <td>
+                <button th:onclick="req('update')">수정하기</button>
+            </td>
+            <td>
+                <button th:onclick="req('delete')">탈퇴하기</button>
+            </td>
+        </tr>
         </tbody>
     </table>
+    <div style="width: 100%; display: none" id="passwordCheckForm" name="passwordCheckForm">
+        <label for="checkPass">비밀번호</label>:
+        <input type="text" id="checkPass" name="checkPass">
+        <input type="button" th:onclick="checkPass()" value="비밀번호확인">
+    </div>
 </div>
+<script>
+    let method = null;
+    const req = (req) => {
+        const passwordCheckForm = document.querySelector("#passwordCheckForm");
+        passwordCheckForm.style.display = "block";
+        method = req;
+    }
+
+    const checkPass = (method) => {
+        const checkPassInput = document.querySelector("#checkPass");
+        const memberPassword = "[[${memberDTO.memberPassword}]]"; // Thymeleaf 표현식을 변수에 저장
+        console.log(method);l
+        if (checkPassInput.value === memberPassword) {
+            alert("비밀번호가 맞습니다");
+        } else {
+            alert("비밀번호가 틀렸습니다.");
+        }
+    }
+
+</script>
 </body>
 </html>
