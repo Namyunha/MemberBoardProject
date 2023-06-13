@@ -45,4 +45,13 @@ public class SwMemberService {
             return null;
         }
     }
+
+    public SwMemberDTO findByEmailAndMemberPassword(String memberEmail, String memberPassword) {
+        SwMemberEntity swMemberEntity = swMemberRepository.findByMemberEmailAndMemberPassword(memberEmail,memberPassword);
+        if(swMemberEntity!=null) {
+            return SwMemberDTO.toDTO(swMemberEntity);
+        }else {
+            return null;
+        }
+    }
 }

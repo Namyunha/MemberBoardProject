@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -43,5 +44,23 @@ public class SwMemberController {
         }
     }
 
+    @PostMapping("/member/login")
+    public ResponseEntity memberLogin(@RequestBody SwMemberDTO swMemberDTO, HttpSession session) throws Exception {
+        SwMemberDTO DTO = swMemberService.findByEmailAndMemberPassword(swMemberDTO.getMemberEmail(),swMemberDTO.getMemberPassword());
+        System.out.println("DTO = " + DTO);
+        if(DTO!=null) {
+            session.setAttribute("loginEmail",DTO.getMemberEmail());
+            System.out.println("1");
+            return new ResponseEntity<>(DTO,HttpStatus.OK);
+        }else {
+            System.out.println("2");
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
 
+    @GetMapping("/member/logout")
+    public String memberLogout(HttpSession session) {
+        session.invalidate();
+        return "/SWPages";
+    }
 }
