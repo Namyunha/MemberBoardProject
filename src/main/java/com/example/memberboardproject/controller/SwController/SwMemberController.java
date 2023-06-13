@@ -4,11 +4,10 @@ import com.example.memberboardproject.dto.SwDTO.SwMemberDTO;
 import com.example.memberboardproject.service.swService.SwMemberService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -28,4 +27,21 @@ public class SwMemberController {
         swMemberService.save(swMemberDTO);
         return "/SWPages/index";
     }
+
+    @GetMapping("/member/login")
+    public String memberLoginForm() {
+        return "/SWPages/memberPages/memberLogin";
+    }
+
+    @PostMapping("/email_check")
+    public ResponseEntity email_check(@RequestBody SwMemberDTO swMemberDTO) {
+        SwMemberDTO DTO = swMemberService.findByEmail(swMemberDTO.getMemberEmail());
+        if(DTO == null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
+
+
 }
