@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
+
     @GetMapping("/")
     public String index() {
         return "index";
     }
-
     @GetMapping("/HSPages")
     public String HSPages(HttpServletRequest request, Model model) {
         String address = request.getRequestURI();
@@ -36,4 +36,5 @@ public class HomeController {
     public String YHPages() {
         return "/YHPages/index";
     }
+
 }

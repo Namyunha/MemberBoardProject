@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
+</head>
+<body>
+
+<div id="loginForm">
+    <label for="memberEmail">이메일입력</label>
+    <input type="text" id="memberEmail" name="memberEmail"><br>
+    <label for="memberPassword">비밀번호입력</label>
+    <input type="password" id="memberPassword" name="memberPassword"><br>
+    <input type="button" th:onclick="loginMember()" value="로그인하기">
+</div>
+
+<script>
+    const loginMember = () => {
+        const memberEmail = document.querySelector("#memberEmail");
+        const memberPassword = document.querySelector("#memberPassword");
+        axios({
+            url: "/yhMember/login",
+            method: "post",
+            data: {
+                memberEmail: memberEmail.value,
+                memberPassword: memberPassword.value
+            }
+        }).then(res => {
+            location.href = "/yhBoard/list";
+        }).catch(err => {
+            alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+        })
+    }
+</script>
+</body>
+</html>

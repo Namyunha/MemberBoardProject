@@ -20,6 +20,7 @@ public class YhMemberFileEntity {
     @Column(length = 50, nullable = false)
     private String storedFileName;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yh_member_id")
     private YhMemberEntity yhMemberEntity;
