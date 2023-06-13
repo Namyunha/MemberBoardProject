@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -61,6 +62,13 @@ public class SwMemberController {
     @GetMapping("/member/logout")
     public String memberLogout(HttpSession session) {
         session.invalidate();
-        return "/SWPages";
+        return "redirect:/SWPages";
+    }
+
+    @GetMapping("/member/memberDetail")
+    public String memberDetail(Model model,HttpSession session) {
+        SwMemberDTO swMemberDTO = swMemberService.findByEmail((String) session.getAttribute("loginEmail"));
+        System.out.println("swMemberDTO = " + swMemberDTO);
+        return "redirect:/SWPages";
     }
 }
