@@ -1,6 +1,5 @@
 package com.example.memberboardproject.entity.SwEntity;
 
-import com.example.memberboardproject.dto.SwDTO.SwMemberFileDTO;
 import lombok.Getter;
 import lombok.Setter;
 

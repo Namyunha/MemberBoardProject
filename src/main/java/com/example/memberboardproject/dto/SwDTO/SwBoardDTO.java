@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,4 +22,8 @@ public class SwBoardDTO {
     private String createdAt;
     private List<MultipartFile> swBoardFile;
     private int fileAttached;
+    private List<String> originalFileName = new ArrayList<>();
+    private List<String> storedFileName = new ArrayList<>();
+
+
 }
