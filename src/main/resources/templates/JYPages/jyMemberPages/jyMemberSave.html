@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>회원가입</h2>
+<form action="/jy/member/save" method="post" enctype="multipart/form-data">
+    <input type="text" name="memberEmail" id="member-email" placeholder="이메일" onblur="email_check()"> <br>
+    <p id="email-result"></p>
+    <input type="text" name="memberPassword" placeholder="패스워드"> <br>
+    <input type="text" name="memberName" placeholder="이름"> <br>
+    <input type="text" name="memberMobile" placeholder="전화번호"> <br>
+    <input type="date" name="memberBirth" placeholder="생년월일"> <br>
+    <input type="file" name="memberProfile"> <br>
+    <input type="submit" value="회원가입">
+</form>
+</body>
+<script>
+    const email_check = () => {
+        const email = document.querySelector("#member-email").value;
+        const emailResult = document.querySelector("#email-result");
+        console.log(email);
+
+        axios({
+            method: "post",
+            url: "/jy/member/email-check",
+            data: {
+                memberEmail: email
+            }
+        }).then(res => {
+            emailResult.innerHTML = "사용가능";
+        }).catch(err => {
+            emailResult.innerHTML = "중복된 이메일";
+        });
+    }
+</script>
+</html>
