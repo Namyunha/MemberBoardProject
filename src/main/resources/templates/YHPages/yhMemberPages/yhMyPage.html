@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
 <body>
 <div>
-    <table>
+    <table class="table table-striped table-hover text-center">
         <thead>
         <tr>
             <th>비고</th>
@@ -32,9 +31,10 @@
         </tr>
         <tr th:if="${memberDTO.fileAttached == 1}">
             <th>프로필사진</th>
-            <td th:each="fileName: ${memberDTO.storedFileName}">
-                <img th:src="@{|/upload/${fileName}}" width="200" height="200"></td>
+            <td>
+                <img th:src="@{|/upload/${memberDTO.storedFileName[0]}}" width="200" height="200"></td>
         </tr>
+        <tr></tr>
         </tbody>
     </table>
 </div>
