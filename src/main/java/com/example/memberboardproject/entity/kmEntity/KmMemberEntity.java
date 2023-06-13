@@ -29,6 +29,7 @@ public class KmMemberEntity {
 
     @Column()
     public int memberProfile;
+
     @OneToMany(mappedBy = "kmMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<KmMemberFileEntity> kmMemberFileEntityList = new ArrayList<>();
 
@@ -50,4 +51,7 @@ public class KmMemberEntity {
         return kmMemberEntity;
 
     }
+
+
+
 }

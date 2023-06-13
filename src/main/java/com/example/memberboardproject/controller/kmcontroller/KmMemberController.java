@@ -37,5 +37,12 @@ public class KmMemberController {
         return "KMPages/kmMemberPages/kmMemberList";
 
     }
+
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute KmMemberDTO kmMemberDTO) throws IOException {
+//        kmMemberService.save(kmMemberDTO);
+//        return "KMPages/kmMemberPages/kmMemberMain";
+//    }
+
 }
 

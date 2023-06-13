@@ -17,6 +17,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class KmMemberService {
+
     private final KmMemberRepository kmMemberRepository;
     private final KmMemberFileRepository kmMemberFileRepository;
 
@@ -54,4 +55,6 @@ public class KmMemberService {
         });
         return kmMemberDTOList;
     }
+
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "yh_member_table")
 @Getter
 @Setter
-public class YhMemberEntity {
+public class YhMemberEntity extends YhBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

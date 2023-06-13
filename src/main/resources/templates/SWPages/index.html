@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="SWPages/component/config"></th:block>
 </head>
 <body>
-
+<div th:replace="SWPages/component/header :: header"></div>
+<div th:replace="SWPages/component/nav :: nav"></div>
+<div id="section">
+    <a href="/sw/member/save">회원가입</a>
+    <a href="/sw/member/login">로그인</a>
+    <a href="/sw/member/list">글 목록</a>
+</div>
+<div th:replace="SWPages/component/footer :: footer"></div>
 </body>
 </html>

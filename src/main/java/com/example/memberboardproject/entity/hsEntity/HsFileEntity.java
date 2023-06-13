@@ -27,4 +27,12 @@ public class HsFileEntity {
     @ManyToOne
     @JoinColumn(name= "member_id")
     HsMemberEntity hsMemberEntity;
+
+    public static HsFileEntity toSaveFileMemberEntity(HsMemberEntity savedEntity, String originalFileName, String storedFileName) {
+        HsFileEntity hsFileEntity = new HsFileEntity();
+        hsFileEntity.setHsMemberEntity(savedEntity);
+        hsFileEntity.setOriginalFileName(originalFileName);
+        hsFileEntity.setStoredFileName(storedFileName);
+        return hsFileEntity;
+    }
 }

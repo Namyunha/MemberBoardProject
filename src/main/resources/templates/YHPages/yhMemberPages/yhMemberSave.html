@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
 <body>
-
 <form id="saveForm" onsubmit="saveMember(event)" name="saveForm" action="/yhMember/save" method="post"
       enctype="multipart/form-data">
     <label for="memberName">이름</label>
@@ -13,9 +12,9 @@
     <label for="memberEmail">이메일</label>
     <input type="text" name="memberEmail" id="memberEmail"><br>
     <label for="memberPassword">비밀번호</label>
-    <input type="text" name="memberPassword" id="memberPassword"><br>
+    <input type="password" name="memberPassword" id="memberPassword"><br>
     <label for="memberMoblie">전화번호</label>
-    <input type="text" name="memberMoblie" id="memberMoblie"><br>
+    <input type="date" name="memberMoblie" id="memberMoblie"><br>
     <label for="memberMoblie">생년월일</label>
     <input type="text" name="memberBirth" id="memberBirth"><br>
     <label for="memberProfile">프로필사진</label>
@@ -52,6 +51,10 @@
             alert("회원가입에 성공하셨습니다");
         }
 
+    }
+
+    const goPage = () => {
+        location.href=""
     }
 
 </script>
