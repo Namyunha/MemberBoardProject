@@ -9,11 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class YhMemberService {
     private final YhMemberRepository yhMemberRepository;
     private final YhMemberFileRepository yhMemberFileRepository;
+
     public Long save(YhMemberDTO yhMemberDTO) {
         if (yhMemberDTO.getMemberProfile() == null || yhMemberDTO.getMemberProfile().get(0).isEmpty()) {
             YhMemberEntity yhMemberEntity = YhMemberEntity.toSaveEntity(yhMemberDTO);
@@ -32,4 +35,13 @@ public class YhMemberService {
         }
     }
 
+    public YhMemberDTO login(YhMemberDTO yhMemberDTO) {
+        Optional<YhMemberEntity> yhMemberEntity = yhMemberRepository.findByMemberEmailAndMemberPassword(yhMemberDTO.getMemberEmail(), yhMemberDTO.getMemberPassword());
+        YhMemberEntity loginMemberEntiy = yhMemberEntity.get();
+        if (loginMemberEntiy == null) {
+            return null;
+        } else {
+            return yhMemberDTO;
+        }
+    }
 }
