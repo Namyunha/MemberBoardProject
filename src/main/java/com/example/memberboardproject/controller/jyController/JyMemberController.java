@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -51,5 +52,13 @@ public class JyMemberController {
             session.setAttribute("loginId", jyMemberDTO.getId());
             return "JYPages/jyMemberPages/jyMemberMain";
         }
+    }
+
+    @GetMapping("mypage")
+    public String findById(HttpSession session, Model model) {
+        Long loginId = (Long) session.getAttribute("loginId");
+        JyMemberDTO jyMemberDTO = jyMemberService.findById(loginId);
+        model.addAttribute("member", jyMemberDTO);
+        return "JYPages/jyMemberPages/jyMemberMyPage";
     }
 }
