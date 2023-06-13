@@ -24,19 +24,34 @@ public class KmMemberEntity {
     public String memberMobile;
     @Column(length = 30, nullable = false)
     public String memberName;
+    @Column(length = 30, nullable = false)
+    public String memberBirth;
+
     @Column()
     public int memberProfile;
-//    @OneToMany(mappedBy = "KmMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private List<KmMemberFileEntity> kmMemberFileEntityList = new ArrayList<>();
 
-//    public static KmMemberEntity savetoKmMemberEntity(KmMemberDTO kmMemberDTO) {
-//        KmMemberEntity kmMemberEntity = new KmMemberEntity();
-//        kmMemberEntity.setMemberEmail(kmMemberDTO.getMemberEmail());
-//        kmMemberEntity.setMemberPass(kmMemberDTO.getMemberPass());
-//        kmMemberEntity.setMemberName(kmMemberDTO.getMemberName());
-//        kmMemberEntity.setMemberMobile(kmMemberDTO.getMemberMobile());
-//        kmMemberEntity.setMemberProfile(0);
-//        return kmMemberEntity;
-//
-//    }
+    @OneToMany(mappedBy = "kmMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<KmMemberFileEntity> kmMemberFileEntityList = new ArrayList<>();
+
+    public static KmMemberEntity savetoKmMemberEntity(KmMemberDTO kmMemberDTO) {
+        KmMemberEntity kmMemberEntity = new KmMemberEntity();
+        kmMemberEntity.setMemberEmail(kmMemberDTO.getMemberEmail());
+        kmMemberEntity.setMemberPass(kmMemberDTO.getMemberPass());
+        kmMemberEntity.setMemberName(kmMemberDTO.getMemberName());
+        kmMemberEntity.setMemberMobile(kmMemberDTO.getMemberMobile());
+        kmMemberEntity.setMemberBirth(kmMemberDTO.getMemberBirth());
+        kmMemberEntity.setMemberProfile(0);
+        return kmMemberEntity;
+
+    }
+
+    public static KmMemberEntity savetoKmMemberEntityWithFile(KmMemberDTO kmMemberDTO) {
+        KmMemberEntity kmMemberEntity = savetoKmMemberEntity(kmMemberDTO);
+        kmMemberEntity.setMemberProfile(1);
+        return kmMemberEntity;
+
+    }
+
+
+
 }
