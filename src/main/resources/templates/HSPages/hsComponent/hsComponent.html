@@ -14,10 +14,10 @@
     <div>
         <ul>
             <li th:if="${showBtn}">
-                    <a href="/HSPages" id="goingHome">Home</a>
+                <a href="/">초기화면</a>
             </li>
             <li th:unless="${showBtn}">
-                <a href="/">초기화면</a>
+                <a href="/HSPages" id="goingHome">Home</a>
             </li>
             <li>
                 <a href="/hsMember/save" id="goingSave">회원가입</a>

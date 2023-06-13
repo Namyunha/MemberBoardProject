@@ -22,10 +22,10 @@ public class KmMemberController {
         return "KMPages/kmMemberPages/kmMemberSave";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute KmMemberDTO kmMemberDTO) throws IOException {
-        kmMemberService.save(kmMemberDTO);
-        return "KMPages/kmMemberPages/kmMemberMain";
-    }
+//    @PostMapping("/save")
+//    public String save(@ModelAttribute KmMemberDTO kmMemberDTO) throws IOException {
+//        kmMemberService.save(kmMemberDTO);
+//        return "KMPages/kmMemberPages/kmMemberMain";
+//    }
 }
 

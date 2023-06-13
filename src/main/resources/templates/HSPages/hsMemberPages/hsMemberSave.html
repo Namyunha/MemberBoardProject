@@ -8,7 +8,83 @@
 <div th:replace="HSPages/hsComponent/hsComponent :: nav"></div>
 <section>
   <div>
-    <h2>안녕 나는 회원가입</h2>
+    <h2 style="text-align: center">안녕 나는 회원가입</h2>
+    <form action="/hsMember/save" method="post" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberEmail">아이디</label></td>
+        </tr>
+        <tr>
+          <th><input type="text" name="memberEmail" id="memberEmail"></th>
+        </tr>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberPassword">비밀번호</label></td>
+        </tr>
+        <tr>
+          <th><input type="password" name="memberPassword" id="memberPassword"></th>
+        </tr>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberPassword1">비밀번호 확인</label></td>
+        </tr>
+        <tr>
+          <th><input type="password" name="memberPassword1" id="memberPassword1"></th>
+        </tr>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberName">이름</label></td>
+        </tr>
+        <tr>
+          <th><input type="text" id="memberName" name="memberName"></th>
+        </tr>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberNum1">전화번호</label></td>
+        </tr>
+        <tr>
+          <th>
+            <select name="memberNum1" id="memberNum1">
+              <option value="">선택</option>
+              <option value="010">010</option>
+              <option value="011">011</option>
+              <option value="070">070</option>
+            </select>
+            <input type="text" maxlength="4" name="memberNum2" id="memberNum2">
+            <input type="text" maxlength="4" name="memberNum3" id="memberNum3">
+          </th>
+        </tr>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberYY">생일</label></td>
+        </tr>
+        <tr>
+          <th>
+            <input type="text" name="memberYY" id="memberYY" maxlength="4">
+            <select name="memberMM" id="memberMM">
+              <option value="">선택</option>
+              <option value="01">1월</option>
+              <option value="02">2월</option>
+              <option value="03">3월</option>
+              <option value="04">4월</option>
+              <option value="05">5월</option>
+              <option value="06">6월</option>
+              <option value="07">7월</option>
+              <option value="08">8월</option>
+              <option value="09">9월</option>
+              <option value="10">10월</option>
+              <option value="11">11월</option>
+              <option value="12">12월</option>
+            </select>
+            <input type="text" name="memberDD" id="memberDD" maxlength="2">
+          </th>
+        </tr>
+        <tr>
+          <td><label style="font-weight: bold;" for="memberFile">프로필</label></td>
+        </tr>
+        <tr>
+          <th><input type="file" name="memberFile" id="memberFile"></th>
+        </tr>
+        <tr>
+          <th><button type="submit" id="memberSaveBtn">회원가입</button></th>
+        </tr>
+      </table>
+    </form>
   </div>
 </section>
 <div th:replace="HSPages/hsComponent/hsComponent :: footer"></div>
