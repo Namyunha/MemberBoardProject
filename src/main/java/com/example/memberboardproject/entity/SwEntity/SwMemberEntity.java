@@ -1,5 +1,6 @@
 package com.example.memberboardproject.entity.SwEntity;
 
+import com.example.memberboardproject.dto.SwDTO.SwMemberDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -48,4 +49,27 @@ public class SwMemberEntity {
 
     @OneToMany(mappedBy = "swMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SwCommentEntity> swCommentEntityList = new ArrayList<>();
+
+    public static SwMemberEntity toSaveEntity(SwMemberDTO swMemberDTO) {
+        SwMemberEntity swMemberEntity = new SwMemberEntity();
+        swMemberEntity.setMemberEmail(swMemberDTO.getMemberEmail());
+        swMemberEntity.setMemberPassword(swMemberDTO.getMemberPassword());
+        swMemberEntity.setMemberName(swMemberDTO.getMemberName());
+        swMemberEntity.setMemberMobile(swMemberDTO.getMemberMobile());
+        swMemberEntity.setMemberBirth(swMemberDTO.getMemberBirth());
+        swMemberEntity.setFileAttached(0);
+        return swMemberEntity;
+    }
+
+    public static SwMemberEntity toSaveWithFileEntity(SwMemberDTO swMemberDTO) {
+        SwMemberEntity swMemberEntity = new SwMemberEntity();
+        swMemberEntity.setMemberEmail(swMemberDTO.getMemberEmail());
+        swMemberEntity.setMemberPassword(swMemberDTO.getMemberPassword());
+        swMemberEntity.setMemberName(swMemberDTO.getMemberName());
+        swMemberEntity.setMemberMobile(swMemberDTO.getMemberMobile());
+        swMemberEntity.setMemberBirth(swMemberDTO.getMemberBirth());
+        swMemberEntity.setFileAttached(1);
+        return swMemberEntity;
+    }
+
 }

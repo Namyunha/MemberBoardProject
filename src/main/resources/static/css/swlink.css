@@ -1,0 +1,51 @@
+a {
+    color: black;
+    text-decoration-line: none;
+}
+
+a:hover {
+    color: violet;
+}
+
+a:active {
+    color: red;
+}
+
+div a {
+    color: black;
+    text-decoration-line: none;
+}
+
+div a:hover {
+    color: violet;
+}
+
+div a:active {
+    color: red;
+}
+
+div.row a {
+    color: black;
+    text-decoration-line: none;
+}
+
+div.row a:hover {
+    color: violet;
+}
+
+div.row a:active {
+    color: red;
+}
+
+form a {
+    color: black;
+    text-decoration-line: none;
+}
+
+form a:hover {
+    color: violet;
+}
+
+form a:active {
+    color: red;
+}

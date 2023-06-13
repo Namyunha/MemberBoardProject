@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -17,6 +20,7 @@ public class SwMemberDTO {
     private String memberMobile;
     private String memberBirth;
     private int fileAttached;
+    private List<MultipartFile> swMemberFile;
     private String CreatedAt;
 
 }
