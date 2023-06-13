@@ -8,7 +8,16 @@
 <div th:replace="KMPages/kmComponent/kmNav"></div>
 <div id="section">
     <h2>km member saveForm.html</h2>
+    <form action="/kmMember/save" method="post" enctype="multipart/form-data">
+        <input type="text" name = "memberEmail" placeholder="이메일">
+        <input type="text" name = "memberPass" placeholder="비밀번호">
+        <input type="text" name = "memberName" placeholder="이름">
+        <input type="text" name = "memberMobile" placeholder="전화번호">
+        <input type="file" name="memberFile" class="form-control" >
 
+        <input type="submit"  value="회원가입">
+
+    </form>
 </div>
 <div th:replace="KMPages/kmComponent/kmFooter"></div>
 
