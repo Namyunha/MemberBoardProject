@@ -54,7 +54,10 @@ public class JyMemberController {
         }
     }
 
-    @GetMapping("mypage")
+    @GetMapping("/main")
+    public String mainForm() { return "JYPages/jyMemberPages/jyMemberMain"; }
+
+    @GetMapping("/mypage")
     public String findById(HttpSession session, Model model) {
         Long loginId = (Long) session.getAttribute("loginId");
         JyMemberDTO jyMemberDTO = jyMemberService.findById(loginId);

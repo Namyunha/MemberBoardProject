@@ -9,7 +9,7 @@
   <tr th:if="${member.fileAttached == 1}">
     <th>image</th>
     <td>
-      <img th:src="@{|/upload/${member.storeFileName}}" width="200" height="200" alt="">
+      <img th:src="@{|/upload/${member.storedFileName}}" width="200" height="200" alt="">
     </td>
   </tr>
   <tr>
@@ -33,5 +33,11 @@
     <td th:text="${member.memberBirth}"></td>
   </tr>
 </table>
+<button onclick="mypage_back()">뒤로</button>
 </body>
+<script>
+    const mypage_back = () => {
+      location.href = "/jy/member/main";
+    }
+</script>
 </html>
