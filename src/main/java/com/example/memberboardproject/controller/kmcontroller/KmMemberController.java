@@ -26,6 +26,8 @@ public class KmMemberController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute KmMemberDTO kmMemberDTO, Model model) throws IOException {
+        System.out.println("kmMemberDTO = " + kmMemberDTO);
+
         kmMemberService.save(kmMemberDTO);
 
         return "KMPages/kmMemberPages/kmMemberMain";
