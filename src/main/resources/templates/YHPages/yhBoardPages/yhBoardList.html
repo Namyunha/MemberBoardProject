@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
-<h2>list.html</h2>
 <div>
     <button th:onclick="goPage()">mypage</button>
+    <h2 th:text='${loginEmail}'></h2>
 </div>
 </body>
+<script>
+    const goPage = () => {
+        location.href="/yhMember/myPage";
+    }
+</script>
 </html>

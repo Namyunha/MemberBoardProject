@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>비고</th>
+            <td>정보</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>번호</th>
+            <td th:text="${memberDTO.id}"></td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td th:text="${memberDTO.memberEmail}"></td>
+        </tr>
+        <tr>
+            <th>비밀번호</th>
+            <td th:text="${memberDTO.memberPassword}"></td>
+        </tr>
+        <tr>
+            <th>휴대전화</th>
+            <td th:text="${memberDTO.memberMoblie}"></td>
+        </tr>
+        <tr th:if="${memberDTO.fileAttached == 1}">
+            <th>프로필사진</th>
+            <td th:each="fileName: ${memberDTO.storedFileName}">
+                <img th:src="@{|/upload/${fileName}}" width="200" height="200"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -12,4 +12,5 @@ public interface YhMemberRepository extends JpaRepository<YhMemberEntity, Long> 
     //  select * from member_table where member_email=? and member_password=?
     Optional<YhMemberEntity> findByMemberEmailAndMemberPassword(String memberEmail, String memePassword);
 
+    YhMemberEntity findByMemberEmail(String memberEmail);
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <th:block th:replace="component/config :: config"></th:block>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
 <body>
 <form id="saveForm" onsubmit="saveMember(event)" name="saveForm" action="/yhMember/save" method="post"
@@ -12,7 +12,7 @@
     <label for="memberEmail">이메일</label>
     <input type="text" name="memberEmail" id="memberEmail"><br>
     <label for="memberPassword">비밀번호</label>
-    <input type="text" name="memberPassword" id="memberPassword"><br>
+    <input type="password" name="memberPassword" id="memberPassword"><br>
     <label for="memberMoblie">전화번호</label>
     <input type="date" name="memberMoblie" id="memberMoblie"><br>
     <label for="memberMoblie">생년월일</label>

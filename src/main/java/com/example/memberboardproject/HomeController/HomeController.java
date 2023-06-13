@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+
     @GetMapping("/")
     public String index() {
         return "index";
     }
-
     @GetMapping("/HSPages")
     public String HSPages() {
         return "/HSPages/index";
@@ -30,4 +30,5 @@ public class HomeController {
     public String YHPages() {
         return "/YHPages/index";
     }
+
 }

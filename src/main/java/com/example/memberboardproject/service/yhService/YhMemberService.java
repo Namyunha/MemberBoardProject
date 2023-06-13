@@ -7,8 +7,11 @@ import com.example.memberboardproject.repository.yhRepository.YhMemberFileReposi
 import com.example.memberboardproject.repository.yhRepository.YhMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -17,7 +20,7 @@ public class YhMemberService {
     private final YhMemberRepository yhMemberRepository;
     private final YhMemberFileRepository yhMemberFileRepository;
 
-    public Long save(YhMemberDTO yhMemberDTO) {
+    public Long save(YhMemberDTO yhMemberDTO) throws IOException {
         if (yhMemberDTO.getMemberProfile() == null || yhMemberDTO.getMemberProfile().get(0).isEmpty()) {
             YhMemberEntity yhMemberEntity = YhMemberEntity.toSaveEntity(yhMemberDTO);
             return yhMemberRepository.save(yhMemberEntity).getId();
@@ -28,6 +31,11 @@ public class YhMemberService {
             for (MultipartFile memberFile : yhMemberDTO.getMemberProfile()) {
                 String originalFileName = memberFile.getOriginalFilename();
                 String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
+                String savePath = "D:\\Springboot_github_img\\" + storedFileName;
+                memberFile.transferTo(new File(savePath));
+//                memberFile.transferTo(new File(savePath));
+                // 3. BoardFileEntity로 변환 후 board_file_table에 저장
+                // 자식 데이터를 저장할 때 반드시 부모의 id가 아닌 부모의 Entity 객체가 전달돼야 함.
                 YhMemberFileEntity yhMemberFileEntity = YhMemberFileEntity.toSaveFileEntity(savedFile, originalFileName, storedFileName);
                 yhMemberFileRepository.save(yhMemberFileEntity);
             }
@@ -44,4 +52,15 @@ public class YhMemberService {
             return yhMemberDTO;
         }
     }
+
+    @Transactional
+    public YhMemberDTO findByEmail(String loginDTO) {
+        YhMemberEntity yhMemberEntity = yhMemberRepository.findByMemberEmail(loginDTO);
+        YhMemberDTO yhMemberDTO = YhMemberDTO.toSaveDTO(yhMemberEntity);
+        return yhMemberDTO;
+    }
+
+//    public YhMemberDTO findByEmail(String loginDTO) {
+//        Optional<YhMemberEntity> yhMemberEntity = yhMemberRepository.find
+//    }
 }
