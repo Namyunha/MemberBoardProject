@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,8 +31,17 @@ public class HsMemberService {
             String storedFileName = System.currentTimeMillis() + "-" + originalFileName;
             String savePath = "D:\\springboot_img\\" + storedFileName;
             hsMemberDTO.getMemberFile().transferTo(new File(savePath));
-            HsFileEntity hsFileEntity = HsFileEntity.toSaveFileMemberEntity(savedEntity,originalFileName,storedFileName);
+            HsFileEntity hsFileEntity = HsFileEntity.toSaveFileMemberEntity(savedEntity, originalFileName, storedFileName);
             hsFileRepository.save(hsFileEntity);
+        }
+    }
+
+    public boolean findByMemberEmail(String memberEmail) {
+        Optional<HsMemberEntity> optionalHsMemberEntity = hsMemberRepository.findByMemberEmail(memberEmail);
+        if (optionalHsMemberEntity.isPresent()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

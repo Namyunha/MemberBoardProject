@@ -68,7 +68,7 @@ table,tr,td {
     border-radius: 30px;
 }
 #memberEmail,#memberPassword,#memberPassword1,#memberName {
-    width:100%;
+    width:257px;
     height: 25px;
     outline: none;
 }
