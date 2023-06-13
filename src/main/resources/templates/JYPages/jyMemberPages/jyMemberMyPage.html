@@ -34,10 +34,56 @@
   </tr>
 </table>
 <button onclick="mypage_back()">뒤로</button>
+<button id="member-update">수정</button>
+<button id="member-delete">탈퇴</button>
+<div id="check-area">
+
+</div>
 </body>
 <script>
     const mypage_back = () => {
       location.href = "/jy/member/main";
+    }
+
+    const memberUpdate = document.getElementById("member-update");
+    const memberDelete = document.getElementById("member-delete");
+    let clickButtonId = null;
+
+    memberUpdate.addEventListener("click", () => {
+      clickButtonId = "member-update";
+      password_check();
+    });
+
+    memberDelete.addEventListener("click", () => {
+      clickButtonId = "member-delete";
+      password_check();
+    });
+
+    const password_check = () => {
+      const checkArea = document.getElementById("check-area");
+
+      let output = "<input type='text' name='memberPassword' placeholder='비밀번호 입력'>";
+      output += "<button onclick='password()'>확인</button>";
+      checkArea.innerHTML = output;
+    }
+
+    const password = () => {
+      const passwordDB = [[${member.memberPassword}]];
+      const id = [[${member.id}]];
+      const password = document.querySelector('input[name="memberPassword"]').value;
+
+      if (password == passwordDB) {
+        alert("확인 완료");
+        if (clickButtonId === "member-update") {
+          alert("수정버튼");
+          // location.href = "/jy/member/update/" + id;
+        } else if (clickButtonId === "member-delete") {
+          alert("탈퇴버튼");
+          // location.href = "/jy/member/delete/" + id;
+        }
+      } else {
+        alert("비밀번호 확인필요");
+      }
     }
 </script>
 </html>
