@@ -54,6 +54,12 @@ public class JyMemberController {
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/JYPages";
+    }
+
     @GetMapping("/main")
     public String mainForm() { return "JYPages/jyMemberPages/jyMemberMain"; }
 
