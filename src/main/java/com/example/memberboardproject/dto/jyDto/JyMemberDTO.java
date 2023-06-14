@@ -1,6 +1,7 @@
 package com.example.memberboardproject.dto.jyDto;
 
 import com.example.memberboardproject.entity.jyEntity.JyMemberEntity;
+import com.example.memberboardproject.util.jyUtil.JyUtilClass;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +35,7 @@ public class JyMemberDTO {
         jyMemberDTO.setMemberName(jyMemberEntity.getMemberName());
         jyMemberDTO.setMemberMobile(jyMemberEntity.getMemberMobile());
         jyMemberDTO.setMemberBirth(jyMemberEntity.getMemberBirth());
+        jyMemberDTO.setCreatedAt(JyUtilClass.dateFormat(jyMemberEntity.getCreatedAt()));
 
         if (jyMemberEntity.getFileAttached() == 1) {
             jyMemberDTO.setFileAttached(1);
