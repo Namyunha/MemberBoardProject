@@ -64,4 +64,17 @@ public class JyMemberController {
         model.addAttribute("member", jyMemberDTO);
         return "JYPages/jyMemberPages/jyMemberMyPage";
     }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        JyMemberDTO jyMemberDTO = jyMemberService.findById(id);
+        model.addAttribute("member", jyMemberDTO);
+        return "JYPages/jyMemberPages/jyMemberUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute JyMemberDTO jyMemberDTO) {
+        jyMemberService.update(jyMemberDTO);
+        return "redirect:/jy/member/mypage";
+    }
 }
