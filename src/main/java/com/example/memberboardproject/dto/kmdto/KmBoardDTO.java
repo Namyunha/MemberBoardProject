@@ -22,4 +22,5 @@ public class KmBoardDTO {
     private List<String> storedFileName;
     private List<MultipartFile> boardFile;
 
+
 }

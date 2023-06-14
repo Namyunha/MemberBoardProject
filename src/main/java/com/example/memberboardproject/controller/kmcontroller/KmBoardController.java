@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/kmBoard")
-public class KmBoardController {
+public class
+KmBoardController {
     private final KmBoardService kmBoardService;
+
     @GetMapping("/save")
-    public String boardSave(@ModelAttribute KmBoardDTO kmBoardDTO){
+    public String boardSave(@ModelAttribute KmBoardDTO kmBoardDTO) {
         kmBoardService.save(kmBoardDTO);
 
 
