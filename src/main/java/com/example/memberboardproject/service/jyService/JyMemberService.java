@@ -72,4 +72,8 @@ public class JyMemberService {
         System.out.println("jyMemberEntity = " + jyMemberEntity + "jyMemberDTO" + jyMemberDTO);
         jyMemberRepository.save(jyMemberEntity);
     }
+
+    public void delete(Long id) {
+        jyMemberRepository.deleteById(id);
+    }
 }
