@@ -21,7 +21,9 @@ public class KmMemberFileEntity {
     @JoinColumn(name="kmMember_id")
     private KmMemberEntity kmMemberEntity;
 
-    public static KmMemberFileEntity toSaveKmMemberFileEntity(KmMemberEntity kmSavedEntity, String profileOriginalFileName, String profileStoredFileName) {
+    public static KmMemberFileEntity toSaveKmMemberFileEntity(KmMemberEntity kmSavedEntity,
+                                                              String profileOriginalFileName,
+                                                              String profileStoredFileName) {
         KmMemberFileEntity kmMemberFileEntity = new KmMemberFileEntity();
         kmMemberFileEntity.setKmMemberEntity(kmSavedEntity);
         kmMemberFileEntity.setProfileOriginalFileName(profileOriginalFileName);
