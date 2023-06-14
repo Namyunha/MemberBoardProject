@@ -26,8 +26,6 @@ public class KmMemberEntity extends KmBaseEntity{
     public String memberName;
     @Column(length = 30, nullable = false)
     public String memberBirth;
-//    @Column(length = 30, nullable = false)
-//    public String memberCreatedAt;
 
     @Column()
     public int memberProfile;
@@ -42,7 +40,6 @@ public class KmMemberEntity extends KmBaseEntity{
         kmMemberEntity.setMemberName(kmMemberDTO.getMemberName());
         kmMemberEntity.setMemberMobile(kmMemberDTO.getMemberMobile());
         kmMemberEntity.setMemberBirth(kmMemberDTO.getMemberBirth());
-//        kmMemberEntity.setMemberCreatedAt(km);
         kmMemberEntity.setMemberProfile(0);
         return kmMemberEntity;
 

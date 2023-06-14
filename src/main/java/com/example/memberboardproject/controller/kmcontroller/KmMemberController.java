@@ -2,7 +2,6 @@ package com.example.memberboardproject.controller.kmcontroller;
 
 import com.example.memberboardproject.dto.kmdto.KmMemberDTO;
 import com.example.memberboardproject.service.kmService.KmMemberService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +30,13 @@ public class KmMemberController {
 
         kmMemberService.save(kmMemberDTO);
 
-        return "redirect:/kmMember/list";
+        return "redirect:/kmMember/login";
     }
 
     @GetMapping("/list")
     public String findMemberAll(Model model) {
         List<KmMemberDTO> kmMemberDTOList = kmMemberService.findAll();
-//        System.out.println("kmMemberDTOList = " + kmMemberDTOList);
+        System.out.println("kmMemberDTOList = " + kmMemberDTOList);
         model.addAttribute("memberList", kmMemberDTOList);
         return "KMPages/kmMemberPages/kmMemberList";
     }
@@ -56,8 +55,8 @@ public class KmMemberController {
         if (loginResult == 1) {
             System.out.println("로그인 성공");
             session.setAttribute("loginEmail", kmMemberDTO.getMemberEmail());
-            System.out.println("세션값=" + session.getAttribute("loginEmail"));
-            return "redirect:/kmMember/list";
+//            System.out.println("세션값=" + session.getAttribute("loginEmail"));
+            return "KMPages/kmMemberPages/kmMemberMain";
         } else {
             System.out.println("로그인 실패");
             return "redirect:/kmMember/login";
@@ -75,6 +74,23 @@ public class KmMemberController {
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        System.out.println("로그아웃 완료");
+        return "KMPages/index";
+
+    }
+    @GetMapping("/mypage")
+    public String myPage(HttpSession session, Model model){
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        System.out.println("sessionloginEmail = " + loginEmail);
+        KmMemberDTO memberDTO = kmMemberService.findMemberByEmail(loginEmail);
+
+        System.out.println("memberDTO = " + memberDTO);
+        model.addAttribute("member",memberDTO);
+        return "KMPages/kmMemberPages/kmMemberDetail";
     }
 }
 
