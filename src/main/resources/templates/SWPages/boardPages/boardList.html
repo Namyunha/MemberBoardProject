@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="SWPages/component/config"></th:block>
+</head>
+<body>
+<div th:replace="SWPages/component/header :: header"></div>
+<div th:replace="SWPages/component/nav :: nav"></div>
+<div id="section">
+    <div class="container" id="board-list">
+        <table class="table table-striped table-hover text-center">
+            <tr>
+                <th>글 번호</th>
+                <th>글 제목</th>
+                <th>글 작성자</th>
+                <th>조회수</th>
+                <th>작성시간</th>
+                <th>그림유무</th>
+            </tr>
+            <tr th:each="board: ${boardDTOList}">
+                <td th:text="${board.id}"></td>
+                <td><a th:href="@{|/sw/board/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+                <td th:text="${board.boardWriter}"></td>
+                <td th:text="${board.boardHits}"></td>
+                <td th:text="${board.createdAt}"></td>
+                <td th:text="${board.fileAttached}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<button onclick="back()" class="btn btn-danger">뒤로가기</button>
+<div th:replace="SWPages/component/footer :: footer"></div>
+</body>
+<script th:inline="javascript">
+    const back = () => {
+        history.back();
+    }
+</script>
+
+</html>

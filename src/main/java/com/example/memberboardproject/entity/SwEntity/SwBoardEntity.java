@@ -32,6 +32,9 @@ public class SwBoardEntity {
     @Column
     private int boardHits = 0;
 
+    @Column
+    private int fileAttached;
+
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -49,6 +52,18 @@ public class SwBoardEntity {
     public static SwBoardEntity toSaveEntity(SwMemberEntity swMemberEntity,SwBoardDTO swBoardDTO) {
         SwBoardEntity swBoardEntity = new SwBoardEntity();
         swBoardEntity.setSwMemberEntity(swMemberEntity);
+        swBoardEntity.setFileAttached(0);
+        swBoardEntity.setBoardTitle(swBoardDTO.getBoardTitle());
+        swBoardEntity.setBoardContents(swBoardDTO.getBoardContents());
+        swBoardEntity.setBoardHits(swBoardDTO.getBoardHits());
+        swBoardEntity.setBoardWriter(swBoardDTO.getBoardWriter());
+        return swBoardEntity;
+    }
+
+    public static SwBoardEntity toSaveWithFileEntity(SwMemberEntity swMemberEntity,SwBoardDTO swBoardDTO) {
+        SwBoardEntity swBoardEntity = new SwBoardEntity();
+        swBoardEntity.setSwMemberEntity(swMemberEntity);
+        swBoardEntity.setFileAttached(1);
         swBoardEntity.setBoardTitle(swBoardDTO.getBoardTitle());
         swBoardEntity.setBoardContents(swBoardDTO.getBoardContents());
         swBoardEntity.setBoardHits(swBoardDTO.getBoardHits());
