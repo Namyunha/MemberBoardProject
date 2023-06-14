@@ -10,13 +10,14 @@
 <h2>km member list. html</h2>
   <table>
     <tr>
-      <th>글번호</th>
-      <th>글제목</th>
-      <th>글비번</th>
-      <th>작성자</th>
-      <th>글내용</th>
-      <th>조회수</th>
-      <th>작성일</th>
+      <th>회원번호</th>
+      <th>이메일</th>
+      <th>비번</th>
+      <th>회원이름</th>
+      <th>폰번호</th>
+      <th>프로필유무</th>
+      <th>생일</th>
+      <th>가입일</th>
     </tr>
     <tr th:each="member:${memberList}">
       <td th:text="${member.id}"></td>
@@ -26,6 +27,7 @@
       <td th:text="${member.memberMobile}"></td>
       <td th:text="${member.memberProfile}"></td>
       <td th:text="${member.memberBirth}"></td>
+      <td th:text="${member.memberCreatedAt}"></td>
       <!--        <td th:text="*{#temporals.format(board.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>-->
 
     </tr>
