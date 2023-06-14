@@ -66,4 +66,10 @@ public class JyMemberService {
         JyMemberEntity jyMemberEntity = jyMemberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return JyMemberDTO.toDTO(jyMemberEntity);
     }
+
+    public void update(JyMemberDTO jyMemberDTO) {
+        JyMemberEntity jyMemberEntity = JyMemberEntity.toUpdateEntity(jyMemberDTO);
+        System.out.println("jyMemberEntity = " + jyMemberEntity + "jyMemberDTO" + jyMemberDTO);
+        jyMemberRepository.save(jyMemberEntity);
+    }
 }

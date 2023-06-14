@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>회원가입</h2>
+<form action="/jy/member/update" method="post" onsubmit="return update_check()">
+    <input type="hidden" name="id" th:value="${member.id}">
+    <input type="text" name="memberEmail" placeholder="이메일" th:value="${member.memberEmail}" readonly> <br>
+    <input type="text" name="memberPassword" id="password" placeholder="패스워드" onblur="password_check()"> <br>
+    <input type="text" id="password-check" placeholder="패스워드 확인" onblur="password_check()"> <br>
+    <p id="password-result"></p>
+    <input type="text" name="memberName" placeholder="이름" th:value="${member.memberName}"> <br>
+    <input type="text" name="memberMobile" placeholder="전화번호" th:value="${member.memberMobile}"> <br>
+    <input type="date" name="memberBirth" placeholder="생년월일" th:value="${member.memberBirth}"> <br>
+    <input type="hidden" name="fileAttached" th:value="${member.fileAttached}">
+    <input type="submit" value="정보수정">
+</form>
+</body>
+<script>
+    const password_check = () => {
+        const password = document.getElementById("password").value;
+        const passwordCheck = document.getElementById("password-check").value;
+        const passwordResult = document.getElementById("password-result");
+
+        if (password == passwordCheck) {
+            passwordResult.innerHTML = "";
+            return true;
+        } else {
+            passwordResult.innerHTML = "패스워드와 패스워드 확인을 동일하게 입력하십시오";
+            return false;
+        }
+    }
+
+    const update_check = () => {
+        const password = document.getElementById("password");
+        const originalPassword = [[${member.memberPassword}]];
+
+        if (password.value == "") {
+            password.value = originalPassword;
+            return true;
+        } else if (password_check()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</html>

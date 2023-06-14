@@ -75,10 +75,8 @@
       if (password == passwordDB) {
         alert("확인 완료");
         if (clickButtonId === "member-update") {
-          alert("수정버튼");
-          // location.href = "/jy/member/update/" + id;
+          location.href = "/jy/member/update/" + id;
         } else if (clickButtonId === "member-delete") {
-          alert("탈퇴버튼");
           // location.href = "/jy/member/delete/" + id;
         }
       } else {

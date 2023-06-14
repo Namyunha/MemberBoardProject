@@ -59,4 +59,16 @@ public class JyMemberEntity extends JyBaseEntity {
         jyMemberEntity.setFileAttached(1);
         return jyMemberEntity;
     }
+
+    public static JyMemberEntity toUpdateEntity(JyMemberDTO jyMemberDTO) {
+        JyMemberEntity jyMemberEntity = new JyMemberEntity();
+        jyMemberEntity.setId(jyMemberDTO.getId());
+        jyMemberEntity.setMemberEmail(jyMemberDTO.getMemberEmail());
+        jyMemberEntity.setMemberPassword(jyMemberDTO.getMemberPassword());
+        jyMemberEntity.setMemberName(jyMemberDTO.getMemberName());
+        jyMemberEntity.setMemberMobile(jyMemberDTO.getMemberMobile());
+        jyMemberEntity.setMemberBirth(jyMemberDTO.getMemberBirth());
+        jyMemberEntity.setFileAttached(jyMemberDTO.getFileAttached());
+        return jyMemberEntity;
+    }
 }
