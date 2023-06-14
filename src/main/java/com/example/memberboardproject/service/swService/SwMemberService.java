@@ -7,10 +7,12 @@ import com.example.memberboardproject.repository.SwRepository.SwMemberFileReposi
 import com.example.memberboardproject.repository.SwRepository.SwMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -45,13 +47,34 @@ public class SwMemberService {
             return null;
         }
     }
-
+    @Transactional
     public SwMemberDTO findByEmailAndMemberPassword(String memberEmail, String memberPassword) {
         SwMemberEntity swMemberEntity = swMemberRepository.findByMemberEmailAndMemberPassword(memberEmail,memberPassword);
         if(swMemberEntity!=null) {
             return SwMemberDTO.toDTO(swMemberEntity);
         }else {
             return null;
+        }
+    }
+    @Transactional
+    public SwMemberDTO findById(Long id) {
+        SwMemberEntity swMemberEntity = swMemberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return SwMemberDTO.toDTO(swMemberEntity);
+    }
+
+    public void memberUpdate(SwMemberDTO swMemberDTO) throws IOException {
+        if(swMemberDTO.getSwMemberFile() == null || swMemberDTO.getSwMemberFile().get(0).isEmpty()) {
+            SwMemberEntity.toUpdateEntity(swMemberDTO);
+        }else {
+            SwMemberEntity saveMemberEntity = swMemberRepository.save(SwMemberEntity.toUpdateWithFileEntity(swMemberDTO));
+            for(MultipartFile swMemberFile : swMemberDTO.getSwMemberFile()) {
+                String originalFileName = swMemberFile.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis()+"-"+originalFileName;
+                String savePath = "D:\\Springboot_github_img\\"+ storedFileName;
+                swMemberFile.transferTo(new File(savePath));
+                SwMemberFileEntity swMemberFileEntity = SwMemberFileEntity.toUpdateMemberFileEntity(saveMemberEntity,originalFileName,storedFileName);
+                swMemberFileRepository.save(swMemberFileEntity);
+            }
         }
     }
 }
