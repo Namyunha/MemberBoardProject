@@ -26,7 +26,6 @@ public class KmMemberEntity extends KmBaseEntity{
     public String memberName;
     @Column(length = 30, nullable = false)
     public String memberBirth;
-
     @Column()
     public int memberProfile;
 
