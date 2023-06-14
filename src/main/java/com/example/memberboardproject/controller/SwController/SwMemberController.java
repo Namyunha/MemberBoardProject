@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,14 +59,36 @@ public class SwMemberController {
     @GetMapping("/member/logout")
     public String memberLogout(HttpSession session) {
         session.invalidate();
+        System.out.println(session);
         return "redirect:/SWPages";
     }
+    
+    @GetMapping("/member/mypage")
+    @Transactional
+    public String memberMyPage(HttpSession session,Model model) {
+        SwMemberDTO swMemberDTO = swMemberService.findByEmail((String) session.getAttribute("loginEmail"));
+        model.addAttribute("memberDTO",swMemberDTO);
+        return "/SWPages/memberPages/memberMyPage";
+    }
 
-//    @GetMapping("/member/memberDetail")
-//    public String memberDetail(Model model,HttpSession session) {
-//        try {
-//            SwMemberDTO swMemberDTO = swMemberService.findById()
-//        }
-//        return "redirect:/SWPages";
-//    }
+    @Transactional
+    @GetMapping("/member/updateForm/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        SwMemberDTO swMemberDTO = swMemberService.findById(id);
+        model.addAttribute("memberDTO",swMemberDTO);
+        return "/SWPages/memberPages/memberUpdate";
+    }
+
+    @PostMapping("/member/update")
+    public String memberUpdate(@ModelAttribute SwMemberDTO swMemberDTO) throws IOException {
+        swMemberService.memberUpdate(swMemberDTO);
+        return "redirect:/SWPages";
+    }
+    @GetMapping("/member/memberDelete/{id}")
+    public String memberDelete(@PathVariable Long id) {
+        swMemberService.memberDelete(id);
+        return "redirect:/sw/member/logout";
+    }
+
+
 }

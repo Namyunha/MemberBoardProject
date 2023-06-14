@@ -19,7 +19,7 @@
             </ul>
             <div th:if="${session.loginEmail != null and session.loginEmail.length() != 0}">
                 <div th:text="${session.loginEmail + '님 반갑습니다'}"></div>
-                <a href="/sw/member/logout">로그아웃</a>
+                <a href="/sw/member/logout">로그아웃</a><a href="/sw/member/mypage"><i class="bi bi-emoji-dizzy-fill"></i></a>
             </div>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

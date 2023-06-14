@@ -8,7 +8,7 @@
 <div th:replace="SWPages/component/nav :: nav"></div>
 <div id="section">
     <div th:if="${session.loginEmail != null and session.loginEmail.length() != 0}">
-        <a href="/sw/member/memberDetail">MyPage</a>
+        <a href="/sw/member/mypage">MyPage</a>
         <a href="/sw/member/logout">로그아웃</a>
     </div>
     <div th:unless="${session.loginEmail != null and session.loginEmail.length() != 0}">

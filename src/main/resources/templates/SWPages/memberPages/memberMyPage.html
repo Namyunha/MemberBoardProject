@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="SWPages/component/config"></th:block>
+</head>
+<body>
+<div th:replace="SWPages/component/header :: header"></div>
+<div th:replace="SWPages/component/nav :: nav"></div>
+<div id="section">
+    <div class="container">
+        <h2 style="text-align: center">내 정보</h2>
+        <ul class="nav" style="text-align: center; display: flex; justify-content: center;">
+            <li class="nav-item" id="button">
+                <button class="btn btn-primary" onclick="sellerInterface()">내 정보 확인하기</button>
+            </li>
+        </ul>
+        <div id="container" style="display: none">
+            <div th:if="${memberDTO.fileAttached == 1}" style="text-align: center; align-items: center; justify-content: center" >
+                <div th:each="fileName: ${memberDTO.storedFileName}" style="object-fit: cover">
+                    <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="" style="border-radius: 50%;" >
+                </div>
+            </div>
+            <div th:unless="${memberDTO.fileAttached == 1}" style="text-align: center; align-items: center; justify-content: center" >
+                <div style="object-fit: cover">
+                <img src="https://avatars.githubusercontent.com/u/127707534?v=4" width="200" height="200" alt="" style="border-radius: 50%">
+                </div>
+            </div>
+            <table class="table table-dark table-striped">
+                <tr>
+                    <th>유저번호</th>
+                    <th>이메일</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>생년월일</th>
+                    <th>가입일자</th>
+                </tr>
+                <tr>
+                    <td th:text="${memberDTO.id}"></td>
+                    <td th:text="${memberDTO.memberEmail}"></td>
+                    <td th:text="${memberDTO.memberName}"></td>
+                    <td th:text="${memberDTO.memberMobile}"></td>
+                    <td th:text="${memberDTO.memberBirth}"></td>
+                    <td th:text="${memberDTO.createdAt}"></td>
+                </tr>
+            </table>
+            <button class="btn btn-dark" onclick="req('update')">회원정보수정</button>
+            <button class="btn btn-dark" onclick="req('delete')">회원탈퇴</button>
+            <button class="btn btn-dark" onclick="closeData()">닫기</button>
+        </div>
+        <div id="password-input" class="container">
+
+        </div>
+    </div>
+</div>
+<button class="form-control" onclick="back()">뒤로가기</button>
+<div th:replace="SWPages/component/footer :: footer"></div>
+</body>
+<script th:inline="javascript">
+    const back = () => {
+        history.back();
+    }
+    const sellerInterface = () => {
+        const container = document.getElementById("container");
+        const button = document.getElementById("button");
+        container.style.display = "block";
+        button.style.display = "none";
+    }
+    const closeData = () => {
+        const container = document.getElementById("container");
+        const button = document.getElementById("button");
+        const password_input = document.getElementById("password-input");
+        container.style.display = "none";
+        password_input.style.display = "none";
+        button.style.display = "block";
+    }
+    const req = (type) => {
+        document.getElementById("password-input").innerHTML = "<input type=\"text\" class=\"form-control\" placeholder=\"비밀번호\" id=\"password\">\n" +
+            "        <button class=\"form-control\" onclick=\"pass_check('" + type + "')\">확인</button>";
+    }
+
+    const pass_check = (type) => {
+        const password = document.getElementById("password").value;
+        const passDB = [[${memberDTO.memberPassword}]];
+        const id = [[${memberDTO.id}]];
+        if(password == passDB) {
+            if(type == "update") {
+                location.href="/sw/member/updateForm/"+id;
+            }else if(type == "delete") {
+                if(confirm("삭제하시겠습니까?")) {
+                    location.href="/sw/member/memberDelete/"+id;
+                }else {
+                    alert("삭제 취소");
+                }
+            }
+        }
+    }
+
+
+
+</script>
+
+</html>

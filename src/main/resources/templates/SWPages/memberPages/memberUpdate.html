@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <th:block th:replace="SWPages/component/config"></th:block>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div th:replace="SWPages/component/header :: header"></div>
+<div th:replace="SWPages/component/nav :: nav"></div>
+<div id="section">
+  <div class="container">
+    <h2 style="text-align: center">회원정보수정</h2>
+    <form action="/sw/member/update" method="post" enctype="multipart/form-data" onsubmit="return check()">
+      <input type="hidden" name="id" th:value="${memberDTO.id}">
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="member-email" name="memberEmail" th:value="${memberDTO.memberEmail}" readonly>
+        <label for="member-email">Email</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="member-password" name="memberPassword" th:value="${memberDTO.memberPassword}">
+        <label for="member-password">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password-check" class="form-control" id="member-password-check" name="memberPasswordCheck" th:value="${memberDTO.memberPassword}">
+        <label for="member-password">Password-check</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="member-name" name="memberName" th:value="${memberDTO.memberName}">
+        <label for="member-name">Name</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="tel" class="form-control" id="member-mobile" name="memberMobile" th:value="${memberDTO.memberMobile}">
+        <label for="member-mobile">전화번호</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="date" class="form-control" id="member-birth" name="memberBirth" th:value="${memberDTO.memberBirth}">
+        <label for="member-birth">생년월일</label>
+      </div>
+      <div th:if="${memberDTO.fileAttached == 1}" style="text-align: center; align-items: center; justify-content: center" >
+        <div th:each="fileName: ${memberDTO.storedFileName}" style="object-fit: cover">
+          <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="" style="border-radius: 50%;" >
+        </div>
+      </div>
+      <div th:unless="${memberDTO.fileAttached == 1}" style="text-align: center; align-items: center; justify-content: center" >
+        <div style="object-fit: cover">
+          <img src="https://avatars.githubusercontent.com/u/127707534?v=4" width="200" height="200" alt="" style="border-radius: 50%">
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="file" class="form-control" id="member-file" name="swMemberFile">
+        <label for="member-file">프로필사진</label>
+      </div>
+      <input type="submit" id="submit-button" class="btn btn-primary" value="수정하기">
+      <input type="button" class="btn btn-danger" value="뒤로" onclick="back()">
+
+    </form>
+  </div>
+</div>
+<div th:replace="SWPages/component/footer :: footer"></div>
+</body>
+<script th:inline="javascript">
+  const back = () => {
+    history.back();
+  }
+  const check = () => {
+    const password = document.querySelector('input[name="memberPassword"]');
+    const password_check = document.querySelector('input[name="memberPasswordCheck"]');
+    if(password.value == password_check.value) {
+      return true;
+    }else {
+      password_check.focus();
+      return false;
+    }
+
+  }
+</script>
+
+</html>

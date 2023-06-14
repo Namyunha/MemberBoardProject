@@ -31,5 +31,13 @@ public class SwMemberFileEntity {
         swMemberFileEntity.setStoredFileName(storedFileName);
         return swMemberFileEntity;
     }
+    public static SwMemberFileEntity toUpdateMemberFileEntity(SwMemberEntity swMemberEntity,String originalFileName,String storedFileName) {
+        SwMemberFileEntity swMemberFileEntity = new SwMemberFileEntity();
+        swMemberFileEntity.setId(swMemberEntity.getId());
+        swMemberFileEntity.setSwMemberEntity(swMemberEntity);
+        swMemberFileEntity.setOriginalFileName(originalFileName);
+        swMemberFileEntity.setStoredFileName(storedFileName);
+        return swMemberFileEntity;
+    }
 
 }
