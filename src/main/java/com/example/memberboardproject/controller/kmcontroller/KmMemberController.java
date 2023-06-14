@@ -26,15 +26,16 @@ public class KmMemberController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute KmMemberDTO kmMemberDTO, Model model) throws IOException {
-        System.out.println("kmMemberDTO = " + kmMemberDTO);
+        System.out.println("컨트롤러kmMemberDTO = " + kmMemberDTO);
 
         kmMemberService.save(kmMemberDTO);
 
-        return "KMPages/kmMemberPages/kmMemberMain";
+        return "redirect:/kmMember/list";
     }
     @GetMapping("/list")
     public String findMemberAll(Model model){
         List<KmMemberDTO> kmMemberDTOList= kmMemberService.findAll();
+        System.out.println("kmMemberDTOList = " + kmMemberDTOList);
         model.addAttribute("memberList",kmMemberDTOList);
         return "KMPages/kmMemberPages/kmMemberList";
 

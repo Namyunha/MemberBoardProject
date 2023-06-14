@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "kmMember_table")
-public class KmMemberEntity {
+public class KmMemberEntity extends KmBaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -26,6 +26,8 @@ public class KmMemberEntity {
     public String memberName;
     @Column(length = 30, nullable = false)
     public String memberBirth;
+//    @Column(length = 30, nullable = false)
+//    public String memberCreatedAt;
 
     @Column()
     public int memberProfile;
@@ -33,25 +35,25 @@ public class KmMemberEntity {
     @OneToMany(mappedBy = "kmMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<KmMemberFileEntity> kmMemberFileEntityList = new ArrayList<>();
 
-    public static KmMemberEntity savetoKmMemberEntity(KmMemberDTO kmMemberDTO) {
+    public static KmMemberEntity saveToKmMemberEntity(KmMemberDTO kmMemberDTO) {
         KmMemberEntity kmMemberEntity = new KmMemberEntity();
         kmMemberEntity.setMemberEmail(kmMemberDTO.getMemberEmail());
         kmMemberEntity.setMemberPass(kmMemberDTO.getMemberPass());
         kmMemberEntity.setMemberName(kmMemberDTO.getMemberName());
         kmMemberEntity.setMemberMobile(kmMemberDTO.getMemberMobile());
         kmMemberEntity.setMemberBirth(kmMemberDTO.getMemberBirth());
+//        kmMemberEntity.setMemberCreatedAt(km);
         kmMemberEntity.setMemberProfile(0);
         return kmMemberEntity;
 
     }
 
-    public static KmMemberEntity savetoKmMemberEntityWithFile(KmMemberDTO kmMemberDTO) {
-        KmMemberEntity kmMemberEntity = savetoKmMemberEntity(kmMemberDTO);
+    public static KmMemberEntity saveToKmMemberEntityWithFile(KmMemberDTO kmMemberDTO) {
+        KmMemberEntity kmMemberEntity = saveToKmMemberEntity(kmMemberDTO);
         kmMemberEntity.setMemberProfile(1);
         return kmMemberEntity;
 
     }
-
 
 
 }

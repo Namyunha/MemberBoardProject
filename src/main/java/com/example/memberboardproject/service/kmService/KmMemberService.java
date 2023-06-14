@@ -21,14 +21,16 @@ public class KmMemberService {
     private final KmMemberRepository kmMemberRepository;
     private final KmMemberFileRepository kmMemberFileRepository;
 
-    //    private final KmMemberFileRepository kmMemberFileRepository;
     public Long save(KmMemberDTO kmMemberDTO) throws IOException {
+        System.out.println("서비스kmMemberDTO = " + kmMemberDTO);
+        System.out.println("파일없나"+ kmMemberDTO.getMemberProfileFile().isEmpty());
 
         if (kmMemberDTO.getMemberProfileFile().isEmpty()) {
-            KmMemberEntity kmMemberEntity = KmMemberEntity.savetoKmMemberEntity(kmMemberDTO);
+
+            KmMemberEntity kmMemberEntity = KmMemberEntity.saveToKmMemberEntity(kmMemberDTO);
             return kmMemberRepository.save(kmMemberEntity).getId();
         } else { //프로필파일이 있다면
-            KmMemberEntity kmMemberEntity = KmMemberEntity.savetoKmMemberEntityWithFile(kmMemberDTO);
+            KmMemberEntity kmMemberEntity = KmMemberEntity.saveToKmMemberEntityWithFile(kmMemberDTO);
             KmMemberEntity kmSavedEntity = kmMemberRepository.save(kmMemberEntity);
             for(MultipartFile kmMemberProfileFile : kmMemberDTO.getMemberProfileFile()){
                 String profileOriginalFileName = kmMemberProfileFile.getOriginalFilename();
