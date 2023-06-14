@@ -20,7 +20,7 @@ public class YhMemberDTO {
     private String memberName;
     private String memberEmail;
     private String memberPassword;
-    private String memberMobile;
+    private String memberMoblie;
     private String memberBirth;
     private String createdAt;
     private int fileAttached;
@@ -36,7 +36,7 @@ public class YhMemberDTO {
         yhMemberDTO.setMemberName(yhMemberEntity.getMemberName());
         yhMemberDTO.setMemberEmail(yhMemberEntity.getMemberEmail());
         yhMemberDTO.setMemberPassword(yhMemberEntity.getMemberPassword());
-        yhMemberDTO.setMemberMobile(yhMemberEntity.getMemberMobile());
+        yhMemberDTO.setMemberMoblie(yhMemberEntity.getMemberMobile());
         yhMemberDTO.setMemberBirth(yhMemberEntity.getMemberBirth());
         yhMemberDTO.setCreatedAt(YhUtilClass.dateFormat(yhMemberEntity.getCreatedAt()));
         // 파일 여부에 따른 코드 추가

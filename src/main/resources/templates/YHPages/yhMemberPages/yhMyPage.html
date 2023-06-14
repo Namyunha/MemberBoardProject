@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <th>휴대전화</th>
-            <td th:text="${memberDTO.memberMobile}"></td>
+            <td th:text="${memberDTO.memberMoblie}"></td>
         </tr>
         <tr th:if="${memberDTO.fileAttached == 1}">
             <th>프로필사진</th>
@@ -49,67 +49,25 @@
         <input type="text" id="checkPass" name="checkPass">
         <input type="button" th:onclick="checkPass()" value="비밀번호확인">
     </div>
-    <div id="updateArea" name="updateArea"></div>
 </div>
 <script>
-
     let method = null;
     const req = (req) => {
         const passwordCheckForm = document.querySelector("#passwordCheckForm");
-        const updateArea = document.querySelector("#updateArea");
         passwordCheckForm.style.display = "block";
-        updateArea.innerHTML = "";
         method = req;
-        console.log(method);
     }
 
-
-    const checkPass = () => {
+    const checkPass = (method) => {
         const checkPassInput = document.querySelector("#checkPass");
         const memberPassword = "[[${memberDTO.memberPassword}]]"; // Thymeleaf 표현식을 변수에 저장
-        const memberName = "[[${memberDTO.memberName}]]";
-        const updateArea = document.querySelector("#updateArea");
-        const memberId = "[[${memberDTO.id}]]";
-        const memberEmail = "[[${memberDTO.memberEmail}]]";
-        const memberMobile = "[[${memberDTO.memberMobile}]]";
+        console.log(method);l
         if (checkPassInput.value === memberPassword) {
-            if (method == "update") {
-                axios({
-                    url: "/yhMember/updateForm",
-                    method: "post"
-                }).then(res => {
-                    let result = `<form id="updateForm" onsubmit="updateMember(event)" name="updateForm" action="/yhMember/update" method="post" enctype="multipart/form-data">
-                    <input type="text" style="display: none" value="${memberId}">
-                    <label for="memberName">이름</label>
-                    <input type="text" name="memberName" id="memberName" value="${memberName}" readonly><br>
-                    <label for="memberEmail">이메일</label>
-                    <input type="text" name="memberEmail" id="memberEmail" value="${memberEmail}"><br>
-                    <label for="memberPassword">비밀번호</label>
-                    <input type="password" name="memberPassword" id="memberPassword" value="${memberMobile}"><br>
-                    <label for="memberMoblie">전화번호</label>
-                    <input type="text" name="memberMoblie" id="memberMoblie" value="${memberMobile}"><br>
-<!--                    <label for="memberProfile">프로필사진</label>-->
-<!--                    <input type="file" id="memberProfile" name="memberProfile" class="form-control" multiple><br>-->
-                    <input type="submit" value="업데이트하기">
-                    <input type="button" onclick="hiddenexample()" value="숨기기">
-                </form>`;
-                    updateArea.innerHTML = result;
-                }).catch(err => {
-                    console.log("err" + err);
-                })
-            } else if (method == "delete") {
-                // 삭제 관련 코드 작성
-            }
+            alert("비밀번호가 맞습니다");
         } else {
             alert("비밀번호가 틀렸습니다.");
         }
     }
-
-    const hiddenexample = () => {
-        const updateArea = document.querySelector("#updateArea");
-        updateArea.innerHTML = "";
-    }
-
 
 </script>
 </body>
