@@ -1,5 +1,7 @@
 package com.example.memberboardproject.entity.SwEntity;
 
+import com.example.memberboardproject.dto.SwDTO.SwBoardDTO;
+import com.example.memberboardproject.util.SwUtil.SwUtilClass;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,7 +30,7 @@ public class SwBoardEntity {
     private String boardContents;
 
     @Column
-    private int boardHits;
+    private int boardHits = 0;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -43,6 +45,17 @@ public class SwBoardEntity {
 
     @OneToMany(mappedBy = "swBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<SwCommentEntity> swCommentEntityList = new ArrayList<>();
+
+    public static SwBoardEntity toSaveEntity(SwMemberEntity swMemberEntity,SwBoardDTO swBoardDTO) {
+        SwBoardEntity swBoardEntity = new SwBoardEntity();
+        swBoardEntity.setSwMemberEntity(swMemberEntity);
+        swBoardEntity.setBoardTitle(swBoardDTO.getBoardTitle());
+        swBoardEntity.setBoardContents(swBoardDTO.getBoardContents());
+        swBoardEntity.setBoardHits(swBoardDTO.getBoardHits());
+        swBoardEntity.setBoardWriter(swBoardDTO.getBoardWriter());
+        return swBoardEntity;
+    }
+
 
 
 

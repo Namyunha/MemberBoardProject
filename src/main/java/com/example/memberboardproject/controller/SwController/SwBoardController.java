@@ -9,9 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,9 +27,19 @@ public class SwBoardController {
     @Transactional
     public String boardSaveForm(HttpSession session, Model model) {
         SwMemberDTO swMemberDTO = swMemberService.findByEmail((String) session.getAttribute("loginEmail"));
-        System.out.println("swMemberDTO = " + swMemberDTO);
-        model.addAttribute("memberDTO",swMemberDTO);
+        String memberName = swMemberDTO.getMemberName();
+        Long member_id = swMemberDTO.getId();
+        model.addAttribute("memberName",memberName);
         return "/SWPages/boardPages/boardSave";
     }
+
+    @PostMapping("/board/save")
+    @Transactional
+    public String boardSave(@ModelAttribute SwBoardDTO swBoardDTO) throws IOException {
+        swBoardService.save(swBoardDTO);
+        return "redirect:/SWPages";
+    }
+
+
 
 }
