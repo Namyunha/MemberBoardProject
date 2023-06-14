@@ -18,7 +18,7 @@ public class SwBoardDTO {
     private String boardTitle;
     private String boardWriter;
     private String boardContents;
-    private int boardHits;
+    private int boardHits = 0;
     private String createdAt;
     private List<MultipartFile> swBoardFile;
     private int fileAttached;
