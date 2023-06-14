@@ -3,6 +3,7 @@ package com.example.memberboardproject.dto.jyDto;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class JyBoardDTO {
     private Long id;
-    private String boardTile;
+    private String boardTitle;
     private String boardWriter;
     private String boardContents;
     private int boardHits;
@@ -20,6 +21,6 @@ public class JyBoardDTO {
 
     private List<MultipartFile> boardFile;
     private int fileAttached;
-    private List<String> originalFileName;
-    private List<String> storedFileName;
+    private List<String> originalFileName = new ArrayList<>();
+    private List<String> storedFileName = new ArrayList<>();
 }
