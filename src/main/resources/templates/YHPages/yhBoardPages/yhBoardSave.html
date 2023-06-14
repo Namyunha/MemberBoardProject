@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
+</head>
+<th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
+<body>
+
+<form id="boardSaveForm" action="/yhBoard/save" method="post" enctype="multipart/form-data">
+    <label for="boardWriter">작성자</label>
+    <input type="text" name="boardWriter" id="boardWriter" th:value="${session.loginDTO}" readonly><br>
+    <label for="boardTitle">제목</label>
+    <input type="text" id="boardTitle" name="boardTitle"><br>
+    <label for="boardContents">내용</label>
+    <textarea type="text" id="boardContents" name="boardContents"></textarea><br>
+    <label for="boardFile">파일첨부</label>
+    <input id="boardFile" name="boardFile" type="file" multiple><br>
+    <input type="submit" value="게시글작성">
+</form>
+
+</body>
+</html>

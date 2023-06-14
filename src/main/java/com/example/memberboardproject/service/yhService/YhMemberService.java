@@ -45,8 +45,8 @@ public class YhMemberService {
 
     public YhMemberDTO login(YhMemberDTO yhMemberDTO) {
         Optional<YhMemberEntity> yhMemberEntity = yhMemberRepository.findByMemberEmailAndMemberPassword(yhMemberDTO.getMemberEmail(), yhMemberDTO.getMemberPassword());
-        YhMemberEntity loginMemberEntiy = yhMemberEntity.get();
-        if (loginMemberEntiy == null) {
+        YhMemberEntity loginMemberEntity = yhMemberEntity.get();
+        if (loginMemberEntity == null) {
             return null;
         } else {
             return yhMemberDTO;
@@ -58,6 +58,15 @@ public class YhMemberService {
         YhMemberEntity yhMemberEntity = yhMemberRepository.findByMemberEmail(loginDTO);
         YhMemberDTO yhMemberDTO = YhMemberDTO.toSaveDTO(yhMemberEntity);
         return yhMemberDTO;
+    }
+
+    public Long updateUser(YhMemberDTO yhMemberDTO) {
+        YhMemberEntity yhMemberEntity = YhMemberEntity.toUpdateEntity(yhMemberDTO);
+        return yhMemberRepository.save(yhMemberEntity).getId();
+    }
+
+    public void deleteUser(Long id) {
+        yhMemberRepository.deleteById(id);
     }
 
 //    public YhMemberDTO findByEmail(String loginDTO) {

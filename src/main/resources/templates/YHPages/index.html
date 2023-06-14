@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
 <body>
-<a href="/yhMember/save">회원가입</a>
-<a href="/yhMember/login">로그인</a>
-<a href="/yhBoard/list">글목록</a>
+    <th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
+<script>
+    const loginBtn = () => {
+        location.href = "/yhMember/login";
+    }
+    const signUpBtn = () => {
+        location.href = "/yhMember/save";
+    }
+</script>
+
 </body>
+
 </html>

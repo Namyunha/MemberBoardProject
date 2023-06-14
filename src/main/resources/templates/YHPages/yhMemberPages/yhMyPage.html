@@ -4,6 +4,7 @@
     <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
 <body>
+<th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
 <div>
     <table class="table table-striped table-hover text-center">
         <thead>
@@ -27,7 +28,7 @@
         </tr>
         <tr>
             <th>휴대전화</th>
-            <td th:text="${memberDTO.memberMoblie}"></td>
+            <td th:text="${memberDTO.memberMobile}"></td>
         </tr>
         <tr th:if="${memberDTO.fileAttached == 1}">
             <th>프로필사진</th>
@@ -49,26 +50,101 @@
         <input type="text" id="checkPass" name="checkPass">
         <input type="button" th:onclick="checkPass()" value="비밀번호확인">
     </div>
+    <div id="updateArea" name="updateArea"></div>
 </div>
 <script>
     let method = null;
     const req = (req) => {
         const passwordCheckForm = document.querySelector("#passwordCheckForm");
+        const updateArea = document.querySelector("#updateArea");
         passwordCheckForm.style.display = "block";
+        updateArea.innerHTML = "";
         method = req;
+        console.log(method);
     }
-
-    const checkPass = (method) => {
+    const checkPass = () => {
         const checkPassInput = document.querySelector("#checkPass");
         const memberPassword = "[[${memberDTO.memberPassword}]]"; // Thymeleaf 표현식을 변수에 저장
-        console.log(method);l
+        const memberName = "[[${memberDTO.memberName}]]";
+        const updateArea = document.querySelector("#updateArea");
+        const memberId = "[[${memberDTO.id}]]";
+        const memberEmail = "[[${memberDTO.memberEmail}]]";
+        const memberMobile = "[[${memberDTO.memberMobile}]]";
+        const memberBirth = "[[${memberDTO.memberBirth}]]"
+        console.log(method);
         if (checkPassInput.value === memberPassword) {
-            alert("비밀번호가 맞습니다");
+            if (method == "update") {
+                axios({
+                    url: "/yhMember/updateForm",
+                    method: "post"
+                }).then(res => {
+                    let result = `<form id="updateForm" onsubmit="updateMember(event)"  name="updateForm" action="/yhMember/update" method="put" enctype="multipart/form-data">
+                    <input id="memberId" type="text" style="display: none" value="${memberId}">
+                    <label for="memberName">이름</label>
+                    <input type="text" name="memberName" id="memberName" value="${memberName}" readonly><br>
+                    <label for="memberEmail">이메일</label>
+                    <input type="text" name="memberEmail" id="memberEmail" value="${memberEmail}" readonly><br>
+                    <label for="memberPassword">비밀번호</label>
+                    <input type="password" name="memberPassword" id="memberPassword" value="${memberPassword}"><br>
+                    <label for="memberMobile">전화번호</label>
+                    <input type="text" name="memberMobile" id="memberMobile" value="${memberMobile}"><br>
+                    <label for="memberBirth">생년월일</label>
+                    <input type="text" name="memberBirth" id="memberBirth" value="${memberBirth}"><br>
+<!--                    <label for="memberProfile">프로필사진</label>-->
+<!--                    <input type="file" id="memberProfile" name="memberProfile" class="form-control" multiple><br>-->
+                    <input type="submit" value="업데이트하기">
+                    <input type="button" onclick="hiddenexample()" value="숨기기">
+                </form>`;
+                    updateArea.innerHTML = result;
+                }).catch(err => {
+                    console.log("err" + err);
+                })
+            } else if (method == "delete") {
+                axios({
+                    url: "/yhMember/" + memberId,
+                    method: "delete"
+                }).then(res => {
+                    location.href = "/yhMember/login";
+                    alert("삭제 성공");
+                }).catch(err => {
+                    alert("삭제 실패");
+                })
+            }
         } else {
             alert("비밀번호가 틀렸습니다.");
         }
     }
 
+    const updateMember = (event) => {
+        event.preventDefault();
+        const memberId = document.querySelector("#memberId").value;
+        const memberName = "[[${memberDTO.memberName}]]";
+        const memberEmail = document.querySelector("#memberEmail").value;
+        const memberPassword = document.querySelector("#memberPassword").value;
+        const memberMobile = document.querySelector("#memberMobile").value;
+        const memberBirth = document.querySelector("#memberBirth").value;
+        axios({
+            url: "/yhMember/update",
+            method: "put",
+            data: {
+                id: memberId,
+                memberName: memberName,
+                memberEmail: memberEmail,
+                memberPassword: memberPassword,
+                memberMobile: memberMobile,
+                memberBirth: memberBirth
+            }
+        }).then(res => {
+            alert("업데이트에 성공하셨습니다");
+            location.href = "/yhMember/myPage"
+        }).catch(err => {
+            alert("업데이트에 실패하셨습니다");
+        })
+    }
+    const hiddenexample = () => {
+        const updateArea = document.querySelector("#updateArea");
+        updateArea.innerHTML = "";
+    }
 </script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
+<th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
 <body>
 <form id="saveForm" onsubmit="saveMember(event)" name="saveForm" action="/yhMember/save" method="post"
       enctype="multipart/form-data">
@@ -13,10 +13,10 @@
     <input type="text" name="memberEmail" id="memberEmail"><br>
     <label for="memberPassword">비밀번호</label>
     <input type="password" name="memberPassword" id="memberPassword"><br>
-    <label for="memberMoblie">전화번호</label>
-    <input type="date" name="memberMoblie" id="memberMoblie"><br>
-    <label for="memberMoblie">생년월일</label>
-    <input type="text" name="memberBirth" id="memberBirth"><br>
+    <label for="memberMobile">전화번호</label>
+    <input type="text" name="memberMobile" id="memberMobile"><br>
+    <label for="memberBirth">생년월일</label>
+    <input type="date" name="memberBirth" id="memberBirth"><br>
     <label for="memberProfile">프로필사진</label>
     <input type="file" id="memberProfile" name="memberProfile" class="form-control" multiple><br>
     <input type="submit" value="회원가입하기">
@@ -29,7 +29,7 @@
         const memberName = document.querySelector("#memberName");
         const memberEmail = document.querySelector("#memberEmail");
         const memberPassword = document.querySelector("#memberPassword");
-        const memberMoblie = document.querySelector("#memberMoblie");
+        const memberMobile = document.querySelector("#memberMobile");
         const memberBirth = document.querySelector("#memberBirth");
         if (memberName.value == "") {
             alert("이름을 입력해주세요");
@@ -40,7 +40,7 @@
         } else if (memberPassword.value == "") {
             alert("비밀번호를 입력해주세요");
             memberPassword.focus();
-        } else if (memberMoblie.value == "") {
+        } else if (memberMobile.value == "") {
             alert("전화번호를 입력해주세요");
             memberMoblie.focus();
         } else if (memberBirth.value == "") {
@@ -50,11 +50,9 @@
             saveForm.submit();
             alert("회원가입에 성공하셨습니다");
         }
-
     }
-
     const goPage = () => {
-        location.href=""
+        location.href = ""
     }
 
 </script>

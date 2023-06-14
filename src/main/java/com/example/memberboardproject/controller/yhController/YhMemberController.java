@@ -48,14 +48,37 @@ public class YhMemberController {
         }
     }
 
-
+    @GetMapping("/logOut")
+    public String logOut(HttpSession session) {
+        session.invalidate();
+        return "redirect:login";
+    }
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         String loginDTO = (String) session.getAttribute("loginDTO");
         YhMemberDTO yhMemberDTO = yhMemberService.findByEmail(loginDTO);
-        System.out.println("컨트롤러에있는 yhMemberDTO = " + yhMemberDTO);
         model.addAttribute("memberDTO", yhMemberDTO);
         return "/YHPages/yhMemberPages/yhMyPage";
     }
 
+    @PostMapping("/updateForm")
+    public ResponseEntity updateForm(HttpSession session, Model model) {
+        String loginDTO = (String) session.getAttribute("loginDTO");
+        YhMemberDTO yhMemberDTO = yhMemberService.findByEmail(loginDTO);
+        return new ResponseEntity<>(yhMemberDTO, HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity updateUser(@RequestBody YhMemberDTO yhMemberDTO) {
+        System.out.println("컨트롤러에 있는 yhMemberDTO = " + yhMemberDTO);
+        yhMemberService.updateUser(yhMemberDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteUser(@PathVariable Long id) {
+        System.out.println("id = " + id);
+        yhMemberService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
