@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,4 +60,22 @@ public class KmMemberService {
     }
 
 
+    public int loginChk(KmMemberDTO kmMemberDTO) {
+        Optional<KmMemberEntity> kmMemberEntity =  kmMemberRepository.findByMemberEmailAndMemberPass(kmMemberDTO.getMemberEmail(), kmMemberDTO.getMemberPass());
+        System.out.println("로그인 되면kmMemberEntity = " + kmMemberEntity);
+        if (kmMemberEntity.isPresent()){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public boolean findByEmail(String memberEmail) {
+        Optional<KmMemberEntity> kmMemberEntity = kmMemberRepository.findByMemberEmail(memberEmail);
+        if (kmMemberEntity.isPresent()){
+            return false;
+        }else {
+            return true;
+        }
+    }
 }

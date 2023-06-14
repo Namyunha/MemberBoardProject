@@ -4,13 +4,13 @@ import com.example.memberboardproject.dto.kmdto.KmMemberDTO;
 import com.example.memberboardproject.service.kmService.KmMemberService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KmMemberController {
     private final KmMemberService kmMemberService;
+
     @GetMapping("/save")
     public String saveForm() {
         return "KMPages/kmMemberPages/kmMemberSave";
@@ -32,20 +33,48 @@ public class KmMemberController {
 
         return "redirect:/kmMember/list";
     }
-    @GetMapping("/list")
-    public String findMemberAll(Model model){
-        List<KmMemberDTO> kmMemberDTOList= kmMemberService.findAll();
-        System.out.println("kmMemberDTOList = " + kmMemberDTOList);
-        model.addAttribute("memberList",kmMemberDTOList);
-        return "KMPages/kmMemberPages/kmMemberList";
 
+    @GetMapping("/list")
+    public String findMemberAll(Model model) {
+        List<KmMemberDTO> kmMemberDTOList = kmMemberService.findAll();
+//        System.out.println("kmMemberDTOList = " + kmMemberDTOList);
+        model.addAttribute("memberList", kmMemberDTOList);
+        return "KMPages/kmMemberPages/kmMemberList";
     }
 
-//    @PostMapping("/save")
-//    public String save(@ModelAttribute KmMemberDTO kmMemberDTO) throws IOException {
-//        kmMemberService.save(kmMemberDTO);
-//        return "KMPages/kmMemberPages/kmMemberMain";
-//    }
+    @GetMapping("/login")
+    public String LoginForm() {
 
+        return "KMPages/kmMemberPages/kmMemberLoginForm";
+    }
+
+    @PostMapping("/login")
+    public String memberLogin(@ModelAttribute KmMemberDTO kmMemberDTO,
+                              HttpSession session) {
+        System.out.println("로그인kmMemberDTO = " + kmMemberDTO);
+        int loginResult = kmMemberService.loginChk(kmMemberDTO);
+        if (loginResult == 1) {
+            System.out.println("로그인 성공");
+            session.setAttribute("loginEmail", kmMemberDTO.getMemberEmail());
+            System.out.println("세션값=" + session.getAttribute("loginEmail"));
+            return "redirect:/kmMember/list";
+        } else {
+            System.out.println("로그인 실패");
+            return "redirect:/kmMember/login";
+        }
+    }
+
+    @PostMapping("/emailDupleChk")
+    public ResponseEntity memberDupleChk(@RequestBody KmMemberDTO kmMemberDTO) {
+        String email =kmMemberDTO.getMemberEmail();
+        boolean dupleResult = kmMemberService.findByEmail(email);
+//        System.out.println("dupleResult = " + dupleResult);
+        if (dupleResult) {
+            return new ResponseEntity<>(HttpStatus.OK);
+
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
 }
 

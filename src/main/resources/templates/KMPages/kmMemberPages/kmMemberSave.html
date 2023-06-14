@@ -9,7 +9,16 @@
 <div id="section">
     <h2>km member saveForm.html</h2>
     <form action="/kmMember/save" method="post" enctype="multipart/form-data">
-        <input type="text" name = "memberEmail" placeholder="이메일">
+        <input type="text" name = "memberEmail" placeholder="이메일" id="member-email" onblur="email_duple_check()">
+        <p id="emailDupleResult">
+            <span id="emailOk" style="color:green; font-size: 10px; display: none">
+                사용 가능한 이메일입니다.
+            </span>
+            <span id="emailNo" style="color: red; font-size: 10px; display: none">
+                중복 이메일 입니다.
+            </span>
+            
+        </p>
         <input type="text" name = "memberPass" placeholder="비밀번호">
         <input type="text" name = "memberName" placeholder="이름">
         <input type="text" name = "memberMobile" placeholder="전화번호">
@@ -22,4 +31,28 @@
 <div th:replace="KMPages/kmComponent/kmFooter"></div>
 
 </body>
+<script>
+    const email_duple_check = () => {
+        document.querySelector("#emailNo").style.display = "none";
+        document.querySelector("#emailOk").style.display = "none";
+
+        const email = document.querySelector("#member-email").value;
+        console.log("email=", email);
+        axios({
+            method:"post",
+            url:"/kmMember/emailDupleChk",
+            data :{
+                memberEmail : email
+            }
+        }).then(res =>{
+            console.log("res",res);
+            document.querySelector("#emailOk").style.display = "block";
+
+        }).catch(err =>{
+            console.log("err",err);
+            document.querySelector("#emailNo").style.display = "block";
+            document.querySelector("#member-email").focus();
+        })
+    }
+</script>
 </html>

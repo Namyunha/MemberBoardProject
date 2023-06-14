@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="KMPages/kmComponent/kmConfig :: kmConfig"></th:block>
+</head>
+<body>
+<div th:replace="KMPages/kmComponent/kmHeader"></div>
+<div th:replace="KMPages/kmComponent/kmNav"></div>
+<div id="section">
+    <h2>member login form</h2>
+    <form action="/kmMember/login" method="post" name="memberLogin">
+        <input type="text" name="memberEmail" placeholder="email 입력">
+        <input type="text" name="memberPass" placeholder="비밀번호 입력">
+        <input type="button" th:onclick="member_login()" value="로그인">
+    </form>
+</div>
+<div th:replace="KMPages/kmComponent/kmFooter"></div>
+
+</body>
+<script>
+    const member_login = () => {
+        console.log("로그인함수호출")
+        // const loginForm = document.getElementById("memberLogin");
+        document.memberLogin.submit();
+
+    }
+</script>
+</html>
