@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -8,6 +8,7 @@
 <h2>memberMain</h2>
 <a href="/jy/member/mypage">마이페이지</a>
 <a href="/jy/board/save">글작성</a>
+<a th:href="@{/jy/board(page=1)}">글목록</a>
 <a href="/jy/member/logout">로그아웃</a>
 </body>
 </html>

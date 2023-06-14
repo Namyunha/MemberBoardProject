@@ -5,7 +5,12 @@ import com.example.memberboardproject.entity.jyEntity.JyBoardEntity;
 import com.example.memberboardproject.entity.jyEntity.JyBoardFileEntity;
 import com.example.memberboardproject.repository.jyRepository.JyBoardFileRepository;
 import com.example.memberboardproject.repository.jyRepository.JyBoardRepository;
+import com.example.memberboardproject.util.jyUtil.JyUtilClass;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,5 +45,26 @@ public class JyBoardService {
             }
             return savedEntity.getId();
         }
+    }
+
+    public Page<JyBoardDTO> paging(Pageable pageable, String type, String q) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 5;
+        Page<JyBoardEntity> jyBoardEntities = null;
+        if (type.equals("title")) {
+            jyBoardEntities = jyBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else if (type.equals("writer")) {
+            jyBoardEntities = jyBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else {
+            jyBoardEntities = jyBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        }
+        Page<JyBoardDTO> jyBoardDTOS = jyBoardEntities.map(jyBoardEntity -> JyBoardDTO.builder()
+                                                            .id(jyBoardEntity.getId())
+                                                            .boardTitle(jyBoardEntity.getBoardTitle())
+                                                            .boardWriter(jyBoardEntity.getBoardWriter())
+                                                            .createdAt(JyUtilClass.dateFormat(jyBoardEntity.getCreatedAt()))
+                                                            .boardHits(jyBoardEntity.getBoardHits())
+                                                            .build());
+        return jyBoardDTOS;
     }
 }
