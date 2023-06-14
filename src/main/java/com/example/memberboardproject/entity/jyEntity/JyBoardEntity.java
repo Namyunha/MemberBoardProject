@@ -31,6 +31,6 @@ public class JyBoardEntity extends JyBaseEntity {
     @Column
     private int fileAttached;
 
-    @OneToMany(mappedBy = "jyMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "jyBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<JyBoardFileEntity> jyBoardFileEntityList = new ArrayList<>();
 }
