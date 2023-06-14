@@ -77,4 +77,8 @@ public class SwMemberService {
             }
         }
     }
+
+    public void memberDelete(Long id) {
+        swMemberRepository.deleteById(id);
+    }
 }

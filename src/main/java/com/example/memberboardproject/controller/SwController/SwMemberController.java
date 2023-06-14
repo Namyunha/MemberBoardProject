@@ -59,6 +59,7 @@ public class SwMemberController {
     @GetMapping("/member/logout")
     public String memberLogout(HttpSession session) {
         session.invalidate();
+        System.out.println(session);
         return "redirect:/SWPages";
     }
     
@@ -82,6 +83,11 @@ public class SwMemberController {
     public String memberUpdate(@ModelAttribute SwMemberDTO swMemberDTO) throws IOException {
         swMemberService.memberUpdate(swMemberDTO);
         return "redirect:/SWPages";
+    }
+    @GetMapping("/member/memberDelete/{id}")
+    public String memberDelete(@PathVariable Long id) {
+        swMemberService.memberDelete(id);
+        return "redirect:/sw/member/logout";
     }
 
 

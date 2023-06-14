@@ -85,6 +85,12 @@
         if(password == passDB) {
             if(type == "update") {
                 location.href="/sw/member/updateForm/"+id;
+            }else if(type == "delete") {
+                if(confirm("삭제하시겠습니까?")) {
+                    location.href="/sw/member/memberDelete/"+id;
+                }else {
+                    alert("삭제 취소");
+                }
             }
         }
     }
