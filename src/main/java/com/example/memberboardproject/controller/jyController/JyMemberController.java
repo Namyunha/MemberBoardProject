@@ -83,4 +83,10 @@ public class JyMemberController {
         jyMemberService.update(jyMemberDTO);
         return "redirect:/jy/member/mypage";
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        jyMemberService.delete(id);
+        return "redirect:/jy/member/logout";
+    }
 }
