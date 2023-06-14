@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="KMPages/kmComponent/kmConfig :: kmConfig"></th:block>
+</head>
+<body>
+<div th:replace="KMPages/kmComponent/kmHeader"></div>
+<div th:replace="KMPages/kmComponent/kmNav"></div>
+<div id="section">
+  <h2>my page. html</h2>
+  <table class="table table-striped">
+    <tr>
+      <th>id</th>
+      <td th:text="${member.id}"></td>
+    </tr>
+    <tr>
+      <th>email</th>
+      <td th:text="${member.memberEmail}"></td>
+    </tr>
+    <tr>
+      <th>name</th>
+      <td th:text="${member.memberName}"></td>
+    </tr>
+    <tr>
+      <th>birth</th>
+      <td th:text="${member.memberBirth}"></td>
+    </tr>
+    <tr>
+      <th>mobile</th>
+      <td th:text="${member.memberMobile}"></td>
+    </tr>
+    <tr>
+      <th>회원가입날짜</th>
+      <td th:text="${member.memberCreatedAt}"></td>
+    </tr>
+        <tr>
+      <th>비밀번호</th>
+      <td th:text="${member.memberPass}"></td>
+    </tr>
+    <tr th:if="${member.memberProfile==1}">
+      <th>프로필사진</th>
+      <td th:each="fileName: ${member.profileStoredFileName}">
+        <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+      </td>
+<!--      <td>-->
+<!--        <img th:src="@{|/upload/${member.profileStoredFileName}}" width="200" height="200" alt="">-->
+<!--      </td>-->
+    </tr>
+
+  </table>
+
+
+</div>
+<div th:replace="KMPages/kmComponent/kmFooter"></div>
+
+</body>
+<script>
+
+</script>
+</html>

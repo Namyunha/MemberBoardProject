@@ -13,13 +13,13 @@
                 <i class="bi bi-house"></i>
             </a>
         </li>
-        <li>
+        <li id="navMenu1">
             <a href="/kmMember/save">회원가입</a>
         </li>
-        <li>
+        <li id="navMenu2">
             <a href="/kmMember/login">로그인</a>
         </li>
-        <li>
+        <li id="navMenu3">
             <a href="/kmMember/list">회원목록</a>
         </li>
         <li class="login-area" id="login-area">
@@ -30,11 +30,18 @@
 
 </body>
 <script th:inline="javascript">
-    const loginarea =document.getElementById("login-area");
+    const navmenu1 = document.getElementById("navMenu1");
+    const navmenu2 = document.getElementById("navMenu2");
+    const navmenu3 = document.getElementById("navMenu3");
+    const loginarea = document.getElementById("login-area");
     const loginEmail = [[${session.loginEmail}]];
+    console.log(loginEmail);
     if (loginEmail.length != 0) {
-        loginArea.innerHTML = "<a href='/mypage' style='color: black;'>" + loginEmail + "페이지</a>" +
-            "<a href='/logout'>logout</a>";
+        loginarea.innerHTML = "<a href='/kmMember/mypage' style='color: white;'>" + loginEmail + "님 페이지가기</a>" +
+            "<a href='/kmMember/logout' style='color: orange'>logout</a>";
+        navmenu1.innerHTML = "<a href='/kmBoard/save' style = 'color: yellow;'>글쓰기</a>";
+        navmenu2.innerHTML = "<a href='/kmBoard/myBoard' style = 'color: yellow;'>내글보기</a>";
+        navmenu3.innerHTML = "<a href='/kmBoard/boardList' style = 'color: yellow;'>글목록</a>";
     } else {
         loginArea.innerHTML = "<a href='/login'>login</a>";
     }
