@@ -45,7 +45,7 @@ public class YhMemberEntity extends YhBaseEntity {
         yhMemberEntity.setMemberName(yhMemberDTO.getMemberName());
         yhMemberEntity.setMemberEmail(yhMemberDTO.getMemberEmail());
         yhMemberEntity.setMemberPassword(yhMemberDTO.getMemberPassword());
-        yhMemberEntity.setMemberMobile(yhMemberDTO.getMemberMoblie());
+        yhMemberEntity.setMemberMobile(yhMemberDTO.getMemberMobile());
         yhMemberEntity.setMemberBirth(yhMemberDTO.getMemberBirth());
         yhMemberEntity.setFileAttached(0);
         return yhMemberEntity;
@@ -57,7 +57,7 @@ public class YhMemberEntity extends YhBaseEntity {
         yhMemberEntity.setMemberName(yhMemberDTO.getMemberName());
         yhMemberEntity.setMemberEmail(yhMemberDTO.getMemberEmail());
         yhMemberEntity.setMemberPassword(yhMemberDTO.getMemberPassword());
-        yhMemberEntity.setMemberMobile(yhMemberDTO.getMemberMoblie());
+        yhMemberEntity.setMemberMobile(yhMemberDTO.getMemberMobile());
         yhMemberEntity.setMemberBirth(yhMemberDTO.getMemberBirth());
         yhMemberEntity.setFileAttached(1);
         return yhMemberEntity;

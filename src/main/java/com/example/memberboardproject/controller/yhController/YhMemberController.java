@@ -48,7 +48,6 @@ public class YhMemberController {
         }
     }
 
-
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         String loginDTO = (String) session.getAttribute("loginDTO");
@@ -58,4 +57,20 @@ public class YhMemberController {
         return "/YHPages/yhMemberPages/yhMyPage";
     }
 
+    @PostMapping("/updateForm")
+    public ResponseEntity updateForm(HttpSession session, Model model) {
+        String loginDTO = (String) session.getAttribute("loginDTO");
+        YhMemberDTO yhMemberDTO = yhMemberService.findByEmail(loginDTO);
+        return new ResponseEntity<>(yhMemberDTO, HttpStatus.OK);
+    }
 }
+
+
+
+
+
+
+
+
+
+
