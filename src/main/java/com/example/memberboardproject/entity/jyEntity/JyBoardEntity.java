@@ -1,5 +1,6 @@
 package com.example.memberboardproject.entity.jyEntity;
 
+import com.example.memberboardproject.dto.jyDto.JyBoardDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,4 +34,24 @@ public class JyBoardEntity extends JyBaseEntity {
 
     @OneToMany(mappedBy = "jyBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<JyBoardFileEntity> jyBoardFileEntityList = new ArrayList<>();
+
+    public static JyBoardEntity toSaveEntity(JyBoardDTO jyBoardDTO) {
+        JyBoardEntity jyBoardEntity = new JyBoardEntity();
+        jyBoardEntity.setBoardTitle(jyBoardDTO.getBoardTitle());
+        jyBoardEntity.setBoardWriter(jyBoardDTO.getBoardWriter());
+        jyBoardEntity.setBoardContents(jyBoardDTO.getBoardContents());
+        jyBoardEntity.setBoardHits(0);
+        jyBoardEntity.setFileAttached(0);
+        return jyBoardEntity;
+    }
+
+    public static JyBoardEntity toSaveEntityWithFile(JyBoardDTO jyBoardDTO) {
+        JyBoardEntity jyBoardEntity = new JyBoardEntity();
+        jyBoardEntity.setBoardTitle(jyBoardDTO.getBoardTitle());
+        jyBoardEntity.setBoardWriter(jyBoardDTO.getBoardWriter());
+        jyBoardEntity.setBoardContents(jyBoardDTO.getBoardContents());
+        jyBoardEntity.setBoardHits(0);
+        jyBoardEntity.setFileAttached(1);
+        return jyBoardEntity;
+    }
 }
