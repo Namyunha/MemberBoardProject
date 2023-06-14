@@ -1,21 +1,18 @@
 package com.example.memberboardproject.entity.yhEntity;
 
 import com.example.memberboardproject.dto.yhdDto.YhBoardDTO;
-import com.example.memberboardproject.util.yhUtil.YhUtilClass;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "yh_board_table")
-public class YhBoardEntity extends YhUtilClass {
+public class YhBoardEntity extends YhBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,9 +28,6 @@ public class YhBoardEntity extends YhUtilClass {
 
     @Column
     private int BoardHits;
-
-    @Column
-    private String createdAt;
 
     @Column
     private int fileAttached;

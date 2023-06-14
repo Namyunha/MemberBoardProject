@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -38,5 +40,16 @@ public class YhBoardService {
             }
             return saveFile.getId();
         }
+    }
+
+    public List<YhBoardDTO> findAll() {
+        List<YhBoardEntity> yhBoardEntityList = yhBoardRepository.findAll();
+        System.out.println("서비스에 있는 yhBoardEntityList = " + yhBoardEntityList);
+        List<YhBoardDTO> yhBoardDTOList = new ArrayList<>();
+        for (YhBoardEntity boardEntity : yhBoardEntityList) {
+            YhBoardDTO yhBoardDTO = YhBoardDTO.toSaveDTO(boardEntity);
+            yhBoardDTOList.add(yhBoardDTO);
+        }
+        return yhBoardDTOList;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -16,13 +17,16 @@ import java.io.IOException;
 @RequestMapping("/yhBoard")
 public class YhBoardController {
     private final YhBoardService yhBoardService;
+
     @GetMapping
     public String boardIndex() {
         return "/YHPages/yhBoardPages/index";
     }
 
     @GetMapping("/list")
-    public String boardList(HttpSession session, Model model) {
+    public String boardList(Model model) {
+        List<YhBoardDTO> yhBoardDTOList = yhBoardService.findAll();
+        model.addAttribute("boardList", yhBoardDTOList);
         return "/YHPages/yhBoardPages/yhBoardList";
     }
 
