@@ -17,25 +17,18 @@ public class YhMemberEntity extends YhBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(length = 20, nullable = false)
     private String memberName;
-
     @Column(length = 20, nullable = false)
     private String memberEmail;
-
     @Column(length = 20, nullable = false)
     private String memberPassword;
-
     @Column(length = 20, nullable = false)
     private String memberMobile;
-
     @Column(length = 10, nullable = false)
     private String memberBirth;
-
     @Column
     private int fileAttached;
-
     @OneToMany(mappedBy = "yhMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<YhMemberFileEntity> yhMemberFileEntityList = new ArrayList<>();
 
@@ -50,7 +43,6 @@ public class YhMemberEntity extends YhBaseEntity {
         yhMemberEntity.setFileAttached(0);
         return yhMemberEntity;
     }
-
 
     public static YhMemberEntity toSaveEntityWithFile(YhMemberDTO yhMemberDTO) {
         YhMemberEntity yhMemberEntity = new YhMemberEntity();

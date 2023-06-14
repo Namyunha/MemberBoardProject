@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
+<th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
 <body>
 <form id="saveForm" onsubmit="saveMember(event)" name="saveForm" action="/yhMember/save" method="post"
       enctype="multipart/form-data">
@@ -50,9 +50,7 @@
             saveForm.submit();
             alert("회원가입에 성공하셨습니다");
         }
-
     }
-
     const goPage = () => {
         location.href = ""
     }

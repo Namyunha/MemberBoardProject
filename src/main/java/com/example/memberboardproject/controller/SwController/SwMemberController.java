@@ -49,6 +49,7 @@ public class SwMemberController {
         SwMemberDTO DTO = swMemberService.findByEmailAndMemberPassword(swMemberDTO.getMemberEmail(),swMemberDTO.getMemberPassword());
         if(DTO!=null) {
             session.setAttribute("loginEmail",DTO.getMemberEmail());
+
             return new ResponseEntity<>(DTO,HttpStatus.OK);
         }else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);

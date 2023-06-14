@@ -48,6 +48,11 @@ public class YhMemberController {
         }
     }
 
+    @GetMapping("/logOut")
+    public String logOut(HttpSession session) {
+        session.invalidate();
+        return "redirect:login";
+    }
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         String loginDTO = (String) session.getAttribute("loginDTO");
