@@ -54,7 +54,6 @@ public class YhBoardController {
     public String detail(@PathVariable Long id, Model model, HttpSession session) {
         YhBoardDTO yhBoardDTO = yhBoardService.findById(id);
         List<YhCommentDTO> commentDTOList = yhCommentService.findAll(id);
-        System.out.println("컨트롤러안에있는 commentDTOList = " + commentDTOList);
         String loginEmail = (String) session.getAttribute("loginDTO");
         YhMemberDTO writerDTO = yhMemberService.findByEmail(loginEmail);
         model.addAttribute("commentList", commentDTOList);
@@ -64,7 +63,7 @@ public class YhBoardController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute YhBoardDTO yhBoardDTO) {
+    public String update(@ModelAttribute YhBoardDTO yhBoardDTO) throws IOException {
         System.out.println("컨트롤러에 있는 update : yhBoardDTO = " + yhBoardDTO);
         yhBoardService.updateBoard(yhBoardDTO);
         return "redirect:list";

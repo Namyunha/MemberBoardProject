@@ -17,6 +17,7 @@ public class YhCommentDTO {
 
     public static YhCommentDTO toDTO(YhCommentEntity comment) {
         YhCommentDTO yhCommentDTO = new YhCommentDTO();
+        yhCommentDTO.setId(comment.getId());
         yhCommentDTO.setCommentWriter(comment.getCommentWriter());
         yhCommentDTO.setCommentContents(comment.getCommentContents());
         yhCommentDTO.setBoardId(comment.getYhBoardEntity().getId());

@@ -70,7 +70,7 @@ public class YhBoardEntity extends YhBaseEntity {
         yhBoardEntity.setBoardWriter(yhBoardDTO.getBoardWriter());
         yhBoardEntity.setBoardContents(yhBoardDTO.getBoardContents());
         yhBoardEntity.setBoardHits(0);
-        yhBoardEntity.setFileAttached(yhBoardDTO.getFileAttached());
+        yhBoardEntity.setFileAttached(1);
         return yhBoardEntity;
     }
 }
