@@ -39,6 +39,9 @@ public class YhBoardEntity extends YhBaseEntity {
     @OneToMany(mappedBy = "yhBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     List<YhBoardFileEntity> yhBoardFileEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "yhBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    List<YhCommentEntity> yhCommentEntityList = new ArrayList<>();
+
     public static YhBoardEntity toSaveEntity(YhBoardDTO yhBoardDTO) {
         YhBoardEntity yhBoardEntity = new YhBoardEntity();
         yhBoardEntity.setBoardTitle(yhBoardDTO.getBoardTitle());

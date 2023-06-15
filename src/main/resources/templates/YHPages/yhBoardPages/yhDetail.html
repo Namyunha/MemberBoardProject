@@ -51,9 +51,83 @@
     <input type="text" id="passwordCheck" name="passwordCheck">
     <input type="button" onclick="passwordCheck()" value="비밀번호 확인">
 </div>
+
 <div id="updateArea"></div>
 
-<script>
+<div id="commentArea">
+    <input type="text" id="boardId" style="display: none" name="boardId" th:value="${yhBoard.id}">
+    <label for="commentWriter">작성자</label>
+    <input type="text" id="commentWriter" name="commentWriter" th:value="${writerDTO.memberName}"><br>
+    <label for="commentContent">내용</label><br>
+    <textarea name="commentContent" id="commentContent" cols="30" rows="10"></textarea><br>
+    <input type="button" onclick="saveComment()" value="등록하기">
+</div>
+<div id="commentResult">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>내용</th>
+                <th>작성자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment: ${commentList}">
+                <td th:text="${comment.id}"></td>
+                <td th:text="${comment.commentContents}"></td>
+                <td th:text="${comment.commentWriter}"></td>
+            </tr>
+            </tbody>
+        </table>
+</div>
+
+<script th:inline="javascript">
+    const comment_list = (commentList) => {
+        console.log("댓글 목록 함수", commentList);
+        const commentResult = document.querySelector("#commentResult");
+        let output = "        <table class=\"table\">\n" +
+            "            <tr>\n" +
+            "                <th>id</th>\n" +
+            "                <th>writer</th>\n" +
+            "                <th>contents</th>\n" +
+            "                <th>수정</th>\n" +
+            "                <th>삭제</th>\n" +
+            "            </tr>";
+        for (let i in commentList) {
+            output += "<tr>\n" +
+                "                <td>" + commentList[i].id + "</td>\n" +
+                "                <td>" + commentList[i].commentWriter + "</td>\n" +
+                "                <td>" + commentList[i].commentContents + "</td>\n" +
+                "                <td>" + <button>삭제</button> + "</td>\n" +
+                "                <td>" + <button>수정</button> + "</td>\n" +
+                "            </tr>";
+        }
+        output += "</table>";
+        commentResult.innerHTML = output;
+    }
+    const saveComment = () => {
+        const commentWriter = document.querySelector("#commentWriter");
+        const commentContent = document.querySelector("#commentContent");
+        const boardId = document.querySelector("#boardId");
+        axios({
+            url: "/yhComment/save",
+            method: "post",
+            data: {
+                commentWriter: commentWriter.value,
+                commentContents: commentContent.value,
+                boardId: boardId.value
+            }
+        }).then(res => {
+            console.log("res", res);
+            const commentContent = document.querySelector("#commentContent");
+            commentContent.innerHTML = "";
+            comment_list(res.data);
+        }).catch(err => {
+            alert("등록실패!");
+        })
+    }
+
+
     let method = null
     const req = (met) => {
         const passwordArea = document.querySelector("#passwordArea");
@@ -63,14 +137,13 @@
         updateArea.innerHTML = "";
     }
 
-
     const passwordCheck = () => {
         const passwordCheck = document.querySelector("#passwordCheck");
-        const boardId = "[[${yhBoard.id}]]";
-        const boardPass = "[[${writerDTO.memberPassword}]]";
-        const boardWriter = "[[${writerDTO.memberName}]]";
-        const boardTitle = "[[${yhBoard.boardTitle}]]";
-        const boardContents = "[[${yhBoard.boardContents}]]";
+        const boardId = [[${yhBoard.id}]];
+        const boardPass = [[${writerDTO.memberPassword}]];
+        const boardWriter = [[${writerDTO.memberName}]];
+        const boardTitle = [[${yhBoard.boardTitle}]];
+        const boardContents = [[${yhBoard.boardContents}]];
         const updateArea = document.querySelector("#updateArea");
         console.log(method);
         if (passwordCheck.value != boardPass) {

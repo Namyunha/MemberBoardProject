@@ -30,7 +30,6 @@ public class YhMemberEntity extends YhBaseEntity {
     private String memberBirth;
     @Column
     private int fileAttached;
-
     @OneToMany(mappedBy = "yhMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<YhMemberFileEntity> yhMemberFileEntityList = new ArrayList<>();
     @OneToMany(mappedBy = "yhMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -46,6 +45,7 @@ public class YhMemberEntity extends YhBaseEntity {
         yhMemberEntity.setFileAttached(0);
         return yhMemberEntity;
     }
+
     public static YhMemberEntity toSaveEntityWithFile(YhMemberDTO yhMemberDTO) {
         YhMemberEntity yhMemberEntity = new YhMemberEntity();
         yhMemberEntity.setMemberName(yhMemberDTO.getMemberName());
@@ -56,7 +56,6 @@ public class YhMemberEntity extends YhBaseEntity {
         yhMemberEntity.setFileAttached(1);
         return yhMemberEntity;
     }
-
 
     public static YhMemberEntity toUpdateEntity(YhMemberDTO yhMemberDTO) {
         YhMemberEntity yhMemberEntity = new YhMemberEntity();
@@ -69,6 +68,5 @@ public class YhMemberEntity extends YhBaseEntity {
         yhMemberEntity.setFileAttached(1);
         return yhMemberEntity;
     }
-
 
 }

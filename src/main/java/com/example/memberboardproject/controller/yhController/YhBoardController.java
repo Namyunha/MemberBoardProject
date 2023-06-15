@@ -1,8 +1,10 @@
 package com.example.memberboardproject.controller.yhController;
 
 import com.example.memberboardproject.dto.yhdDto.YhBoardDTO;
+import com.example.memberboardproject.dto.yhdDto.YhCommentDTO;
 import com.example.memberboardproject.dto.yhdDto.YhMemberDTO;
 import com.example.memberboardproject.service.yhService.YhBoardService;
+import com.example.memberboardproject.service.yhService.YhCommentService;
 import com.example.memberboardproject.service.yhService.YhMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,12 +25,11 @@ import java.util.List;
 public class YhBoardController {
     private final YhBoardService yhBoardService;
     private final YhMemberService yhMemberService;
-
+    private final YhCommentService yhCommentService;
     @GetMapping
     public String boardIndex() {
         return "/YHPages/yhBoardPages/index";
     }
-
     @Transactional
     @GetMapping("/list")
     public String boardList(Model model) {
@@ -49,13 +50,14 @@ public class YhBoardController {
         return "redirect:list";
     }
 
-
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model, HttpSession session) {
         YhBoardDTO yhBoardDTO = yhBoardService.findById(id);
+        List<YhCommentDTO> commentDTOList = yhCommentService.findAll(id);
+        System.out.println("컨트롤러안에있는 commentDTOList = " + commentDTOList);
         String loginEmail = (String) session.getAttribute("loginDTO");
         YhMemberDTO writerDTO = yhMemberService.findByEmail(loginEmail);
-        System.out.println("컨트롤러에 있는 yhMemberDTO = " + yhBoardDTO);
+        model.addAttribute("commentList", commentDTOList);
         model.addAttribute("writerDTO", writerDTO);
         model.addAttribute("yhBoard", yhBoardDTO);
         return "/YHPages/yhBoardPages/yhDetail";
@@ -73,5 +75,4 @@ public class YhBoardController {
         yhBoardService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

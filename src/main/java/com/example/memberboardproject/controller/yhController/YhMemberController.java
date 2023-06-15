@@ -32,8 +32,6 @@ public class YhMemberController {
         return "redirect:login";
     }
 
-
-
     @GetMapping("/login")
     public String loginForm() {
         return "YHPages/YhMemberPages/yhMemberLogin";
