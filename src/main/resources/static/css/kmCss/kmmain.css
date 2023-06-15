@@ -33,12 +33,13 @@ ul {
 /*#nav ul {*/
 /*    margin: 0px;*/
 /*}*/
-#nav li {
-    float: left;
-}
+/*#nav li {*/
+/*}*/
 #nav ul li {
     display: inline-block;
     margin-right: 3px; /* 우측 간격 조절 */
+    float: left;
+    color: yellow;
 }
 #nav #login-area {
     float: right;

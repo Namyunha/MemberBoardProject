@@ -3,6 +3,7 @@ package com.example.memberboardproject.dto.kmdto;
 import com.example.memberboardproject.entity.kmEntity.KmBoardEntity;
 import com.example.memberboardproject.entity.kmEntity.KmBoardFileEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,7 @@ import java.util.List;
 import static com.example.memberboardproject.util.kmUtil.KmUtilClass.kmDateFormat;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class KmBoardDTO {
@@ -52,4 +54,6 @@ public class KmBoardDTO {
         }
         return kmBoardDTO;
     }
+
+
 }
