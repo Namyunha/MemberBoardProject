@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,5 +49,24 @@ public class JyBoardController {
         model.addAttribute("type", type);
         model.addAttribute("q", q);
         return "JYPages/jyBoardPages/jyBoardPaging";
+    }
+
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id,
+                           @RequestParam("page") int page,
+                           @RequestParam("type") String type,
+                           @RequestParam("q") String q,
+                           Model model) {
+        jyBoardService.updateHits(id);
+        model.addAttribute("page", page);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
+        try {
+            JyBoardDTO jyBoardDTO = jyBoardService.findById(id);
+            model.addAttribute("board", jyBoardDTO);
+            return "JYPages/jyBoardPages/jyBoardDetail";
+        } catch (NoSuchElementException e) {
+            return "JYPages/jyBoardPages/jyBoardNotFound";
+        }
     }
 }
