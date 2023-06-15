@@ -1,19 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
 </head>
-
+<th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
 <body>
-<div>
-    <button th:onclick="goPage()">mypage</button>
-    <h2 th:text='${loginEmail}'></h2>
-</div>
+<table class="table table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>조회하기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board: ${boardList}">
+        <td th:text="${board.id}"></td>
+        <td th:text="${board.boardTitle}"></td>
+        <td th:text="${board.boardWriter}"></td>
+        <td><a style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 5px" th:href="@{|/yhBoard/${board.id}|}">조회</a></td>
+    </tr>
+    </tbody>
+</table>
+<div th:if="${session.loginDTO != null}"><a href="/yhBoard/save">글등록</a></div>
 </body>
 <script>
     const goPage = () => {
-        location.href="/yhMember/myPage";
+        location.href = "/yhMember/myPage";
     }
 </script>
 </html>
+
+

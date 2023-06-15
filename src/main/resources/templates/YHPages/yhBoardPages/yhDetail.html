@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="/YHPages/yhComponent/yhConfig :: config"></th:block>
+</head>
+<th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
+<body>
+<table class="table table-hover">
+    <tr class="table-dark">
+        <th>번호</th>
+        <td th:text="${yhBoard.id}"></td>
+    </tr>
+    <tr>
+        <th>제목</th>
+        <td th:text="${yhBoard.boardTitle}"></td>
+    </tr>
+    <tr>
+        <th>작성자</th>
+        <td th:text="${yhBoard.boardWriter}"></td>
+    </tr>
+    <tr>
+        <th>내용</th>
+        <td th:text="${yhBoard.boardContents}"></td>
+    </tr>
+    <tr>
+        <th>조회수</th>
+        <td th:text="${yhBoard.boardHits}"></td>
+    </tr>
+    <tr th:if="${yhBoard.fileAttached == 1}">
+        <th>이미지</th>
+        <td th:each="fileName: ${yhBoard.storedFileName}">
+            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        </td>
+    </tr>
+    <tr>
+        <th>수정</th>
+        <td>
+            <button onclick="req('update')">수정하기</button>
+        </td>
+    </tr>
+    <tr>
+        <th>삭제</th>
+        <td>
+            <button onclick="req('delete')">삭제하기</button>
+        </td>
+    </tr>
+
+</table>
+<div id="passwordArea" style="display: none">
+    <label for="passwordCheck">비밀번호: </label>
+    <input type="text" id="passwordCheck" name="passwordCheck">
+    <input type="button" onclick="passwordCheck()" value="비밀번호 확인">
+</div>
+
+<div id="updateArea"></div>
+
+<div id="commentArea">
+    <input type="text" id="boardId" style="display: none" name="boardId" th:value="${yhBoard.id}">
+    <label for="commentWriter">작성자</label>
+    <input type="text" id="commentWriter" name="commentWriter" th:value="${writerDTO.memberName}"><br>
+    <label for="commentContent">내용</label><br>
+    <textarea name="commentContent" id="commentContent" cols="30" rows="10"></textarea><br>
+    <input type="button" onclick="saveComment()" value="등록하기">
+</div>
+<div id="commentResult">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>내용</th>
+            <th>작성자</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment: ${commentList}">
+            <td th:text="${comment.id}"></td>
+            <td th:text="${comment.commentContents}"></td>
+            <td th:text="${comment.commentWriter}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:inline="javascript">
+
+    const comment_list = (commentList) => {
+        console.log("댓글 목록 함수", commentList);
+        const commentResult = document.querySelector("#commentResult");
+        let output = "        <table class=\"table\">\n" +
+            "            <tr>\n" +
+            "                <th>id</th>\n" +
+            "                <th>writer</th>\n" +
+            "                <th>contents</th>\n" +
+            "                <th>삭제</th>\n" +
+            "            </tr>";
+        for (let i in commentList) {
+            output += "<tr>\n" +
+                "                <td>" + commentList[i].id + "</td>\n" +
+                "                <td>" + commentList[i].commentWriter + "</td>\n" +
+                "                <td>" + commentList[i].commentContents + "</td>\n" +
+                "                <td>  <button onclick='deleteComment()'>삭제</button>  </td>\n" +
+                "            </tr>";
+        }
+        output += "</table>";
+        commentResult.innerHTML = output;
+    }
+
+    const saveComment = () => {
+        const commentWriter = document.querySelector("#commentWriter");
+        const commentContent = document.querySelector("#commentContent");
+        const boardId = document.querySelector("#boardId");
+        axios({
+            url: "/yhComment/save",
+            method: "post",
+            data: {
+                commentWriter: commentWriter.value,
+                commentContents: commentContent.value,
+                boardId: boardId.value
+            }
+        })
+            .then(res => {
+                console.log("res", res);
+                const commentContent = document.querySelector("#commentContent");
+                commentContent.innerHTML = "";
+                comment_list(res.data);
+            }).catch(err => {
+            alert("등록실패!");
+        })
+    }
+
+
+    let method = null
+    const req = (met) => {
+        const passwordArea = document.querySelector("#passwordArea");
+        const updateArea = document.querySelector("#updateArea");
+        passwordArea.style.display = "block";
+        method = met;
+        updateArea.innerHTML = "";
+    }
+
+    const passwordCheck = () => {
+        const passwordCheck = document.querySelector("#passwordCheck");
+        const boardId = [[${yhBoard.id}]];
+        const boardPass = [[${writerDTO.memberPassword}]];
+        const boardWriter = [[${writerDTO.memberName}]];
+        const boardTitle = [[${yhBoard.boardTitle}]];
+        const boardContents = [[${yhBoard.boardContents}]];
+        const updateArea = document.querySelector("#updateArea");
+        console.log(method);
+        if (passwordCheck.value != boardPass) {
+            alert("비밀번호가 일치하지않습니다");
+        } else if (method == "update") {
+            let result = `<form id="boardUpdateForm" onsubmit="updateForm(event)" name="boardUpdateForm" action="/yhBoard/update" method="post" enctype="multipart/form-data">
+            <input type="text" value="${boardId}" name="id" style="display:none">
+            <label for="boardWriter">작성자</label>
+            <input type="text" id="boardWriter" name="boardWriter" value="${boardWriter}"><br>
+            <label for="boardTitle">제목</label>
+            <input type="text" id="boardTitle" name="boardTitle" value="${boardTitle}"><br>
+            <label for="boardContents">내용</label>
+            <input type="text" id="boardContents" name="boardContents" value="${boardContents}"><br>
+            <label for="boardFile">파일첨부</label>
+            <input type="file" id="boardFile" name="boardFile" multiple><br>
+            <input type="submit" value="수정하기">
+            <input type="button" onclick="hiddenUpdate()" value="숨기기">
+        </form>`;
+            updateArea.innerHTML = result;
+        } else if (method == "delete") {
+            if (confirm("정말로 진행하시겠습니까?")) {
+                axios({
+                    url: "/yhBoard/" + boardId,
+                    method: "delete"
+                }).then(res => {
+                    location.href = "/yhBoard/list";
+                    alert("삭제에 성공하셨습니다.")
+                }).catch(err => {
+                    alert("삭제에 실패하셨습니다.")
+                })
+
+            } else {
+                updateArea.innerHTML = "";
+            }
+        }
+    }
+    const updateForm = (event) => {
+        event.preventDefault();
+        const boardUpdateForm = document.querySelector("#boardUpdateForm");
+        const updateArea = document.querySelector("#updateArea");
+        if (confirm("정말로 진행하시겠습니까?")) {
+            alert("업데이트에 성공하셨습니다");
+            boardUpdateForm.submit();
+        } else {
+            updateArea.innerHTML = "";
+        }
+    }
+
+
+    const hiddenUpdate = () => {
+        const updateArea = document.querySelector("#updateArea");
+        updateArea.innerHTML = "";
+    }
+</script>
+</body>
+</html>
