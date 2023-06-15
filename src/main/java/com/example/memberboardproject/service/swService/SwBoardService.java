@@ -1,6 +1,7 @@
 package com.example.memberboardproject.service.swService;
 
 import com.example.memberboardproject.dto.SwDTO.SwBoardDTO;
+import com.example.memberboardproject.dto.SwDTO.SwBoardFileDTO;
 import com.example.memberboardproject.dto.SwDTO.SwMemberDTO;
 import com.example.memberboardproject.entity.SwEntity.SwBoardEntity;
 import com.example.memberboardproject.entity.SwEntity.SwBoardFileEntity;
@@ -52,4 +53,11 @@ public class SwBoardService {
         });
         return swBoardDTOList;
     }
+
+    public SwBoardDTO findById(Long id) {
+        SwBoardEntity swBoardEntity = swBoardRepository.findById(id).get();
+        return SwBoardDTO.toDTO(swBoardEntity);
+    }
+
+
 }

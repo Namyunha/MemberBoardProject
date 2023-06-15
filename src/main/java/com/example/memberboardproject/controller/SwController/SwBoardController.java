@@ -1,6 +1,7 @@
 package com.example.memberboardproject.controller.SwController;
 
 import com.example.memberboardproject.dto.SwDTO.SwBoardDTO;
+import com.example.memberboardproject.dto.SwDTO.SwBoardFileDTO;
 import com.example.memberboardproject.dto.SwDTO.SwMemberDTO;
 import com.example.memberboardproject.service.swService.SwBoardService;
 import com.example.memberboardproject.service.swService.SwMemberService;
@@ -50,9 +51,13 @@ public class SwBoardController {
     }
 
     @GetMapping("/board/{id}")
-    public String boardDetail(@PathVariable Long id) {
-        System.out.println("id = " + id);
-        return "redirect:/SWPages";
+    @Transactional
+    public String boardDetail(@PathVariable Long id,Model model,HttpSession session) {
+        SwBoardDTO swBoardDTO = swBoardService.findById(id);
+        model.addAttribute("boardDTO",swBoardDTO);
+        SwMemberDTO swMemberDTO = swMemberService.findByEmail((String) session.getAttribute("loginEmail"));
+        model.addAttribute("memberDTO",swMemberDTO);
+        return "/SWpages/boardPages/boardDetail";
     }
 
 
