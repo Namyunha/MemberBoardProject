@@ -1,6 +1,7 @@
 package com.example.memberboardproject.service.yhService;
 
 import com.example.memberboardproject.dto.yhdDto.YhBoardDTO;
+import com.example.memberboardproject.dto.yhdDto.YhMemberDTO;
 import com.example.memberboardproject.entity.yhEntity.YhBoardEntity;
 import com.example.memberboardproject.entity.yhEntity.YhBoardFileEntity;
 import com.example.memberboardproject.entity.yhEntity.YhMemberEntity;
@@ -8,12 +9,14 @@ import com.example.memberboardproject.repository.yhRepository.YhBoardFileReposit
 import com.example.memberboardproject.repository.yhRepository.YhBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -51,5 +54,12 @@ public class YhBoardService {
             yhBoardDTOList.add(yhBoardDTO);
         }
         return yhBoardDTOList;
+    }
+
+    @Transactional
+    public YhBoardDTO findById(Long id) {
+        YhBoardEntity yhBoardEntity = yhBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+            YhBoardDTO yhBoardDTO = YhBoardDTO.toSaveDTO(yhBoardEntity);
+            return yhBoardDTO;
     }
 }

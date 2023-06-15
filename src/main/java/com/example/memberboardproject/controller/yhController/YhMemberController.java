@@ -32,6 +32,8 @@ public class YhMemberController {
         return "redirect:login";
     }
 
+
+
     @GetMapping("/login")
     public String loginForm() {
         return "YHPages/YhMemberPages/yhMemberLogin";
@@ -53,6 +55,7 @@ public class YhMemberController {
         session.invalidate();
         return "redirect:login";
     }
+
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
         String loginDTO = (String) session.getAttribute("loginDTO");

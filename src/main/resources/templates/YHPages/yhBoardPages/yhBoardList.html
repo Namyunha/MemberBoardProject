@@ -12,6 +12,8 @@
         <th>제목</th>
         <th>작성자</th>
         <th>조회하기</th>
+        <th>수정하기</th>
+        <th>삭제하기</th>
     </tr>
     </thead>
     <tbody>
@@ -19,7 +21,7 @@
         <td th:text="${board.id}"></td>
         <td th:text="${board.boardTitle}"></td>
         <td th:text="${board.boardWriter}"></td>
-        <td><a style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 5px" th:href="@{|/board/${board.id}|}">조회</a></td>
+        <td><a style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 5px" th:href="@{|/yhBoard/${board.id}|}">조회</a></td>
     </tr>
     </tbody>
 </table>

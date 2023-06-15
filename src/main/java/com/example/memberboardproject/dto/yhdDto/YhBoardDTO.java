@@ -1,6 +1,7 @@
 package com.example.memberboardproject.dto.yhdDto;
 
 import com.example.memberboardproject.entity.yhEntity.YhBoardEntity;
+import com.example.memberboardproject.entity.yhEntity.YhBoardFileEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,7 +34,22 @@ public class YhBoardDTO {
         yhBoardDTO.setBoardWriter(boardEntity.getBoardWriter());
         yhBoardDTO.setBoardContents(boardEntity.getBoardContents());
         yhBoardDTO.setBoardHits(boardEntity.getBoardHits());
-        yhBoardDTO.setFileAttached(boardEntity.getFileAttached());
+        if (boardEntity.getFileAttached() == 1) {
+            List<String> originalFileNameList = new ArrayList<>();
+            List<String> storedFileNameList = new ArrayList<>();
+            for (YhBoardFileEntity boardFile : boardEntity.getYhBoardFileEntityList()) {
+                String originalFileName = boardFile.getOriginalFileName();
+                String storedFileName = boardFile.getStoredFileName();
+                originalFileNameList.add(originalFileName);
+                storedFileNameList.add(storedFileName);
+            }
+            yhBoardDTO.setFileAttached(1);
+            yhBoardDTO.setOriginalFileName(originalFileNameList);
+            yhBoardDTO.setStoredFileName(storedFileNameList);
+        } else {
+            yhBoardDTO.setFileAttached(0);
+        }
         return yhBoardDTO;
     }
+
 }

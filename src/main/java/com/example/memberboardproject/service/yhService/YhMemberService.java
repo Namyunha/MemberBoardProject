@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -68,6 +69,8 @@ public class YhMemberService {
     public void deleteUser(Long id) {
         yhMemberRepository.deleteById(id);
     }
+
+
 
 //    public YhMemberDTO findByEmail(String loginDTO) {
 //        Optional<YhMemberEntity> yhMemberEntity = yhMemberRepository.find

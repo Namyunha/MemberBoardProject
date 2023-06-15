@@ -1,13 +1,14 @@
 package com.example.memberboardproject.controller.yhController;
 
 import com.example.memberboardproject.dto.yhdDto.YhBoardDTO;
+import com.example.memberboardproject.dto.yhdDto.YhMemberDTO;
 import com.example.memberboardproject.service.yhService.YhBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class YhBoardController {
         return "/YHPages/yhBoardPages/index";
     }
 
+    @Transactional
     @GetMapping("/list")
     public String boardList(Model model) {
         List<YhBoardDTO> yhBoardDTOList = yhBoardService.findAll();
@@ -40,6 +42,16 @@ public class YhBoardController {
         System.out.println("컨트롤러로들어온 yhBoardDTO = " + yhBoardDTO);
         yhBoardService.boardSave(yhBoardDTO);
         return "redirect:list";
+    }
+
+
+
+    @GetMapping("/{id}")
+    public String detail(@PathVariable Long id, Model model) {
+        YhBoardDTO yhBoardDTO = yhBoardService.findById(id);
+        System.out.println("컨트롤러에 있는 yhMemberDTO = " + yhBoardDTO);
+        model.addAttribute("yhBoard", yhBoardDTO);
+        return "/YHPages/yhBoardPages/yhDetail";
     }
 
 }
