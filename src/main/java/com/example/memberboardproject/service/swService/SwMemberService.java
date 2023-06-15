@@ -64,7 +64,7 @@ public class SwMemberService {
 
     public void memberUpdate(SwMemberDTO swMemberDTO) throws IOException {
         if(swMemberDTO.getSwMemberFile() == null || swMemberDTO.getSwMemberFile().get(0).isEmpty()) {
-            SwMemberEntity.toUpdateEntity(swMemberDTO);
+            swMemberRepository.save(SwMemberEntity.toUpdateEntity(swMemberDTO));
         }else {
             SwMemberEntity saveMemberEntity = swMemberRepository.save(SwMemberEntity.toUpdateWithFileEntity(swMemberDTO));
             for(MultipartFile swMemberFile : swMemberDTO.getSwMemberFile()) {

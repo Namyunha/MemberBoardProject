@@ -4,7 +4,6 @@ import com.example.memberboardproject.entity.SwEntity.SwMemberEntity;
 import com.example.memberboardproject.entity.SwEntity.SwMemberFileEntity;
 import com.example.memberboardproject.util.SwUtil.SwUtilClass;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;

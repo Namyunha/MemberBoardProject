@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="SWPages/component/config"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div th:replace="SWPages/component/header :: header"></div>
+<div th:replace="SWPages/component/nav :: nav"></div>
+<div id="section">
+    <div id="container" style="text-align: center; align-items: center; justify-content: center">
+        <div th:if="${boardDTO.fileAttached == 1}"
+             style="text-align: center; align-items: center; justify-content: center">
+            <div th:each="fileName: ${boardDTO.storedFileName}" style="object-fit: cover">
+                <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="" style="border-radius: 50%;">
+            </div>
+        </div>
+        <div th:unless="${boardDTO.fileAttached == 1}"
+             style="text-align: center; align-items: center; justify-content: center">
+            <div style="object-fit: cover">
+                <img src="https://avatars.githubusercontent.com/u/127707534?v=4" width="200" height="200" alt=""
+                     style="border-radius: 50%">
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    글 번호 : <span th:text="${boardDTO.id}"></span>
+                </div>
+                <div class="col">
+                    글 조회수 : <span th:text="${boardDTO.boardHits}"></span>
+                </div>
+                <div class="col">
+                    글 작성시간 : <span th:text="${boardDTO.createdAt}"></span>
+                </div>
+            </div>
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <h5>글 제목</h5>
+                        <div th:text="${boardDTO.boardTitle}"></div>
+                    </div>
+                    <div class="col">
+                        <h5>글 작성자</h5>
+                        <div th:text="${boardDTO.boardWriter}"></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                    <textarea name="boardContents" id="board-contents" class="form-control h-25" rows="10"
+                              th:text="${boardDTO.boardContents}" readonly></textarea>
+            </div>
+            <div th:if="${boardDTO.boardWriter.equals(memberDTO.memberName)}">
+                <button class="btn btn-dark" onclick="modification_board('update')">글 수정</button>
+                <button class="btn btn-dark" onclick="modification_board('delete')">글 삭제</button>
+            </div>
+            <div>
+                <button class="btn btn-danger" onclick="back()">뒤로가기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="password-input" class="container">
+
+</div>
+</div>
+<div th:replace="SWPages/component/footer :: footer"></div>
+</body>
+<script th:inline="javascript">
+    const back = () => {
+        history.back();
+    }
+    const modification_board = (type) => {
+        const id = [[${board.id}]];
+        if (type == "update") {
+            location.href = "/sw/board/updateForm/" + id;
+        } else if (type == "delete") {
+            if (confirm("삭제하시겠습니까?")) {
+                location.href = "/sw/board/memberDelete/" + id;
+            } else {
+                alert("삭제 취소");
+            }
+        }
+    }
+
+</script>
+
+</html>
