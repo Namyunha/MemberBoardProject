@@ -31,4 +31,6 @@ public class YhBoardFileEntity {
         yhBoardFileEntity.setYhBoardEntity(yhBoardEntity);
         return yhBoardFileEntity;
     }
+
+
 }

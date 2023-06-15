@@ -5,6 +5,8 @@ import com.example.memberboardproject.dto.yhdDto.YhMemberDTO;
 import com.example.memberboardproject.service.yhService.YhBoardService;
 import com.example.memberboardproject.service.yhService.YhMemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -57,6 +59,19 @@ public class YhBoardController {
         model.addAttribute("writerDTO", writerDTO);
         model.addAttribute("yhBoard", yhBoardDTO);
         return "/YHPages/yhBoardPages/yhDetail";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute YhBoardDTO yhBoardDTO) {
+        System.out.println("컨트롤러에 있는 update : yhBoardDTO = " + yhBoardDTO);
+        yhBoardService.updateBoard(yhBoardDTO);
+        return "redirect:list";
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+        yhBoardService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

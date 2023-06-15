@@ -66,6 +66,7 @@
 
     const passwordCheck = () => {
         const passwordCheck = document.querySelector("#passwordCheck");
+        const boardId = "[[${yhBoard.id}]]";
         const boardPass = "[[${writerDTO.memberPassword}]]";
         const boardWriter = "[[${writerDTO.memberName}]]";
         const boardTitle = "[[${yhBoard.boardTitle}]]";
@@ -75,7 +76,8 @@
         if (passwordCheck.value != boardPass) {
             alert("비밀번호가 일치하지않습니다");
         } else if (method == "update") {
-            let result = `<form id="boardUpdateForm" onsubmit="updateForm(event)" name="boardUpdateForm" action="/yhBoard/update" method="post">
+            let result = `<form id="boardUpdateForm" onsubmit="updateForm(event)" name="boardUpdateForm" action="/yhBoard/update" method="post" enctype="multipart/form-data">
+            <input type="text" value="${boardId}" name="id" style="display:none">
             <label for="boardWriter">작성자</label>
             <input type="text" id="boardWriter" name="boardWriter" value="${boardWriter}"><br>
             <label for="boardTitle">제목</label>
@@ -89,6 +91,20 @@
         </form>`;
             updateArea.innerHTML = result;
         } else if (method == "delete") {
+            if (confirm("정말로 진행하시겠습니까?")) {
+                axios({
+                    url: "/yhBoard/" + boardId,
+                    method: "delete"
+                }).then(res => {
+                    location.href = "/yhBoard/list";
+                    alert("삭제에 성공하셨습니다.")
+                }).catch(err => {
+                    alert("삭제에 실패하셨습니다.")
+                })
+
+            } else {
+                updateArea.innerHTML = "";
+            }
         }
     }
     const updateForm = (event) => {

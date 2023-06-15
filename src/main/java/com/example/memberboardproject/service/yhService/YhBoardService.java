@@ -59,7 +59,38 @@ public class YhBoardService {
     @Transactional
     public YhBoardDTO findById(Long id) {
         YhBoardEntity yhBoardEntity = yhBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-            YhBoardDTO yhBoardDTO = YhBoardDTO.toSaveDTO(yhBoardEntity);
-            return yhBoardDTO;
+        YhBoardDTO yhBoardDTO = YhBoardDTO.toSaveDTO(yhBoardEntity);
+        return yhBoardDTO;
+    }
+
+//    public Long updateBoard(YhBoardDTO yhBoardDTO) {
+//        if (yhBoardDTO.getFileAttached() == 1) {
+//            List<String> originalFileList = new ArrayList<>();
+//            List<String> storedFileList = new ArrayList<>();
+//            YhBoardEntity yhBoardEntity = YhBoardEntity.toUpdateWithFile(yhBoardDTO);
+//            for (MultipartFile boardFile : yhBoardDTO.getBoardFile()) {
+//                String originalFileName = boardFile.getOriginalFilename();
+//                String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
+//                originalFileList.add(originalFileName);
+//                storedFileList.add(storedFileName);
+//                YhBoardFileEntity yhBoardFileEntity = YhBoardFileEntity.toUpdateFile(yhBoardEntity, originalFileName, storedFileName);
+//            }
+//            yhBoardDTO.setStoredFileName(originalFileList);
+//            yhBoardDTO.setStoredFileName(storedFileList);
+//
+//        } else {
+//
+//        }
+//        YhBoardEntity.toUpdateWithFile(yhBoardDTO);
+//        return null;
+//    }
+
+    public Long updateBoard(YhBoardDTO yhBoardDTO) {
+        YhBoardEntity yhBoardEntity = YhBoardEntity.toUpdateWithFile(yhBoardDTO);
+        return yhBoardRepository.save(yhBoardEntity).getId();
+    }
+
+    public void deleteById(Long id) {
+        yhBoardRepository.deleteById(id);
     }
 }
