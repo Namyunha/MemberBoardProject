@@ -33,8 +33,9 @@ public class KmBoardEntity extends KmBaseEntity {
     @JoinColumn(name = "kmMemberId")
     private KmMemberEntity kmMemberEntity;
 
-    public static KmBoardEntity saveToBoardEntity(KmBoardDTO kmBoardDTO){
+    public static KmBoardEntity saveToBoardEntity(KmBoardDTO kmBoardDTO, KmMemberEntity me){
         KmBoardEntity kmBoardEntity = new KmBoardEntity();
+        kmBoardEntity.setKmMemberEntity(me);
         kmBoardEntity.setBoardTitle(kmBoardDTO.getBoardTitle());
         kmBoardEntity.setBoardWriter(kmBoardDTO.getBoardWriter());
         kmBoardEntity.setBoardContents(kmBoardDTO.getBoardContents());
@@ -43,8 +44,8 @@ public class KmBoardEntity extends KmBaseEntity {
         return kmBoardEntity;
     }
 
-    public static KmBoardEntity saveToBoardEntityWithFile(KmBoardDTO kmBoardDTO) {
-        KmBoardEntity kmBoardEntity = saveToBoardEntity(kmBoardDTO);
+    public static KmBoardEntity saveToBoardEntityWithFile(KmBoardDTO kmBoardDTO, KmMemberEntity me) {
+        KmBoardEntity kmBoardEntity = saveToBoardEntity(kmBoardDTO, me);
         kmBoardEntity.setBoardFileAttached(1);
         return kmBoardEntity;
 
