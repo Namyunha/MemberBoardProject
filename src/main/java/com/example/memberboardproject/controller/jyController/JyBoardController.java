@@ -1,7 +1,9 @@
 package com.example.memberboardproject.controller.jyController;
 
 import com.example.memberboardproject.dto.jyDto.JyBoardDTO;
+import com.example.memberboardproject.dto.jyDto.JyCommentDTO;
 import com.example.memberboardproject.service.jyService.JyBoardService;
+import com.example.memberboardproject.service.jyService.JyCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -22,6 +25,7 @@ import java.util.NoSuchElementException;
 @RequestMapping("/jy/board")
 public class JyBoardController {
     private final JyBoardService jyBoardService;
+    private final JyCommentService jyCommentService;
 
     @GetMapping("/save")
     public String saveForm() { return "JYPages/jyBoardPages/jyBoardSave"; }
@@ -68,6 +72,12 @@ public class JyBoardController {
         try {
             JyBoardDTO jyBoardDTO = jyBoardService.findById(id);
             model.addAttribute("board", jyBoardDTO);
+            List<JyCommentDTO> jyCommentDTOList = jyCommentService.findAll(id);
+            if (jyCommentDTOList.size() > 0) {
+                model.addAttribute("commentList", jyCommentDTOList);
+            } else {
+                model.addAttribute("commentList", null);
+            }
             return "JYPages/jyBoardPages/jyBoardDetail";
         } catch (NoSuchElementException e) {
             return "JYPages/jyBoardPages/jyBoardNotFound";

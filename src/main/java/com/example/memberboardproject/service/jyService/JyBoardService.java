@@ -1,10 +1,13 @@
 package com.example.memberboardproject.service.jyService;
 
 import com.example.memberboardproject.dto.jyDto.JyBoardDTO;
+import com.example.memberboardproject.dto.jyDto.JyCommentDTO;
 import com.example.memberboardproject.entity.jyEntity.JyBoardEntity;
 import com.example.memberboardproject.entity.jyEntity.JyBoardFileEntity;
+import com.example.memberboardproject.entity.jyEntity.JyCommentEntity;
 import com.example.memberboardproject.repository.jyRepository.JyBoardFileRepository;
 import com.example.memberboardproject.repository.jyRepository.JyBoardRepository;
+import com.example.memberboardproject.repository.jyRepository.JyCommentRepository;
 import com.example.memberboardproject.util.jyUtil.JyUtilClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
