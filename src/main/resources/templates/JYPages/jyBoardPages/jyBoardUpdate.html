@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>boardSave</h2>
+<form action="/jy/board/update" method="post">
+    <input type="hidden" name="id" th:value="${board.id}">
+    <input type="text" name="boardTitle" placeholder="글 제목" th:value="${board.boardTitle}"> <br>
+    <input type="text" name="boardWriter" placeholder="글 작성자" th:value="${board.boardWriter}" readonly> <br>
+    <textarea name="boardContents" id="board-contents" cols="30" rows="10" placeholder="글 내용" th:text="${board.boardContents}"></textarea> <br>
+    <input type="hidden" name="boardHits" th:value="${board.boardHits}">
+    <input type="hidden" name="fileAttached" th:value="${board.fileAttached}">
+    <input type="button" value="수정" onclick="board_update()">
+</form>
+</body>
+<script th:inline="javascript">
+    const board_update = () => {
+        const id = document.querySelector('input[name="id"]').value;
+        const boardTitle = document.querySelector('input[name="boardTitle"]').value;
+        const boardWriter = document.querySelector('input[name="boardWriter"]').value;
+        const boardContents = document.querySelector('#board-contents').value;
+        const boardHits = document.querySelector('input[name="boardHits"]').value;
+        const fileAttached = document.querySelector('input[name="fileAttached"]').value;
+        const page = [[${page}]];
+        const type = [[${type}]];
+        const q = [[${q}]];
+
+        axios({
+            method: "put",
+            url: "/jy/board/" + id + "?page=" + page + "&type=" + type + "&q=" + q,
+            data: {
+                id: id,
+                boardTitle: boardTitle,
+                boardWriter: boardWriter,
+                boardContents: boardContents,
+                boardHits: boardHits,
+                fileAttached: fileAttached
+            }
+        }).then(res => {
+            console.log("pages", res.data);
+            const pageValue = res.data.page;
+            const typeValue = res.data.type;
+            const qValue = res.data.q;
+            location.href = "/jy/board/" + id + "?page=" + pageValue + "&type=" + typeValue + "&q=" + qValue;
+        }).catch(err => {
+            alert("수정 실패");
+        })
+    }
+</script>
+</html>
