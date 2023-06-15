@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>boardDetail</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <td th:text="${board.id}"></td>
+    </tr>
+    <tr>
+        <th>title</th>
+        <td th:text="${board.boardTitle}"></td>
+    </tr>
+    <tr>
+        <th>writer</th>
+        <td th:text="${board.boardWriter}"></td>
+    </tr>
+    <tr>
+        <th>contents</th>
+        <td th:text="${board.boardContents}"></td>
+    </tr>
+    <tr>
+        <th>hits</th>
+        <td th:text="${board.boardHits}"></td>
+    </tr>
+    <tr th:if="${board.fileAttached == 1}">
+        <th>image</th>
+        <td th:each="fileName: ${board.storedFileName}">
+            <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+        </td>
+    </tr>
+</table>
+<button onclick="back()">뒤로</button>
+<button th:if="${board.boardWriter == session.loginEmail}" onclick="mypage_back()">수정</button>
+<button th:if="${board.boardWriter == session.loginEmail}" onclick="mypage_back()">삭제</button>
+</body>
+<script th:inline="javascript">
+    const back = () => {
+        const page = [[${page}]];
+        const type = [[${type}]];
+        const q = [[${q}]];
+        location.href = "/jy/board?page=" + page + "&type=" + type + "&q=" + q;
+    }
+</script>
+</html>

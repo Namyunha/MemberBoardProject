@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -66,5 +67,16 @@ public class JyBoardService {
                                                             .boardHits(jyBoardEntity.getBoardHits())
                                                             .build());
         return jyBoardDTOS;
+    }
+
+    @Transactional
+    public void updateHits(Long id) {
+        jyBoardRepository.updateHits(id);
+    }
+
+    @Transactional
+    public JyBoardDTO findById(Long id) {
+        JyBoardEntity jyBoardEntity = jyBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return JyBoardDTO.toDTO(jyBoardEntity);
     }
 }
