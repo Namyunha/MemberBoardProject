@@ -31,7 +31,8 @@ public class KmMemberEntity extends KmBaseEntity{
 
     @OneToMany(mappedBy = "kmMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<KmMemberFileEntity> kmMemberFileEntityList = new ArrayList<>();
-
+    @OneToMany(mappedBy = "kmMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<KmBoardEntity> kmBoardEntityList = new ArrayList<>();
     public static KmMemberEntity saveToKmMemberEntity(KmMemberDTO kmMemberDTO) {
         KmMemberEntity kmMemberEntity = new KmMemberEntity();
         kmMemberEntity.setMemberEmail(kmMemberDTO.getMemberEmail());

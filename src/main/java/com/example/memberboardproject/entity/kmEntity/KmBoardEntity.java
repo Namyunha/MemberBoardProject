@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "km_board_table")
-public class KmBoardEntity extends KmUtilClass {
+public class KmBoardEntity extends KmBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -29,6 +29,9 @@ public class KmBoardEntity extends KmUtilClass {
     public int boardFileAttached;
     @OneToMany(mappedBy = "kmBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<KmBoardFileEntity> kmBoardFileEntityList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kmMemberId")
+    private KmMemberEntity kmMemberEntity;
 
     public static KmBoardEntity saveToBoardEntity(KmBoardDTO kmBoardDTO){
         KmBoardEntity kmBoardEntity = new KmBoardEntity();
@@ -40,4 +43,10 @@ public class KmBoardEntity extends KmUtilClass {
         return kmBoardEntity;
     }
 
+    public static KmBoardEntity saveToBoardEntityWithFile(KmBoardDTO kmBoardDTO) {
+        KmBoardEntity kmBoardEntity = saveToBoardEntity(kmBoardDTO);
+        kmBoardEntity.setBoardFileAttached(1);
+        return kmBoardEntity;
+
+    }
 }

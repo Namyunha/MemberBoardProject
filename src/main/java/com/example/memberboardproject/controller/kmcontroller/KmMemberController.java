@@ -26,10 +26,8 @@ public class KmMemberController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute KmMemberDTO kmMemberDTO, Model model) throws IOException {
-        System.out.println("컨트롤러kmMemberDTO = " + kmMemberDTO);
-
+        System.out.println("컨트롤러 kmMemberDTO = " + kmMemberDTO);
         kmMemberService.save(kmMemberDTO);
-
         return "redirect:/kmMember/login";
     }
 

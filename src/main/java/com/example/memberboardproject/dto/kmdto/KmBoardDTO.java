@@ -18,8 +18,8 @@ public class KmBoardDTO {
     private String boardCreatedAt;
     private int boardFileAttached;
     private int boardHits;
-    private List<String> originalFileName;
-    private List<String> storedFileName;
+    private List<String> originalBoardFileName;
+    private List<String> storedBoardFileName;
     private List<MultipartFile> boardFile;
 
 
