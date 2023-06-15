@@ -84,4 +84,6 @@ public class JyBoardService {
         JyBoardEntity jyBoardEntity = JyBoardEntity.toUpdateEntity(jyBoardDTO);
         jyBoardRepository.save(jyBoardEntity);
     }
+
+    public void delete(Long id) { jyBoardRepository.deleteById(id); }
 }

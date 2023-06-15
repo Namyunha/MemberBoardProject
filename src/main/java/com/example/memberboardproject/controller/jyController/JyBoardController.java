@@ -102,5 +102,14 @@ public class JyBoardController {
         return new ResponseEntity<>(pages, HttpStatus.OK);
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id,
+                         @RequestParam("page") int page,
+                         @RequestParam("type") String type,
+                         @RequestParam("q") String q) {
+        jyBoardService.delete(id);
+        return "redirect:/jy/board?page=" + page + "&type=" + type + "&q=" + q;
+    }
+
 
 }
