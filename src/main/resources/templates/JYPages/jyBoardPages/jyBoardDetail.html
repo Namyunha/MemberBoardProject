@@ -36,7 +36,7 @@
 </table>
 <button onclick="back()">뒤로</button>
 <button th:if="${board.boardWriter == session.loginEmail}" onclick="board_update()">수정</button>
-<button th:if="${board.boardWriter == session.loginEmail}" onclick="mypage_back()">삭제</button>
+<button th:if="${board.boardWriter == session.loginEmail}" onclick="board_delete()">삭제</button>
 </body>
 <script th:inline="javascript">
     const id = [[${board.id}]];
@@ -50,6 +50,10 @@
 
     const board_update = () => {
         location.href = "/jy/board/update/" + id + "?page=" + page + "&type=" + type + "&q=" + q;
+    }
+
+    const board_delete = () => {
+        location.href = "/jy/board/delete/" + id + "?page=" + page + "&type=" + type + "&q=" + q;
     }
 </script>
 </html>
