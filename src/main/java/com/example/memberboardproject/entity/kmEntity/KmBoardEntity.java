@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "km_board_table")
-public class KmBoardEntity extends KmUtilClass {
+public class KmBoardEntity extends KmBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -29,9 +29,13 @@ public class KmBoardEntity extends KmUtilClass {
     public int boardFileAttached;
     @OneToMany(mappedBy = "kmBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<KmBoardFileEntity> kmBoardFileEntityList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "kmMemberId")
+    private KmMemberEntity kmMemberEntity;
 
-    public static KmBoardEntity saveToBoardEntity(KmBoardDTO kmBoardDTO){
+    public static KmBoardEntity saveToBoardEntity(KmBoardDTO kmBoardDTO, KmMemberEntity me){
         KmBoardEntity kmBoardEntity = new KmBoardEntity();
+        kmBoardEntity.setKmMemberEntity(me);
         kmBoardEntity.setBoardTitle(kmBoardDTO.getBoardTitle());
         kmBoardEntity.setBoardWriter(kmBoardDTO.getBoardWriter());
         kmBoardEntity.setBoardContents(kmBoardDTO.getBoardContents());
@@ -40,4 +44,10 @@ public class KmBoardEntity extends KmUtilClass {
         return kmBoardEntity;
     }
 
+    public static KmBoardEntity saveToBoardEntityWithFile(KmBoardDTO kmBoardDTO, KmMemberEntity me) {
+        KmBoardEntity kmBoardEntity = saveToBoardEntity(kmBoardDTO, me);
+        kmBoardEntity.setBoardFileAttached(1);
+        return kmBoardEntity;
+
+    }
 }

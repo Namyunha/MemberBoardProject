@@ -8,10 +8,10 @@
 <div th:replace="KMPages/kmComponent/kmNav"></div>
 <div id="section">
     <h2>boardSave.html</h2>
-    <form action="/KmBoard/save" method="post" enctype="multipart/form-data">
+    <form action="/kmBoard/save" method="post" enctype="multipart/form-data">
         <input type="text" name="boardTitle" placeholder="제목">
         <input type="text" name="boardWriter" readonly th:value="${session.loginEmail}">
-        <textarea cols ="20" rows="30" name="boardContents">내용입력</textarea>
+        <textarea cols ="30" rows="10" name="boardContents">내용입력</textarea>
         <input type="file" name="boardFile" class="form-control" multiple>
         <input type="submit" th:value="글저장">
     </form>

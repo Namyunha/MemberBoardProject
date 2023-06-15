@@ -16,10 +16,17 @@ public class KmBoardFileEntity {
     @Column(length = 300, nullable = false)
     public String storedBoardFileName;
     @Column(length = 500,nullable = false)
-    public String originalFileName;
+    public String originalBoardFileName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kmBoardId")
     private KmBoardEntity kmBoardEntity;
 
 
+    public static KmBoardFileEntity saveToBoardFileEntity(KmBoardEntity kmBoardEntity, String originalBoardFileName, String storedBoardFileName) {
+        KmBoardFileEntity kmBoardFileEntity = new KmBoardFileEntity();
+        kmBoardFileEntity.setKmBoardEntity(kmBoardEntity);
+        kmBoardFileEntity.setOriginalBoardFileName(originalBoardFileName);
+        kmBoardFileEntity.setStoredBoardFileName(storedBoardFileName);
+        return kmBoardFileEntity;
+    }
 }

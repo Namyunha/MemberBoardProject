@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="KMPages/kmComponent/kmConfig :: kmConfig"></th:block>
+</head>
+<body>
+<div th:replace="KMPages/kmComponent/kmHeader"></div>
+<div th:replace="KMPages/kmComponent/kmNav"></div>
+<div id="section">
+<h2>Board list.html</h2>
+    <table>
+        <tr>
+            <th>글번호</th>
+            <th>글제목</th>
+            <th>작성자</th>
+            <th>내용</th>
+            <th>작성날짜</th>
+            <th>파일유무</th>
+            <th>조회수</th>
+        </tr>
+        <tr th:each="board:${boardList}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.boardTitle}"></td>
+            <td th:text="${board.boardWriter}"></td>
+            <td th:text="${board.boardContents}"></td>
+            <td th:text="${board.boardCreatedAt}"></td>
+            <td th:text="${board.boardFileAttached}"></td>
+            <td th:text="${board.boardHits}"></td>
+            <!--        <td th:text="*{#temporals.format(board.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>-->
+
+        </tr>
+    </table>
+
+</div>
+<div th:replace="KMPages/kmComponent/kmFooter"></div>
+
+</body>
+</html>
