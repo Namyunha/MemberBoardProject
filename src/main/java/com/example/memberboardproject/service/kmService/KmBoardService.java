@@ -7,8 +7,12 @@ import com.example.memberboardproject.entity.kmEntity.KmMemberEntity;
 import com.example.memberboardproject.repository.kmRepository.KmBoardFileRepository;
 import com.example.memberboardproject.repository.kmRepository.KmBoardRepository;
 import com.example.memberboardproject.repository.kmRepository.KmMemberRepository;
+import com.example.memberboardproject.util.kmUtil.KmUtilClass;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,6 +72,7 @@ public class KmBoardService {
         return kmBoardDTOList;
 
     }
+
     @Transactional
     public KmBoardDTO findById(Long id) {
         Optional<KmBoardEntity> byId = kmBoardRepository.findById(id);
@@ -75,9 +80,31 @@ public class KmBoardService {
         KmBoardDTO boardDTO = KmBoardDTO.toDTO(boardEntity);
         return boardDTO;
     }
+
     @Transactional
     public void boardHits(Long id) {
 //        KmBoardEntity kmBoardEntity = KmBoardEntity.updateToBoardEntity(kmBoardDTO);
         kmBoardRepository.updateHits(id);
+    }
+
+    public Page<KmBoardDTO> paging(Pageable pageable, String type, String q) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 5; // 한 화면에 5개 글씩 보겠다.
+        Page<KmBoardEntity> kmBoardEntities= null;
+        if (type.equals("title")) {
+            kmBoardEntities = kmBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+
+        } else if (type.equals("writer")) {
+            kmBoardEntities = kmBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else {
+            kmBoardEntities = kmBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        }
+        Page<KmBoardDTO> kmBoardDTOS = kmBoardEntities.map(kmBoardEntity -> KmBoardDTO.builder()
+                .id(kmBoardEntity.getId())
+                .boardTitle(kmBoardEntity.getBoardTitle())
+                .boardWriter(kmBoardEntity.getBoardWriter())
+                .boardCreatedAt(KmUtilClass.kmDateFormat(kmBoardEntity.getKmCreatedAt()))
+                .build());
+        return kmBoardDTOS;
     }
 }
