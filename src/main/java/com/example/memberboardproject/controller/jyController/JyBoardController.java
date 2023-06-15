@@ -6,11 +6,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -69,4 +73,34 @@ public class JyBoardController {
             return "JYPages/jyBoardPages/jyBoardNotFound";
         }
     }
+
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id,
+                             @RequestParam("page") int page,
+                             @RequestParam("type") String type,
+                             @RequestParam("q") String q,
+                             Model model) {
+        JyBoardDTO jyBoardDTO = jyBoardService.findById(id);
+        model.addAttribute("board", jyBoardDTO);
+        model.addAttribute("page", page);
+        model.addAttribute("type", type);
+        model.addAttribute("q", q);
+        return "JYPages/jyBoardPages/jyBoardUpdate";
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@RequestBody JyBoardDTO jyBoardDTO,
+                                 @RequestParam("page") int page,
+                                 @RequestParam("type") String type,
+                                 @RequestParam("q") String q) {
+        System.out.println("jyBoardDTO = " + jyBoardDTO);
+        jyBoardService.update(jyBoardDTO);
+        Map<String, Object> pages = new HashMap<>();
+        pages.put("page", page);
+        pages.put("type", type);
+        pages.put("q", q);
+        return new ResponseEntity<>(pages, HttpStatus.OK);
+    }
+
+
 }

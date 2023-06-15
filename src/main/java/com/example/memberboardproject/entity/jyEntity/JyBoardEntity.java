@@ -54,4 +54,15 @@ public class JyBoardEntity extends JyBaseEntity {
         jyBoardEntity.setFileAttached(1);
         return jyBoardEntity;
     }
+
+    public static JyBoardEntity toUpdateEntity(JyBoardDTO jyBoardDTO) {
+        JyBoardEntity jyBoardEntity = new JyBoardEntity();
+        jyBoardEntity.setId(jyBoardDTO.getId());
+        jyBoardEntity.setBoardTitle(jyBoardDTO.getBoardTitle());
+        jyBoardEntity.setBoardWriter(jyBoardDTO.getBoardWriter());
+        jyBoardEntity.setBoardContents(jyBoardDTO.getBoardContents());
+        jyBoardEntity.setBoardHits(jyBoardDTO.getBoardHits());
+        jyBoardEntity.setFileAttached(jyBoardDTO.getFileAttached());
+        return jyBoardEntity;
+    }
 }

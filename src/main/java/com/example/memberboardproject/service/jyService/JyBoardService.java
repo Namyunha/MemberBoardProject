@@ -79,4 +79,9 @@ public class JyBoardService {
         JyBoardEntity jyBoardEntity = jyBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return JyBoardDTO.toDTO(jyBoardEntity);
     }
+
+    public void update(JyBoardDTO jyBoardDTO) {
+        JyBoardEntity jyBoardEntity = JyBoardEntity.toUpdateEntity(jyBoardDTO);
+        jyBoardRepository.save(jyBoardEntity);
+    }
 }
