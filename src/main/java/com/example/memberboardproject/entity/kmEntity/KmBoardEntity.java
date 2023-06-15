@@ -50,4 +50,15 @@ public class KmBoardEntity extends KmBaseEntity {
         return kmBoardEntity;
 
     }
+
+    public static KmBoardEntity updateToBoardEntity(KmBoardDTO kmBoardDTO) {
+        KmBoardEntity kmBoardEntity = new KmBoardEntity();
+        kmBoardEntity.setId(kmBoardDTO.getId());
+        kmBoardEntity.setBoardTitle(kmBoardDTO.getBoardTitle());
+        kmBoardEntity.setBoardWriter(kmBoardDTO.getBoardWriter());
+        kmBoardEntity.setBoardContents(kmBoardDTO.getBoardContents());
+        kmBoardEntity.setBoardFileAttached(kmBoardDTO.getBoardFileAttached());
+        kmBoardEntity.setBoardHits(kmBoardDTO.getBoardHits()+1);
+        return kmBoardEntity;
+    }
 }

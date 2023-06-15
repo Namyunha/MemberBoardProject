@@ -68,4 +68,16 @@ public class KmBoardService {
         return kmBoardDTOList;
 
     }
+    @Transactional
+    public KmBoardDTO findById(Long id) {
+        Optional<KmBoardEntity> byId = kmBoardRepository.findById(id);
+        KmBoardEntity boardEntity = byId.get();
+        KmBoardDTO boardDTO = KmBoardDTO.toDTO(boardEntity);
+        return boardDTO;
+    }
+    @Transactional
+    public void boardHits(Long id) {
+//        KmBoardEntity kmBoardEntity = KmBoardEntity.updateToBoardEntity(kmBoardDTO);
+        kmBoardRepository.updateHits(id);
+    }
 }

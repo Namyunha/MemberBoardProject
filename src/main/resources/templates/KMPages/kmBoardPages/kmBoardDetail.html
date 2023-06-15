@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="KMPages/kmComponent/kmConfig :: kmConfig"></th:block>
+</head>
+<body>
+<div th:replace="KMPages/kmComponent/kmHeader"></div>
+<div th:replace="KMPages/kmComponent/kmNav"></div>
+<div id="section">
+  <table class="table table-striped">
+    <tr>
+      <th>id</th>
+      <td th:text="${board.id}"></td>
+    </tr>
+    <tr>
+      <th>글쓴이</th>
+      <td th:text="${board.boardWriter}"></td>
+    </tr>
+    <tr>
+      <th>글제목</th>
+      <td th:text="${board.boardTitle}"></td>
+    </tr>
+    <tr>
+      <th>글내용</th>
+      <td th:text="${board.boardContents}"></td>
+    </tr>
+    <tr>
+      <th>조회수</th>
+      <td th:text="${board.boardHits}"></td>
+    </tr>
+    <tr>
+      <th>글쓴날짜</th>
+      <td th:text="${board.boardCreatedAt}"></td>
+    </tr>
+    <tr th:if="${board.boardFileAttached==1}">
+      <th>첨부사진</th>
+      <td th:each="fileName: ${board.storedBoardFileName}">
+        <img th:src="@{|/upload/${fileName}}" width="200" height="200" alt="">
+      </td>
+    </tr>
+
+  </table>
+
+</div>
+<div th:replace="KMPages/kmComponent/kmFooter"></div>
+
+</body>
+</html>
