@@ -35,6 +35,9 @@ public class JyBoardEntity extends JyBaseEntity {
     @OneToMany(mappedBy = "jyBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<JyBoardFileEntity> jyBoardFileEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "jyBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JyCommentEntity> jyCommentEntityList = new ArrayList<>();
+
     public static JyBoardEntity toSaveEntity(JyBoardDTO jyBoardDTO) {
         JyBoardEntity jyBoardEntity = new JyBoardEntity();
         jyBoardEntity.setBoardTitle(jyBoardDTO.getBoardTitle());

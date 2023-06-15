@@ -38,6 +38,9 @@ public class JyMemberEntity extends JyBaseEntity {
     @OneToMany(mappedBy = "jyMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<JyMemberFileEntity> jyMemberFileEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "jyMemberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<JyCommentEntity> jyCommentEntityList = new ArrayList<>();
+
     public static JyMemberEntity toSaveEntity(JyMemberDTO jyMemberDTO) {
         JyMemberEntity jyMemberEntity = new JyMemberEntity();
         jyMemberEntity.setMemberEmail(jyMemberDTO.getMemberEmail());
