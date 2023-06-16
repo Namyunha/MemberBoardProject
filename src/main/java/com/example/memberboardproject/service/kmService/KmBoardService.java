@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,16 +80,16 @@ public class KmBoardService {
         return boardDTO;
     }
 
-    @Transactional
     public void boardHits(Long id) {
 //        KmBoardEntity kmBoardEntity = KmBoardEntity.updateToBoardEntity(kmBoardDTO);
         kmBoardRepository.updateHits(id);
     }
 
+    @Transactional
     public Page<KmBoardDTO> paging(Pageable pageable, String type, String q) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 5; // 한 화면에 5개 글씩 보겠다.
-        Page<KmBoardEntity> kmBoardEntities= null;
+        Page<KmBoardEntity> kmBoardEntities = null;
         if (type.equals("title")) {
             kmBoardEntities = kmBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 

@@ -54,7 +54,8 @@ public class KmMemberController {
             System.out.println("로그인 성공");
             session.setAttribute("loginEmail", kmMemberDTO.getMemberEmail());
 //            System.out.println("세션값=" + session.getAttribute("loginEmail"));
-            return "KMPages/kmMemberPages/kmMemberMain";
+//            return "KMPages/kmBoardPages/kmBoardPaging";
+            return "redirect:/kmBoard/boardPaging";
         } else {
             System.out.println("로그인 실패");
             return "redirect:/kmMember/login";
