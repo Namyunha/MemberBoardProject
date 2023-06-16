@@ -48,7 +48,7 @@
 </table>
 <div id="passwordArea" style="display: none">
     <label for="passwordCheck">비밀번호: </label>
-    <input type="text" id="passwordCheck" name="passwordCheck">
+    <input type="password" id="passwordCheck" name="passwordCheck">
     <input type="button" onclick="passwordCheck()" value="비밀번호 확인">
 </div>
 
@@ -57,7 +57,7 @@
 <div id="commentArea">
     <input type="text" id="boardId" style="display: none" name="boardId" th:value="${yhBoard.id}">
     <label for="commentWriter">작성자</label>
-    <input type="text" id="commentWriter" name="commentWriter" th:value="${writerDTO.memberName}"><br>
+    <input type="text" id="commentWriter" name="commentWriter" th:value="${yhBoard.boardWriter}"><br>
     <label for="commentContent">내용</label><br>
     <textarea name="commentContent" id="commentContent" cols="30" rows="10"></textarea><br>
     <input type="button" onclick="saveComment()" value="등록하기">
@@ -142,7 +142,7 @@
         const passwordCheck = document.querySelector("#passwordCheck");
         const boardId = [[${yhBoard.id}]];
         const boardPass = [[${writerDTO.memberPassword}]];
-        const boardWriter = [[${writerDTO.memberName}]];
+        const boardWriter = [[${yhBoard.boardWriter}]];
         const boardTitle = [[${yhBoard.boardTitle}]];
         const boardContents = [[${yhBoard.boardContents}]];
         const updateArea = document.querySelector("#updateArea");
