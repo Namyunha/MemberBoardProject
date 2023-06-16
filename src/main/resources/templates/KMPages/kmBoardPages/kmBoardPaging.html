@@ -23,57 +23,57 @@
             <tr th:each="board:${boardList}">
                 <td th:text="${board.id}"></td>
                 <td th:text="${board.boardWriter}"></td>
-                <td th:text="${board.id}"></td>
+<!--                                                    page=${boardList.number+1}  현재 페이지 값-->
                 <td><a th:href="@{|/kmBoard/${board.id}?page=${boardList.number+1}&type=${type}&q=${q}|}"
-                       th:text="${board.boardTitle}">제목</a></td>
+                       th:text="${board.boardTitle}"></a></td>
                 <td th:text="${board.boardCreatedAt}"></td>
                 <td th:text="${board.boardHits}"></td>
+                <td th:text="${board.boardFileAttached}"></td>
             </tr>
             </tbody>
         </table>
         <div class="container">
-            <ul class="pagintion justify-content-center">
+            <ul class="pagination justify-content-center">
+                <!--   ============================== 처음페이지로 가기 ========================================================= -->
                 <li class="page-item">
                     <!--첫페이지 요청 링크 /board?page=1 -->
-                    <a class="page-link" th:href="@{/board(page=1, type=${type}, q=${q})}">
+                    <a class="page-link" th:href="@{/kmBoard/boardPaging(page=1, type=${type}, q=${q})}">
                         <span>First</span>
                     </a>
                 </li>
-
+                <!--   ===================================== 전페이지로 가기===================================================== -->
                 <li th:class="${boardList.first} ? 'disabled'" class="page-item">
                     <!--boardList.first: isFirst()
                         boardList.number: getNumber()-->
                     <a class="page-link"
-                       th:href="${boardList.first} ? '#' : @{/board(page=${boardList.number}, type=${type}, q=${q})}">
+                       th:href="${boardList.first} ? '#' : @{/kmBoard/boardPaging(page=${boardList.number}, type=${type}, q=${q})}">
                         <!-- 사용자 3페이지, number 2 /board?page=2 -->
-                        <span><</span> <!-- < -->
+                        <span> < </span> <!-- < -->
                     </a>
                 </li>
+                <!--   ========================================================================================================== -->
                 <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할
                        for(int page=startPage; page<=endPage; page++) -->
                 <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
                     th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">
                     <a class="page-link" th:text="${page}"
-                       th:href="@{/board(page=${page}, type=${type}, q=${q})}"></a>
+                       th:href="@{/kmboard/boardPaging(page=${page}, type=${type}, q=${q})}"></a>
                 </li>
-                <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
-                    th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">
-                    <a class="page-link" th:text="${page}"
-                       th:href="@{/board(page=${page}, type=${type}, q=${q})}"></a>
-                </li>
+                <!--   ========================================================================================================== -->
                 <!-- 다음 페이지 요청
                         현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
                         getNumber() 값은 2임.
                         따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
                 <li th:class="${boardList.last} ? 'disabled'">
                     <a class="page-link"
-                       th:href="${boardList.last} ? '#' : @{/board(page=${boardList.number + 2}, type=${type}, q=${q})}">
+                       th:href="${boardList.last} ? '#' : @{/kmboard/boardPaging(page=${boardList.number + 2}, type=${type}, q=${q})}">
                         <!-- 사용자 3페이지, number 2 /board?page=4 -->
                         <span>&gt;</span>
                     </a>
                 </li>
+                <!--   ========================================================================================================== -->
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/board(page=${boardList.totalPages}, type=${type}, q=${q})}">
+                    <a class="page-link" th:href="@{/kmboard/boardPaging(page=${boardList.totalPages}, type=${type}, q=${q})}">
                         <span>Last</span>
                     </a>
                 </li>
@@ -89,4 +89,16 @@
 <div th:replace="KMPages/kmComponent/kmFooter"></div>
 
 </body>
+<script th:inline="javascript">
+
+    console.log("boardHits",[[${board.boardHits}]]);
+    console.log("boardList 전페이지",[[${boardList.number}]]);
+    console.log("boardList 현재페이지",[[${boardList.number+1}]]);
+    console.log("boardList 다음페이지",[[${boardList.number+2}]]);
+    console.log("startPage",[[${startPage}]]);
+    console.log("endPage",[[${endPage}]]);
+    console.log("q",[[${q}]]);
+    console.log("type",[[${type}]]);
+    console.log("받은page",[[${page}]]);
+</script>
 </html>

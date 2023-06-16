@@ -20,8 +20,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/kmBoard")
-public class
-KmBoardController {
+public class KmBoardController {
     private final KmBoardService kmBoardService;
     private final KmMemberService kmMemberService;
 
@@ -59,22 +58,30 @@ KmBoardController {
         model.addAttribute("boardList", kmBoardDTOS);
         // 시작페이지(startPage), 마직막 페이지(endPage) 값 계산
         int blockLimit = 3;
-        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit - 1;
-        int endPage =( (startPage+blockLimit-1) < kmBoardDTOS.getTotalPages()) ? startPage+blockLimit-1 : kmBoardDTOS.getTotalPages();
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
-        model.addAttribute("q",q);
-        model.addAttribute("type",type);
+        int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < kmBoardDTOS.getTotalPages()) ? startPage + blockLimit - 1 : kmBoardDTOS.getTotalPages();
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("q", q);
+        model.addAttribute("type", type);
         return "KMPages/kmBoardPages/kmBoardPaging";
-
     }
 
-
-    @GetMapping("/boardDetail/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id,
+                           @RequestParam("page") int page,
+                           @RequestParam("type") String type,
+                           @RequestParam("q") String q,
+                           Model model) {
+        System.out.println("id = " + id + ", page = " + page +
+                ", type = " + type + ", q = " + q + ", model = " + model);
         kmBoardService.boardHits(id);
+        model.addAttribute("type", type);
+        model.addAttribute("page", page);
+        model.addAttribute("q", q);
+
         KmBoardDTO boardDTO = kmBoardService.findById(id);
-//        boardDTO = kmBoardService.findById(id);
+
         model.addAttribute("board", boardDTO);
         return "KMPages/kmBoardPages/kmBoardDetail";
     }
