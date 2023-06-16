@@ -1,8 +1,11 @@
 package com.example.memberboardproject.service.yhService;
 
+import com.example.memberboardproject.dto.yhdDto.YhBoardDTO;
 import com.example.memberboardproject.dto.yhdDto.YhMemberDTO;
+import com.example.memberboardproject.entity.yhEntity.YhBoardEntity;
 import com.example.memberboardproject.entity.yhEntity.YhMemberEntity;
 import com.example.memberboardproject.entity.yhEntity.YhMemberFileEntity;
+import com.example.memberboardproject.repository.yhRepository.YhBoardRepository;
 import com.example.memberboardproject.repository.yhRepository.YhMemberFileRepository;
 import com.example.memberboardproject.repository.yhRepository.YhMemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ import java.util.Optional;
 public class YhMemberService {
     private final YhMemberRepository yhMemberRepository;
     private final YhMemberFileRepository yhMemberFileRepository;
+    private final YhBoardRepository yhBoardRepository;
 
     public Long save(YhMemberDTO yhMemberDTO) throws IOException {
         if (yhMemberDTO.getMemberProfile() == null || yhMemberDTO.getMemberProfile().get(0).isEmpty()) {
@@ -70,6 +74,14 @@ public class YhMemberService {
         yhMemberRepository.deleteById(id);
     }
 
+    @Transactional
+    public YhMemberDTO findByBoardId(Long id) {
+        YhBoardEntity yhBoardEntity = yhBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        YhMemberEntity yhMemberEntity = yhMemberRepository.findByMemberEmail(yhBoardEntity.getBoardWriter());
+        YhMemberDTO yhMemberDTO = YhMemberDTO.toSaveDTO(yhMemberEntity);
+        System.out.println("서비스에 있는 yhMemberDTO = " + yhMemberDTO);
+        return yhMemberDTO;
+    }
 
 
 //    public YhMemberDTO findByEmail(String loginDTO) {

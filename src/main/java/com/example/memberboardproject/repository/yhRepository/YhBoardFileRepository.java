@@ -6,4 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface YhBoardFileRepository extends JpaRepository<YhBoardFileEntity, Long> {
     YhBoardFileEntity deleteYhBoardFileEntityByYhBoardEntity(Long id);
+
+
+    YhBoardFileEntity deleteByYhBoardEntity(YhBoardEntity yhBoardEntity);
+
+    YhBoardFileEntity findByYhBoardEntity(YhBoardEntity yhBoardEntity);
 }

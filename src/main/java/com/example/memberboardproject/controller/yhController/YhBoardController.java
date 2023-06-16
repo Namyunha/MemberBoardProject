@@ -53,9 +53,11 @@ public class YhBoardController {
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model, HttpSession session) {
         YhBoardDTO yhBoardDTO = yhBoardService.findById(id);
+        System.out.println("컨트롤러에 있는 yhBoardDTO = " + yhBoardDTO);
         List<YhCommentDTO> commentDTOList = yhCommentService.findAll(id);
         String loginEmail = (String) session.getAttribute("loginDTO");
-        YhMemberDTO writerDTO = yhMemberService.findByEmail(loginEmail);
+        YhMemberDTO writerDTO = yhMemberService.findByBoardId(id);
+        System.out.println("컨트롤러에 있는 writerDTO = " + writerDTO);
         model.addAttribute("commentList", commentDTOList);
         model.addAttribute("writerDTO", writerDTO);
         model.addAttribute("yhBoard", yhBoardDTO);
@@ -65,7 +67,8 @@ public class YhBoardController {
     @PostMapping("/update")
     public String update(@ModelAttribute YhBoardDTO yhBoardDTO) throws IOException {
         System.out.println("컨트롤러에 있는 update : yhBoardDTO = " + yhBoardDTO);
-        yhBoardService.updateBoard(yhBoardDTO);
+        yhBoardService.deleteFile(yhBoardDTO.getId());
+//        yhBoardService.updateBoard(yhBoardDTO);
         return "redirect:list";
     }
 

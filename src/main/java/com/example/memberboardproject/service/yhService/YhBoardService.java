@@ -91,4 +91,11 @@ public class YhBoardService {
     public void deleteById(Long id) {
         yhBoardRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteFile(Long id) {
+        YhBoardEntity yhBoardEntity = yhBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        YhBoardFileEntity yhBoardFileEntity = yhBoardFileRepository.findByYhBoardEntity(yhBoardEntity);
+        yhBoardFileRepository.deleteById(yhBoardFileEntity.getId());
+    }
 }
