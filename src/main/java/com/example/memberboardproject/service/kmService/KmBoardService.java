@@ -79,7 +79,7 @@ public class KmBoardService {
         KmBoardDTO boardDTO = KmBoardDTO.toDTO(boardEntity);
         return boardDTO;
     }
-
+    @Transactional
     public void boardHits(Long id) {
 //        KmBoardEntity kmBoardEntity = KmBoardEntity.updateToBoardEntity(kmBoardDTO);
         kmBoardRepository.updateHits(id);
@@ -92,7 +92,6 @@ public class KmBoardService {
         Page<KmBoardEntity> kmBoardEntities = null;
         if (type.equals("title")) {
             kmBoardEntities = kmBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-
         } else if (type.equals("writer")) {
             kmBoardEntities = kmBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
         } else {
