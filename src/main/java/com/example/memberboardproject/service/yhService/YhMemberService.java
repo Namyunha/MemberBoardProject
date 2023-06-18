@@ -24,7 +24,6 @@ public class YhMemberService {
     private final YhMemberRepository yhMemberRepository;
     private final YhMemberFileRepository yhMemberFileRepository;
     private final YhBoardRepository yhBoardRepository;
-
     public Long save(YhMemberDTO yhMemberDTO) throws IOException {
         if (yhMemberDTO.getMemberProfile() == null || yhMemberDTO.getMemberProfile().get(0).isEmpty()) {
             YhMemberEntity yhMemberEntity = YhMemberEntity.toSaveEntity(yhMemberDTO);
@@ -47,7 +46,6 @@ public class YhMemberService {
             return savedFile.getId();
         }
     }
-
     public YhMemberDTO login(YhMemberDTO yhMemberDTO) {
         Optional<YhMemberEntity> yhMemberEntity = yhMemberRepository.findByMemberEmailAndMemberPassword(yhMemberDTO.getMemberEmail(), yhMemberDTO.getMemberPassword());
         YhMemberEntity loginMemberEntity = yhMemberEntity.get();
@@ -57,23 +55,19 @@ public class YhMemberService {
             return yhMemberDTO;
         }
     }
-
     @Transactional
     public YhMemberDTO findByEmail(String loginDTO) {
         YhMemberEntity yhMemberEntity = yhMemberRepository.findByMemberEmail(loginDTO);
         YhMemberDTO yhMemberDTO = YhMemberDTO.toSaveDTO(yhMemberEntity);
         return yhMemberDTO;
     }
-
     public Long updateUser(YhMemberDTO yhMemberDTO) {
         YhMemberEntity yhMemberEntity = YhMemberEntity.toUpdateEntity(yhMemberDTO);
         return yhMemberRepository.save(yhMemberEntity).getId();
     }
-
     public void deleteUser(Long id) {
         yhMemberRepository.deleteById(id);
     }
-
     @Transactional
     public YhMemberDTO findByBoardId(Long id) {
         YhBoardEntity yhBoardEntity = yhBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
@@ -82,8 +76,6 @@ public class YhMemberService {
         System.out.println("서비스에 있는 yhMemberDTO = " + yhMemberDTO);
         return yhMemberDTO;
     }
-
-
 //    public YhMemberDTO findByEmail(String loginDTO) {
 //        Optional<YhMemberEntity> yhMemberEntity = yhMemberRepository.find
 //    }

@@ -62,6 +62,16 @@ public class YhBoardEntity extends YhBaseEntity {
         return yhBoardEntity;
     }
 
+    public static YhBoardEntity toUpdateEntity(YhBoardDTO yhBoardDTO) {
+        YhBoardEntity yhBoardEntity = new YhBoardEntity();
+        yhBoardEntity.setId(yhBoardDTO.getId());
+        yhBoardEntity.setBoardTitle(yhBoardDTO.getBoardTitle());
+        yhBoardEntity.setBoardWriter(yhBoardDTO.getBoardWriter());
+        yhBoardEntity.setBoardContents(yhBoardDTO.getBoardContents());
+        yhBoardEntity.setBoardHits(0);
+        yhBoardEntity.setFileAttached(0);
+        return yhBoardEntity;
+    }
 
     public static YhBoardEntity toUpdateWithFile(YhBoardDTO yhBoardDTO) {
         YhBoardEntity yhBoardEntity = new YhBoardEntity();
@@ -73,4 +83,6 @@ public class YhBoardEntity extends YhBaseEntity {
         yhBoardEntity.setFileAttached(1);
         return yhBoardEntity;
     }
+
+
 }

@@ -33,11 +33,4 @@ public class YhBoardFileEntity {
     }
 
 
-    public static YhBoardFileEntity toUpdateFileEntity(String originalFileName, String storedFileName, YhBoardEntity updateEntity) {
-        YhBoardFileEntity yhBoardFileEntity = new YhBoardFileEntity();
-        yhBoardFileEntity.setOriginalFileName(originalFileName);
-        yhBoardFileEntity.setStoredFileName(storedFileName);
-        yhBoardFileEntity.setYhBoardEntity(updateEntity);
-        return yhBoardFileEntity;
-    }
 }

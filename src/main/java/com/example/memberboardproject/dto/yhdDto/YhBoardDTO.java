@@ -2,9 +2,7 @@ package com.example.memberboardproject.dto.yhdDto;
 
 import com.example.memberboardproject.entity.yhEntity.YhBoardEntity;
 import com.example.memberboardproject.entity.yhEntity.YhBoardFileEntity;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -13,6 +11,9 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class YhBoardDTO {
     private Long id;
     private String boardTitle;
@@ -51,5 +52,6 @@ public class YhBoardDTO {
         }
         return yhBoardDTO;
     }
+
 
 }
