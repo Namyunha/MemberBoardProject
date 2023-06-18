@@ -9,6 +9,10 @@ import com.example.memberboardproject.repository.yhRepository.YhBoardFileReposit
 import com.example.memberboardproject.repository.yhRepository.YhBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.type.CurrencyType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,26 +70,22 @@ public class YhBoardService {
 
     public Long updateBoard(YhBoardDTO yhBoardDTO) throws IOException {
         if (yhBoardDTO.getBoardFile() == null || yhBoardDTO.getBoardFile().get(0).isEmpty()) {
-            YhBoardEntity yhBoardEntity = YhBoardEntity.toSaveEntity(yhBoardDTO);
+            YhBoardEntity yhBoardEntity = YhBoardEntity.toUpdateEntity(yhBoardDTO);
             YhBoardEntity saveFile = yhBoardRepository.save(yhBoardEntity);
             return saveFile.getId();
         } else {
             YhBoardEntity yhBoardEntity = YhBoardEntity.toUpdateWithFile(yhBoardDTO);
-            YhBoardEntity updateEntity = yhBoardRepository.findById(yhBoardDTO.getId()).orElseThrow(() -> new NoSuchElementException());
             yhBoardRepository.save(yhBoardEntity);
-            yhBoardFileRepository.deleteYhBoardFileEntityByYhBoardEntity(yhBoardEntity.getId());
-//            List<YhBoardFileEntity> yhBoardFileEntityList = updateEntity.getYhBoardFileEntityList();
             for (MultipartFile boardFile : yhBoardDTO.getBoardFile()) {
                 String originalFileName = boardFile.getOriginalFilename();
                 String storedFileName = System.currentTimeMillis() + "_" + originalFileName;
                 String savePath = "D:\\Springboot_github_img\\" + storedFileName;
                 boardFile.transferTo(new File(savePath));
-                YhBoardFileEntity yhBoardFileEntity = YhBoardFileEntity.toUpdateFileEntity(originalFileName, storedFileName, yhBoardEntity);
+                YhBoardFileEntity yhBoardFileEntity = YhBoardFileEntity.toSaveFileEntity(yhBoardEntity, storedFileName, originalFileName);
                 yhBoardFileRepository.save(yhBoardFileEntity);
             }
-            return updateEntity.getId();
+            return yhBoardEntity.getId();
         }
-
     }
 
     public void deleteById(Long id) {
@@ -95,7 +95,40 @@ public class YhBoardService {
     @Transactional
     public void deleteFile(Long id) {
         YhBoardEntity yhBoardEntity = yhBoardRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-        YhBoardFileEntity yhBoardFileEntity = yhBoardFileRepository.findByYhBoardEntity(yhBoardEntity);
-        yhBoardFileRepository.deleteById(yhBoardFileEntity.getId());
+        List<YhBoardFileEntity> yhBoardFileEntityList = yhBoardEntity.getYhBoardFileEntityList();
+        for (YhBoardFileEntity yhBoardFileEntity : yhBoardFileEntityList) {
+            yhBoardFileRepository.deleteById(yhBoardFileEntity.getId());
+        }
+    }
+
+    public Page<YhBoardDTO> findPage(Pageable pageable, String type, String q) {
+        int page = pageable.getPageNumber() - 1;
+        int limit = 10;
+        Page<YhBoardEntity> yhBoardEntities = null;
+        System.out.println("type" + type);
+        System.out.println("q" + q);
+        if (type.equals("제목")) {
+            yhBoardEntities = yhBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "id")));
+        } else if (type.equals("작성자")) {
+            yhBoardEntities = yhBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "id")));
+        } else {
+            yhBoardEntities = yhBoardRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "id")));
+        }
+        Page<YhBoardDTO> yhBoardDTOS = yhBoardEntities.map(yhBoardEntity -> YhBoardDTO
+                .builder()
+                .id(yhBoardEntity.getId())
+                .boardTitle(yhBoardEntity.getBoardTitle())
+                .boardWriter(yhBoardEntity.getBoardWriter())
+                .boardContents(yhBoardEntity.getBoardContents())
+                .boardHits(yhBoardEntity.getBoardHits())
+                .build());
+        return yhBoardDTOS;
     }
 }
+
+
+
+
+
+
+

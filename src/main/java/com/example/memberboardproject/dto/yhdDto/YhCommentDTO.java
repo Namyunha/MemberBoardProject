@@ -2,13 +2,14 @@ package com.example.memberboardproject.dto.yhdDto;
 
 
 import com.example.memberboardproject.entity.yhEntity.YhCommentEntity;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class YhCommentDTO {
     private Long id;
     private String commentWriter;

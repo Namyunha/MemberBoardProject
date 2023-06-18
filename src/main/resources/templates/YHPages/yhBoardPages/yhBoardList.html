@@ -5,25 +5,66 @@
 </head>
 <th:block th:replace="/YHPages/yhComponent/yhHeader :: header"></th:block>
 <body>
-<table class="table table-hover">
-    <thead class="table-dark">
-    <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>조회하기</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="board: ${boardList}">
-        <td th:text="${board.id}"></td>
-        <td th:text="${board.boardTitle}"></td>
-        <td th:text="${board.boardWriter}"></td>
-        <td><a style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 5px" th:href="@{|/yhBoard/${board.id}|}">조회</a></td>
-    </tr>
-    </tbody>
-</table>
+<div th:if="${boardList == null}">
+    <h2>게시물이 없습니다.</h2>
+</div>
+<div th:unless="${boardList == null}">
+    <table class="table table-hover">
+        <thead class="table-dark">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회하기</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board: ${boardList}">
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.boardTitle}"></td>
+            <td th:text="${board.boardWriter}"></td>
+            <td>
+                <a style="text-decoration: none; color: white; background-color: #0d6efd; padding: 5px 10px; border-radius: 5px"
+                   th:href="@{|/yhBoard/${board.id}|}">조회</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <div th:if="${session.loginDTO != null}"><a href="/yhBoard/save">글등록</a></div>
+<div class="container">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" th:href="@{/yhBoard/list(page=1, type=${type}, q=${q})}">
+                <span>First</span>
+            </a>
+        </li>
+        <li th:class="${boardList.first} ? 'disabled'" class="page-item">
+            <a class="page-link"
+               th:href="${boardList.first} ? '#' : @{/yhBoard/list(page=${boardList.number}, type=${type}, q=${q})}">
+                <span><</span>
+            </a>
+        </li>
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+            th:class="${page == boardList.number + 1} ? 'page-item active'" class="page-item">
+            <a class="page-link"
+               th:href="@{/yhBoard/list(page=${page}, type=${type}, q=${q})}"
+               th:text="${page}">
+            </a>
+        </li>
+        <li th:class="${boardList.last} ? 'disabled'" >
+            <a class="page-link"
+               th:href="${boardList.last} ? '#' :  @{/yhBoard/list(page=${boardList.number + 2}, type=${type}, q=${q})}">
+                <span>></span>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"
+               th:href="@{/yhBoard/list(page=${boardList.totalPages}, type=${type}, q=${q})}">
+                <span>last</span>
+            </a>
+        </li>
+    </ul>
+</div>
 </body>
 <script>
     const goPage = () => {

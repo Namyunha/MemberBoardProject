@@ -80,6 +80,25 @@
         </tbody>
     </table>
 </div>
+<div>
+    <ul>
+        <li>
+            <span>First</span>
+        </li>
+        <li>
+            <span><</span>
+        </li>
+        <li th:each="comment: ${#numbers.sequence(startPage, endPage)}">
+            <a th:href="/yhBoard/${comment.id}" th:text="${comment}"></a>
+        </li>
+        <li>
+            <span>></span>
+        </li>
+        <li>
+            <span>Last</span>
+        </li>
+    </ul>
+</div>
 
 <script th:inline="javascript">
 

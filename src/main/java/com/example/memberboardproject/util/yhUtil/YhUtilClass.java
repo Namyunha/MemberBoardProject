@@ -11,5 +11,4 @@ public class YhUtilClass {
             return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         }
     }
-
 }

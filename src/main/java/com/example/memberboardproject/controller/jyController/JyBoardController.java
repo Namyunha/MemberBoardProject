@@ -42,20 +42,23 @@ public class JyBoardController {
                          @RequestParam(value = "type", required = false, defaultValue = "") String type,
                          @RequestParam(value = "q", required = false, defaultValue = "") String q,
                          Model model) {
+
         Page<JyBoardDTO> jyBoardDTOS = jyBoardService.paging(pageable, type, q);
+
         if (jyBoardDTOS.getTotalElements() == 0) {
             model.addAttribute("boardList", null);
         } else {
             model.addAttribute("boardList", jyBoardDTOS);
         }
+
         int blockLimit = 3;
         int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < jyBoardDTOS.getTotalPages()) ? startPage + blockLimit - 1 : jyBoardDTOS.getTotalPages();
-
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("type", type);
         model.addAttribute("q", q);
+
         return "JYPages/jyBoardPages/jyBoardPaging";
     }
 
