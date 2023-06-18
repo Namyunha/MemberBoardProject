@@ -6,6 +6,10 @@ import com.example.memberboardproject.entity.yhEntity.YhCommentEntity;
 import com.example.memberboardproject.repository.yhRepository.YhBoardRepository;
 import com.example.memberboardproject.repository.yhRepository.YhCommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +39,20 @@ public class YhCommentService {
             yhCommentDTOList.add(YhCommentDTO.toDTO(comment));
         });
         return yhCommentDTOList;
+    }
+
+    public Page<YhCommentDTO> findCommentPaging(Pageable pageable) {
+        int limit = 5;
+        int page = pageable.getPageNumber();
+        Page<YhCommentEntity> yhCommentEntities = yhCommentRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC, "id")));
+        Page<YhCommentDTO> yhCommentDTO = yhCommentEntities.map(yhCommentEntity ->
+                YhCommentDTO.builder()
+                        .id(yhCommentEntity.getId())
+                        .commentWriter(yhCommentEntity.getCommentWriter())
+                        .commentContents(yhCommentEntity.getCommentContents())
+                        .boardId(yhCommentEntity.getYhBoardEntity().getId())
+                        .build());
+        return yhCommentDTO;
     }
 
 //    @Transactional

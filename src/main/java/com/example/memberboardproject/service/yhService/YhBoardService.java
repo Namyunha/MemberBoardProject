@@ -101,7 +101,6 @@ public class YhBoardService {
         }
     }
 
-
     public Page<YhBoardDTO> findPage(Pageable pageable, String type, String q) {
         int page = pageable.getPageNumber() - 1;
         int limit = 10;

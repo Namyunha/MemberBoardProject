@@ -8,7 +8,9 @@ import com.example.memberboardproject.service.yhService.YhCommentService;
 import com.example.memberboardproject.service.yhService.YhMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,13 +75,23 @@ public class YhBoardController {
     }
 
     @GetMapping("/{id}")
-    public String detail(@PathVariable Long id, Model model, HttpSession session) {
+    public String detail(@PathVariable Long id, Model model, @PageableDefault(page = 1) Pageable pageable) {
         YhBoardDTO yhBoardDTO = yhBoardService.findById(id);
         System.out.println("컨트롤러에 있는 yhBoardDTO = " + yhBoardDTO);
-        List<YhCommentDTO> commentDTOList = yhCommentService.findAll(id);
+//        List<YhCommentDTO> commentDTOList = yhCommentService.findAll(id);
         YhMemberDTO writerDTO = yhMemberService.findByBoardId(id);
         System.out.println("컨트롤러에 있는 writerDTO = " + writerDTO);
-        model.addAttribute("commentList", commentDTOList);
+        int limitBlock = 5;
+        int startPage = ((int) (Math.ceil((double) pageable.getPageNumber() / limitBlock)) - 1) * limitBlock + 1;
+        Page<YhCommentDTO> yhCommentDTOS = yhCommentService.findCommentPaging(pageable);
+        int endPage = yhCommentDTOS.getTotalPages() < (startPage + limitBlock - 1) ? yhCommentDTOS.getTotalPages() : startPage + limitBlock - 1;
+        if (yhCommentDTOS == null) {
+            model.addAttribute("commentList", null);
+        } else {
+            model.addAttribute("commentList", yhCommentDTOS);
+        }
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("startPage", startPage);
         model.addAttribute("writerDTO", writerDTO);
         model.addAttribute("yhBoard", yhBoardDTO);
         return "/YHPages/yhBoardPages/yhDetail";
