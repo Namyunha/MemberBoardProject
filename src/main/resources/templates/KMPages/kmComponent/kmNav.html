@@ -13,16 +13,16 @@
                 <i class="bi bi-house"></i>
             </a>
         </li>
-        <li id="navMenu1">
+        <li class="navMenu" id="navMenu1">
             <a href="/kmMember/save">회원가입</a>
         </li>
-        <li id="navMenu2">
+        <li class="navMenu" id="navMenu2">
             <a href="/kmMember/login">로그인</a>
         </li>
-        <li id="navMenu3">
+        <li class="navMenu" id="navMenu3">
             <a href="/kmMember/list">회원목록</a>
         </li>
-        <li th:if="${session.loginEmail != null}" id="navMenu4">
+        <li class="navMenu" th:if="${session.loginEmail != null}" id="navMenu4">
             <a href="/kmBoard/boardPaging" style="color: white;">페이징</a>
         </li>
 

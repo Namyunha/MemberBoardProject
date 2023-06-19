@@ -71,13 +71,13 @@ public class KmBoardController {
         model.addAttribute("type", type);
         return "KMPages/kmBoardPages/kmBoardPaging";
     }
-    @GetMapping("/boardDetail/{id}")
+    @GetMapping("/{id}")
     public String findById(@PathVariable Long id,
                            @RequestParam("page") int page,
                            @RequestParam("type") String type,
                            @RequestParam("q") String q,
                            Model model) {
-        System.out.println("id = " + id + ", page = " + page +
+        System.out.println("넘어온id = " + id + ", page = " + page +
                 ", type = " + type + ", q = " + q + ", model = " + model);
         kmBoardService.boardHits(id);
         model.addAttribute("type", type);
