@@ -87,17 +87,17 @@ public class KmBoardService {
     }
 
     @Transactional
-    public Page<KmBoardDTO> paging(Pageable pageable, String type, String q) {
+    public Page<KmBoardDTO> paging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
         int pageLimit = 5; // 한 화면에 5개 글씩 보겠다.
-        Page<KmBoardEntity> kmBoardEntities = null;
-        if (type.equals("title")) {
-            kmBoardEntities = kmBoardRepository.findByBoardTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-        } else if (type.equals("writer")) {
-            kmBoardEntities = kmBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-        } else {
-            kmBoardEntities = kmBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-        }
+//        Page<KmBoardEntity> kmBoardEntities = null;
+//        if (type.equals("title")) {
+        Page<KmBoardEntity> kmBoardEntities = kmBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+//        } else if (type.equals("writer")) {
+//            kmBoardEntities = kmBoardRepository.findByBoardWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+//        } else {
+//            kmBoardEntities = kmBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+//        }
         Page<KmBoardDTO> kmBoardDTOS = kmBoardEntities.map(kmBoardEntity -> KmBoardDTO.builder()
                 .id(kmBoardEntity.getId())
                 .boardTitle(kmBoardEntity.getBoardTitle())

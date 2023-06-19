@@ -50,15 +50,16 @@ public class KmBoardController {
 
     @GetMapping("/boardPaging")
     public String paging(@PageableDefault(page = 1) Pageable pageable,
-                         @RequestParam(value = "type", required = false, defaultValue = "") String type,
-                         @RequestParam(value = "q", required = false, defaultValue = "") String q,
+//                         @RequestParam(value = "type", required = false, defaultValue = "") String type,
+//                         @RequestParam(value = "q", required = false, defaultValue = "") String q,
                          Model model) {
         System.out.println("page = " + pageable.getPageNumber());
         System.out.println("pageable = " + pageable);
-        System.out.println("type" + type);
-        System.out.println("q" + q);
+//        System.out.println("type" + type);
+//        System.out.println("q" + q);
 
-        Page<KmBoardDTO> kmBoardDTOS = kmBoardService.paging(pageable, type, q);
+        Page<KmBoardDTO> kmBoardDTOS = kmBoardService.paging(pageable);
+//        Page<KmBoardDTO> kmBoardDTOS = kmBoardService.paging(pageable, type, q);
         System.out.println("페이징을 위해 가져온kmBoardDTOS = " + kmBoardDTOS);
         model.addAttribute("boardList", kmBoardDTOS);
         // 시작페이지(startPage), 마직막 페이지(endPage) 값 계산
@@ -67,8 +68,8 @@ public class KmBoardController {
         int endPage = ((startPage + blockLimit - 1) < kmBoardDTOS.getTotalPages()) ? startPage + blockLimit - 1 : kmBoardDTOS.getTotalPages();
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("q", q);
-        model.addAttribute("type", type);
+//        model.addAttribute("q", q);
+//        model.addAttribute("type", type);
         return "KMPages/kmBoardPages/kmBoardPaging";
     }
     @GetMapping("/{id}")
