@@ -20,13 +20,13 @@
         </tr>
         <tr th:each="board:${boardList}">
             <td th:text="${board.id}"></td>
-            <td><a th:href="@{|/kmBoard/boardDetail/${board.id}|}" th:text="${board.boardTitle}"></a></td>
+            <td><a th:href="@{|/kmBoard/${board.id}?page=${boardList.number + 1}&type=${type}&q=${q}|}"
+                   th:text="${board.boardTitle}">제목</a></td>
             <td th:text="${board.boardWriter}"></td>
             <td th:text="${board.boardContents}"></td>
             <td th:text="${board.boardCreatedAt}"></td>
             <td th:text="${board.boardFileAttached}"></td>
             <td th:text="${board.boardHits}"></td>
-            <!--        <td th:text="*{#temporals.format(board.createdAt,'yyyy-MM-dd HH:mm:ss')}"></td>-->
 
         </tr>
     </table>
@@ -35,4 +35,11 @@
 <div th:replace="KMPages/kmComponent/kmFooter"></div>
 
 </body>
+<script th:inline="javascript">
+    console.log("boardId",[[${board.id}]]);
+    console.log("boardHits",[[${board.boardHits}]]);
+    console.log("boardTitle",[[${board.boardTitle}]]);
+    console.log("boardWriter",[[${board.boardWriter}]]);
+    console.log("boardContents",[[${board.boardContents}]]);
+</script>
 </html>

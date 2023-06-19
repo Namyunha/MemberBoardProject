@@ -8,11 +8,13 @@
 <div th:replace="KMPages/kmComponent/kmNav"></div>
 <div id="section">
     <h2>member login form</h2>
-    <form action="/kmMember/login" method="post" name="memberLogin">
-        <input type="text" name="memberEmail" placeholder="email 입력">
-        <input type="text" name="memberPass" placeholder="비밀번호 입력">
-        <input type="button" th:onclick="member_login()" value="로그인">
-    </form>
+    <div id="memberLoginForm">
+        <form action="/kmMember/login" method="post" name="memberLogin">
+            <input type="text" name="memberEmail" placeholder="email 입력">
+            <input type="text" name="memberPass" placeholder="비밀번호 입력">
+            <input type="button" th:onclick="member_login()" value="로그인">
+        </form>
+    </div>
 </div>
 <div th:replace="KMPages/kmComponent/kmFooter"></div>
 

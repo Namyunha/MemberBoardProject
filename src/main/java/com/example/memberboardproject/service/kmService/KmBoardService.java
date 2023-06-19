@@ -79,6 +79,7 @@ public class KmBoardService {
         KmBoardDTO boardDTO = KmBoardDTO.toDTO(boardEntity);
         return boardDTO;
     }
+
     @Transactional
     public void boardHits(Long id) {
 //        KmBoardEntity kmBoardEntity = KmBoardEntity.updateToBoardEntity(kmBoardDTO);

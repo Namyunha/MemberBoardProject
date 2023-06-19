@@ -53,6 +53,9 @@ ul {
 #nav #login-area {
     float: right;
 }
+.navMenu {
+    color: wheat;
+}
 
 #footer{
     background-color: #0b5ed7;
@@ -64,4 +67,13 @@ ul {
 #baseMenu{
     text-align: center;
 
+}
+#memberLoginForm {
+    text-align: center;
+        display: flex;
+        /*padding: 10px 100px;*/
+        /*background-color: #363945;*/
+        font-weight: bold;
+        justify-content: center;
+        align-items: center;
 }
